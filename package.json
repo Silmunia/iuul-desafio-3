@@ -1,0 +1,15 @@
+{
+  "name": "iuul-desafio-3",
+  "version": "1.0.0",
+  "description": "Package setup for iUUL's #3 challenge",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1", 
+    "build": "tsc --project tsconfig.json"
+  },
+  "author": "Pedro Costa",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.4.4"
+  }
+}
