@@ -5,7 +5,8 @@
   "main": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1", 
-    "build": "tsc --project tsconfig.json"
+    "build": "tsc --project tsconfig.json",
+    "app-1": "node ./dist/app-1.js"
   },
   "author": "Pedro Costa",
   "license": "ISC",
