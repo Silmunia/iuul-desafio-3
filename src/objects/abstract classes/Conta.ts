@@ -3,11 +3,11 @@ import Credito from "../classes/Credito";
 import Debito from "../classes/Debito";
 
 abstract class Conta {
-    public readonly numero: number
+    public readonly numero: string
     protected creditos: Array<Credito> = []
     protected debitos: Array<Debito> = []
     
-    constructor(numero: number) {
+    constructor(numero: string) {
         this.numero = numero;
     }
 

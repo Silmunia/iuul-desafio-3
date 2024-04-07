@@ -4,7 +4,7 @@ import Conta from "../abstract classes/Conta";
 class ContaCorrente extends Conta {
     public readonly limite: number
 
-    constructor(numero: number, limite: number) {
+    constructor(numero: string, limite: number) {
         super(numero);
         this.limite = limite;
     }

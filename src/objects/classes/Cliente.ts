@@ -22,7 +22,7 @@ class Cliente extends Pessoa implements IUsuario {
         this.enderecos = this.enderecos.concat(enderecos);
     }
 
-    encontrarConta(numero: number): Conta {
+    encontrarConta(numero: string): Conta {
         for (let i = 0; i< this.contas.length; i++) {
             if (this.contas[i].numero === numero) {
                 return this.contas[i];
@@ -32,13 +32,13 @@ class Cliente extends Pessoa implements IUsuario {
         throw new Error(`Conta de numero ${numero} não foi encontrada no cliente de CPF ${this.cpf}`);
     }
 
-    calcularSaldoDeConta(numeroDaConta: number): number {
+    calcularSaldoDeConta(numeroDaConta: string): number {
         let conta = this.encontrarConta(numeroDaConta);
 
         return conta.calcularSaldo();
     }
 
-    fazerTransferencia(numeroContaOrigem: number, clienteDestino: Cliente, numeroContaDestino: number, valor: number) {
+    fazerTransferencia(numeroContaOrigem: string, clienteDestino: Cliente, numeroContaDestino: string, valor: number) {
         let contaOrigem = this.encontrarConta(numeroContaOrigem);
 
         if (contaOrigem instanceof ContaCorrente) {
@@ -52,13 +52,13 @@ class Cliente extends Pessoa implements IUsuario {
 
     }
 
-    fazerDeposito(numeroDaConta: number, valor: number) {
+    fazerDeposito(numeroDaConta: string, valor: number) {
         let conta = this.encontrarConta(numeroDaConta);
 
         conta.depositar(valor);
     }
 
-    fazerSaque(numeroDaConta: number, valor: number) {
+    fazerSaque(numeroDaConta: string, valor: number) {
         let conta = this.encontrarConta(numeroDaConta);
 
         conta.sacar(valor);
