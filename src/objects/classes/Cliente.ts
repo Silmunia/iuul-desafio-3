@@ -49,7 +49,6 @@ class Cliente extends Pessoa implements IUsuario {
             throw new Error(`Conta ${numeroContaOrigem} de cliente ${this.cpf} não é Conta Corrente`);
         }
 
-
     }
 
     fazerDeposito(numeroDaConta: string, valor: number) {
