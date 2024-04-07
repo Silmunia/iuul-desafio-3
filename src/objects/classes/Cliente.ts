@@ -21,14 +21,32 @@ class Cliente extends Pessoa implements IUsuario {
         this.enderecos = this.enderecos.concat(enderecos);
     }
 
-    calcularSaldoDeConta(numero: number): number {
+    encontrarConta(numero: number): Conta {
         for (let i = 0; i< this.contas.length; i++) {
             if (this.contas[i].numero === numero) {
-                return this.contas[i].calcularSaldo();
+                return this.contas[i];
             }
         }
 
         throw new Error(`Conta de numero ${numero} não foi encontrada no cliente de CPF ${this.cpf}`);
+    }
+
+    calcularSaldoDeConta(numeroDaConta: number): number {
+        let conta = this.encontrarConta(numeroDaConta);
+
+        return conta.calcularSaldo();
+    }
+
+    fazerDeposito(numeroDaConta: number, valor: number) {
+        let conta = this.encontrarConta(numeroDaConta);
+
+        conta.depositar(valor);
+    }
+
+    fazerSaque(numeroDaConta: number, valor: number) {
+        let conta = this.encontrarConta(numeroDaConta);
+
+        conta.sacar(valor);
     }
 
     listarEnderecos() {
