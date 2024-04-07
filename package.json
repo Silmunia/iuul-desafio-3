@@ -10,7 +10,7 @@
     "app-2": "node ./dist/apps/app-2.js",
     "app-3": "node ./dist/apps/app-3.js",
     "app-4": "node ./dist/apps/app-4.js",
-    "app-5": "node ./dist/app-5.js"
+    "app-5": "node ./dist/apps/app-5.js"
   },
   "author": "Pedro Costa",
   "license": "ISC",
