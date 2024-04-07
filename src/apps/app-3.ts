@@ -11,6 +11,4 @@ cliente.contas[0].depositar(100);
 
 cliente.contas[0].sacar(50);
 
-if (cliente.contas[0] instanceof ContaCorrente) {
-    console.log(cliente.contas[0].calcularSaldo());
-}
+console.log(cliente.calcularSaldoDeConta(123));
