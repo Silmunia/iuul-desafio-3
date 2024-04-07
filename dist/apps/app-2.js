@@ -5,7 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const Endereco_1 = __importDefault(require("../objects/classes/Endereco"));
 const Cliente_1 = __importDefault(require("../objects/classes/Cliente"));
-let cliente = new Cliente_1.default("123.456.789-10", "Cli A", "(12) 3456-7890", true, new Endereco_1.default("12345-67", "Log A", "123", "Apartamento 456", "Cidade A", "UF B"));
+const ContaCorrente_1 = __importDefault(require("../objects/classes/ContaCorrente"));
+let cliente = new Cliente_1.default("123.456.789-10", "Cli A", "(12) 3456-7890", true, new Endereco_1.default("12345-67", "Log A", "123", "Apartamento 456", "Cidade A", "UF B"), new ContaCorrente_1.default(123, 100));
 cliente.adicionarEnderecos([
     new Endereco_1.default("12345-80", "Log B", "456", "", "Cidade A", "UF B"),
     new Endereco_1.default("46385-53", "Log X", "5678", "", "Cidade B", "UF B"),
