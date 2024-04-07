@@ -16,6 +16,14 @@ class Cliente extends Pessoa_1.default {
     adicionarEnderecos(enderecos) {
         this.enderecos = this.enderecos.concat(enderecos);
     }
+    calcularSaldoDeConta(numero) {
+        for (let i = 0; i < this.contas.length; i++) {
+            if (this.contas[i].numero === numero) {
+                return this.contas[i].calcularSaldo();
+            }
+        }
+        throw new Error(`Conta de numero ${numero} não foi encontrada no cliente de CPF ${this.cpf}`);
+    }
     listarEnderecos() {
         console.log(`Listando enderecos de cliente com CPF ${this.cpf}`);
         for (let i = 0; i < this.enderecos.length; i++) {

@@ -22,6 +22,8 @@ abstract class Conta {
 
         this.debitos.push(novoDebito);
     }
+
+    abstract calcularSaldo(): number;
 }
 
 export default Conta;
