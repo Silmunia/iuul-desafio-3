@@ -12,9 +12,7 @@ let clienteB = new Cliente("456.123.789-10", "Cli B", "(10) 1256-7889", true, ne
 
 clienteB.fazerDeposito(456, 1000);
 
-if (clienteA.contas[0] instanceof ContaCorrente) {
-    clienteA.contas[0].transferir(clienteB.contas[0], 500);
-}
+clienteA.fazerTransferencia(123, clienteB, 456, 500);
 
 console.log(clienteA.calcularSaldoDeConta(123));
 
