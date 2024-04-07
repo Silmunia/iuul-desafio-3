@@ -1,3 +1,4 @@
+
 import Pessoa from "../abstract classes/Pessoa";
 import IUsuario from "../interfaces/IUsuario";
 import Cargo from "./Cargo";
