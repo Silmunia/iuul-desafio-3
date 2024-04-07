@@ -11,6 +11,17 @@ abstract class Conta {
         this.numero = numero;
     }
 
+    calcularTotal(montante: Array<Credito | Debito>): number {
+
+        let total: number = 0;
+
+        for (let i = 0; i < montante.length; i++) {
+            total += montante[i].valor;
+        }
+
+        return total;
+    }
+
     depositar(valor: number) {
         let novoCredito = new Credito(valor, new Date());
 

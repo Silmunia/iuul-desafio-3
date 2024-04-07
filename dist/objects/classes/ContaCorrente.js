@@ -10,14 +10,8 @@ class ContaCorrente extends Conta_1.default {
         this.limite = limite;
     }
     calcularSaldo() {
-        let creditoTotal = 0;
-        for (let i = 0; i < this.creditos.length; i++) {
-            creditoTotal += this.creditos[i].valor;
-        }
-        let debitoTotal = 0;
-        for (let i = 0; i < this.debitos.length; i++) {
-            debitoTotal += this.debitos[i].valor;
-        }
+        let creditoTotal = this.calcularTotal(this.creditos);
+        let debitoTotal = this.calcularTotal(this.debitos);
         return (creditoTotal - debitoTotal) + this.limite;
     }
     transferir(contaDestino, valor) {
