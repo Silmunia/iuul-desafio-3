@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Pessoa_1 = __importDefault(require("../abstract classes/Pessoa"));
+const ContaCorrente_1 = __importDefault(require("./ContaCorrente"));
 class Cliente extends Pessoa_1.default {
     constructor(cpf, nome, telefone, vip, endereco, conta) {
         super(cpf, nome, telefone);
@@ -27,6 +28,16 @@ class Cliente extends Pessoa_1.default {
     calcularSaldoDeConta(numeroDaConta) {
         let conta = this.encontrarConta(numeroDaConta);
         return conta.calcularSaldo();
+    }
+    fazerTransferencia(numeroContaOrigem, clienteDestino, numeroContaDestino, valor) {
+        let contaOrigem = this.encontrarConta(numeroContaOrigem);
+        if (contaOrigem instanceof ContaCorrente_1.default) {
+            let contaDestino = clienteDestino.encontrarConta(numeroContaDestino);
+            contaOrigem.transferir(contaDestino, valor);
+        }
+        else {
+            throw new Error(`Conta ${numeroContaOrigem} de cliente ${this.cpf} não é Conta Corrente`);
+        }
     }
     fazerDeposito(numeroDaConta, valor) {
         let conta = this.encontrarConta(numeroDaConta);

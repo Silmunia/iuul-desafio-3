@@ -3,6 +3,7 @@ import IUsuario from "../interfaces/IUsuario";
 import Pessoa from "../abstract classes/Pessoa";
 import Endereco from "./Endereco";
 import Conta from "../abstract classes/Conta";
+import ContaCorrente from "./ContaCorrente";
 
 class Cliente extends Pessoa implements IUsuario {
 
@@ -35,6 +36,20 @@ class Cliente extends Pessoa implements IUsuario {
         let conta = this.encontrarConta(numeroDaConta);
 
         return conta.calcularSaldo();
+    }
+
+    fazerTransferencia(numeroContaOrigem: number, clienteDestino: Cliente, numeroContaDestino: number, valor: number) {
+        let contaOrigem = this.encontrarConta(numeroContaOrigem);
+
+        if (contaOrigem instanceof ContaCorrente) {
+            let contaDestino = clienteDestino.encontrarConta(numeroContaDestino);
+
+            contaOrigem.transferir(contaDestino, valor);
+        } else {
+            throw new Error(`Conta ${numeroContaOrigem} de cliente ${this.cpf} não é Conta Corrente`);
+        }
+
+
     }
 
     fazerDeposito(numeroDaConta: number, valor: number) {
