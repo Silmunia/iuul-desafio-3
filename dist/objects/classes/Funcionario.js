@@ -8,7 +8,8 @@ const Cargo_1 = __importDefault(require("./Cargo"));
 class Funcionario extends Pessoa_1.default {
     constructor(nomeDoCargo, cpf, nome, telefone, salario) {
         super(cpf, nome, telefone);
-        this.cargo = new Cargo_1.default(nomeDoCargo);
+        this.cargos = [];
+        this.cargos.push(new Cargo_1.default(nomeDoCargo));
         this.salario = salario;
     }
     autenticar() {

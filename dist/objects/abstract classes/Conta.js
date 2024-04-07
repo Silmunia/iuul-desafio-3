@@ -11,6 +11,13 @@ class Conta {
         this.debitos = [];
         this.numero = numero;
     }
+    calcularTotal(montante) {
+        let total = 0;
+        for (let i = 0; i < montante.length; i++) {
+            total += montante[i].valor;
+        }
+        return total;
+    }
     depositar(valor) {
         let novoCredito = new Credito_1.default(valor, new Date());
         this.creditos.push(novoCredito);

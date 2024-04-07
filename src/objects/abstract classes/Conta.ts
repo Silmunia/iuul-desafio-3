@@ -3,12 +3,23 @@ import Credito from "../classes/Credito";
 import Debito from "../classes/Debito";
 
 abstract class Conta {
-    public readonly numero: number
+    public readonly numero: string
     protected creditos: Array<Credito> = []
     protected debitos: Array<Debito> = []
     
-    constructor(numero: number) {
+    constructor(numero: string) {
         this.numero = numero;
+    }
+
+    calcularTotal(montante: Array<Credito | Debito>): number {
+
+        let total: number = 0;
+
+        for (let i = 0; i < montante.length; i++) {
+            total += montante[i].valor;
+        }
+
+        return total;
     }
 
     depositar(valor: number) {
@@ -22,6 +33,8 @@ abstract class Conta {
 
         this.debitos.push(novoDebito);
     }
+
+    abstract calcularSaldo(): number;
 }
 
 export default Conta;
