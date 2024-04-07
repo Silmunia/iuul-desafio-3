@@ -16,5 +16,13 @@ class ContaPoupanca extends Conta_1.default {
         }
         return (creditoTotal - debitoTotal);
     }
+    fazerSaque(valor) {
+        if (this.calcularSaldo() - valor >= 0) {
+            this.sacar(valor);
+        }
+        else {
+            throw new Error(`Sacar ${valor} excede o crédito da conta ${this.numero}`);
+        }
+    }
 }
 exports.default = ContaPoupanca;
