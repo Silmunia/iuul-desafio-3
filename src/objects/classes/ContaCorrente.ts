@@ -23,8 +23,8 @@ class ContaCorrente extends Conta {
         contaDestino.depositar(valor);
     }
 
-    fazerSaque(valor: number)  {
-        if (this.calcularSaldo() - valor >= this.limite) {
+    fazerSaque(valor: number) {
+        if (this.calcularSaldo() - valor >= 0) {
             this.sacar(valor);
         } else {
             throw new Error(`Sacar ${valor} excede o limite de ${this.limite} da conta ${this.numero}`);

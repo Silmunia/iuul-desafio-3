@@ -19,7 +19,7 @@ class ContaCorrente extends Conta_1.default {
         contaDestino.depositar(valor);
     }
     fazerSaque(valor) {
-        if (this.calcularSaldo() - valor >= this.limite) {
+        if (this.calcularSaldo() - valor >= 0) {
             this.sacar(valor);
         }
         else {

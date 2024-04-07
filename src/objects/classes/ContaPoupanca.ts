@@ -10,7 +10,7 @@ class ContaPoupanca extends Conta {
         return (creditoTotal - debitoTotal);
     }
 
-    fazerSaque(valor: number): void {
+    fazerSaque(valor: number) {
         if (this.calcularSaldo() - valor >= 0) {
             this.sacar(valor);
         } else {
