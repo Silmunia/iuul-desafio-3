@@ -12,60 +12,46 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const ControllerState_1 = __importDefault(require("./ControllerState"));
 const InputHandler_1 = __importDefault(require("./InputHandler"));
-var ControllerState;
-(function (ControllerState) {
-    ControllerState[ControllerState["MAIN_MENU"] = 0] = "MAIN_MENU";
-    ControllerState[ControllerState["EMPLOYEE_MENU"] = 1] = "EMPLOYEE_MENU";
-    ControllerState[ControllerState["SHUTDOWN"] = 999] = "SHUTDOWN";
-    ControllerState[ControllerState["RESET"] = 1000] = "RESET";
-})(ControllerState || (ControllerState = {}));
+const MenuRenderer_1 = __importDefault(require("./MenuRenderer"));
 class Controller {
     constructor() {
-        this.currentState = ControllerState.MAIN_MENU;
+        this.currentState = ControllerState_1.default.MAIN_MENU;
         this.inputHandler = new InputHandler_1.default();
+        this.menuRenderer = new MenuRenderer_1.default();
     }
     startProgram() {
-        this.inputLoop();
+        this.runControlLoop();
     }
-    inputLoop() {
+    runControlLoop() {
         switch (this.currentState) {
-            case ControllerState.MAIN_MENU:
-            case ControllerState.EMPLOYEE_MENU:
+            case ControllerState_1.default.MAIN_MENU:
+            case ControllerState_1.default.EMPLOYEE_MENU:
                 this.displayMenu();
                 this.startUserInput();
                 break;
-            case ControllerState.SHUTDOWN:
+            case ControllerState_1.default.SHUTDOWN:
                 console.log(">>> Encerrando programa");
                 return;
-            case ControllerState.RESET:
+            case ControllerState_1.default.RESET:
                 console.log(">>> Voltando para o Menu principal");
-                this.currentState = ControllerState.MAIN_MENU;
-                this.inputLoop();
+                this.currentState = ControllerState_1.default.MAIN_MENU;
+                this.runControlLoop();
                 break;
             default:
                 console.log(">>> Comando desconhecido");
-                this.currentState = ControllerState.RESET;
-                this.inputLoop();
+                this.currentState = ControllerState_1.default.RESET;
+                this.runControlLoop();
         }
     }
     displayMenu() {
-        switch (this.currentState) {
-            case ControllerState.MAIN_MENU:
-                console.log("***Menu Principal***");
-                console.log(`${ControllerState.EMPLOYEE_MENU}. Gerenciar Funcionários`);
-                console.log(`${ControllerState.SHUTDOWN}. Encerrar`);
-                break;
-            case ControllerState.EMPLOYEE_MENU:
-                console.log("***Menu: Gerenciar Funcionários***");
-                console.log("1. Criar Funcionários");
-                console.log(`${ControllerState.MAIN_MENU}. Voltar para Menu Principal`);
-                console.log(`${ControllerState.SHUTDOWN}. Encerrar`);
-                break;
-            default:
-                console.log(">>> Menu desconhecido");
-                console.log(">>> Voltando para o Menu Principal");
-                this.currentState = ControllerState.MAIN_MENU;
+        let renderResult = this.menuRenderer.renderMenu(this.currentState);
+        if (!renderResult) {
+            console.log(">>> Menu desconhecido");
+            console.log(">>> Voltando para o Menu Principal");
+            this.currentState = ControllerState_1.default.MAIN_MENU;
+            this.runControlLoop();
         }
     }
     startUserInput() {
@@ -77,11 +63,11 @@ class Controller {
         if (typeof input === 'string') {
             let parsedInput = parseInt(input);
             this.currentState = parsedInput;
-            this.inputLoop();
+            this.runControlLoop();
         }
         else {
-            this.currentState = ControllerState.RESET;
-            this.inputLoop();
+            this.currentState = ControllerState_1.default.RESET;
+            this.runControlLoop();
         }
     }
 }

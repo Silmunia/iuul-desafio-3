@@ -1,9 +1,11 @@
 import ControllerState from "./ControllerState";
 import InputHandler from "./InputHandler";
+import MenuRenderer from "./MenuRenderer";
 
 class Controller {
     private currentState: ControllerState = ControllerState.MAIN_MENU;
     private inputHandler: InputHandler = new InputHandler();
+    private menuRenderer: MenuRenderer = new MenuRenderer();
     
     public startProgram() {
         this.runControlLoop();
@@ -32,23 +34,13 @@ class Controller {
     }
 
     private displayMenu() {
-        switch (this.currentState) {
-            case ControllerState.MAIN_MENU:
-                console.log("***Menu Principal***");
-                console.log(`${ControllerState.EMPLOYEE_MENU}. Gerenciar Funcionários`);
-                console.log(`${ControllerState.SHUTDOWN}. Encerrar`);
-                break;
-            case ControllerState.EMPLOYEE_MENU:
-                console.log("***Menu: Gerenciar Funcionários***");
-                console.log("1. Criar Funcionários");
-                console.log(`${ControllerState.MAIN_MENU}. Voltar para Menu Principal`);
-                console.log(`${ControllerState.SHUTDOWN}. Encerrar`);
-                break;
-            default:
-                console.log(">>> Menu desconhecido");
-                console.log(">>> Voltando para o Menu Principal");
-                this.currentState = ControllerState.MAIN_MENU;
-                this.runControlLoop();
+        let renderResult = this.menuRenderer.renderMenu(this.currentState);
+
+        if (!renderResult) {
+            console.log(">>> Menu desconhecido");
+            console.log(">>> Voltando para o Menu Principal");
+            this.currentState = ControllerState.MAIN_MENU;
+            this.runControlLoop();
         }
     }
 
