@@ -15,51 +15,65 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const InputHandler_1 = __importDefault(require("./InputHandler"));
 var ControllerState;
 (function (ControllerState) {
-    ControllerState[ControllerState["INITIAL"] = 0] = "INITIAL";
+    ControllerState[ControllerState["MAIN_MENU"] = 0] = "MAIN_MENU";
     ControllerState[ControllerState["EMPLOYEE_MENU"] = 1] = "EMPLOYEE_MENU";
     ControllerState[ControllerState["SHUTDOWN"] = 999] = "SHUTDOWN";
     ControllerState[ControllerState["RESET"] = 1000] = "RESET";
 })(ControllerState || (ControllerState = {}));
 class Controller {
     constructor() {
-        this.currentState = ControllerState.INITIAL;
+        this.currentState = ControllerState.MAIN_MENU;
         this.inputHandler = new InputHandler_1.default();
     }
     startProgram() {
         this.inputLoop();
     }
     inputLoop() {
+        switch (this.currentState) {
+            case ControllerState.MAIN_MENU:
+            case ControllerState.EMPLOYEE_MENU:
+                this.displayMenu();
+                this.startUserInput();
+                break;
+            case ControllerState.SHUTDOWN:
+                console.log(">>> Encerrando programa");
+                return;
+            case ControllerState.RESET:
+                console.log(">>> Voltando para o Menu principal");
+                this.currentState = ControllerState.MAIN_MENU;
+                this.inputLoop();
+                break;
+            default:
+                console.log(">>> Comando desconhecido");
+                this.currentState = ControllerState.RESET;
+                this.inputLoop();
+        }
+    }
+    displayMenu() {
+        switch (this.currentState) {
+            case ControllerState.MAIN_MENU:
+                console.log("***Menu Principal***");
+                console.log(`${ControllerState.EMPLOYEE_MENU}. Gerenciar Funcionários`);
+                console.log(`${ControllerState.SHUTDOWN}. Encerrar`);
+                break;
+            case ControllerState.EMPLOYEE_MENU:
+                console.log("***Menu: Gerenciar Funcionários***");
+                console.log("1. Criar Funcionários");
+                console.log(`${ControllerState.MAIN_MENU}. Voltar para Menu Principal`);
+                console.log(`${ControllerState.SHUTDOWN}. Encerrar`);
+                break;
+            default:
+                console.log(">>> Menu desconhecido");
+                console.log(">>> Voltando para o Menu Principal");
+                this.currentState = ControllerState.MAIN_MENU;
+        }
+    }
+    startUserInput() {
         return __awaiter(this, void 0, void 0, function* () {
-            switch (this.currentState) {
-                case ControllerState.INITIAL:
-                    console.log("***Menu Principal***");
-                    console.log("1. Gerenciar Funcionários");
-                    console.log("999. Encerrar");
-                    let input = yield this.inputHandler.getInput();
-                    this.processUserInput(input);
-                    break;
-                case ControllerState.EMPLOYEE_MENU:
-                    console.log("***Menu: Gerenciar Funcionários***");
-                    console.log("1. Criar Funcionários");
-                    console.log("888. Voltar para Menu Principal");
-                    console.log("999. Encerrar");
-                    break;
-                case ControllerState.SHUTDOWN:
-                    console.log(">>> Encerrando programa");
-                    return;
-                case ControllerState.RESET:
-                    console.log(">>> Voltando para o Menu principal");
-                    this.currentState = ControllerState.INITIAL;
-                    this.inputLoop();
-                    break;
-                default:
-                    console.log(">>> Comando desconhecido");
-                    this.currentState = ControllerState.RESET;
-                    this.inputLoop();
-            }
+            this.parseUserInput(yield this.inputHandler.getInput());
         });
     }
-    processUserInput(input) {
+    parseUserInput(input) {
         if (typeof input === 'string') {
             let parsedInput = parseInt(input);
             this.currentState = parsedInput;
