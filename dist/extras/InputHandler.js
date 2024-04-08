@@ -25,13 +25,13 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const readline = __importStar(require("readline"));
 class InputHandler {
-    getInput() {
+    getInput(message) {
         return new Promise(function (resolve) {
             let readingInterface = readline.createInterface({
                 input: process.stdin,
                 output: process.stdout
             });
-            readingInterface.question("Insira comando:", input => {
+            readingInterface.question(message, input => {
                 readingInterface.close();
                 resolve(input);
             });

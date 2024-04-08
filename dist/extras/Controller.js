@@ -29,7 +29,7 @@ class Controller {
             case ControllerState_1.default.MAIN_MENU:
             case ControllerState_1.default.EMPLOYEE_MENU:
                 this.displayMenu();
-                this.startUserInput();
+                this.startUserInput("Insira comando: ");
                 break;
             case ControllerState_1.default.SHUTDOWN:
                 console.log(">>> Encerrando programa");
@@ -54,9 +54,9 @@ class Controller {
             this.runControlLoop();
         }
     }
-    startUserInput() {
+    startUserInput(prompt) {
         return __awaiter(this, void 0, void 0, function* () {
-            this.parseUserInput(yield this.inputHandler.getInput());
+            this.parseUserInput(yield this.inputHandler.getInput(prompt));
         });
     }
     parseUserInput(input) {

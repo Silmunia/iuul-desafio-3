@@ -16,7 +16,7 @@ class Controller {
             case ControllerState.MAIN_MENU:
             case ControllerState.EMPLOYEE_MENU:
                 this.displayMenu();
-                this.startUserInput();
+                this.startUserInput("Insira comando: ");
                 break;
             case ControllerState.SHUTDOWN:
                 console.log(">>> Encerrando programa");
@@ -44,8 +44,8 @@ class Controller {
         }
     }
 
-    private async startUserInput() {
-        this.parseUserInput(await this.inputHandler.getInput());
+    private async startUserInput(prompt: string) {
+        this.parseUserInput(await this.inputHandler.getInput(prompt));
     }
 
     private parseUserInput(input: unknown) {
