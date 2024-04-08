@@ -4,17 +4,19 @@
   "description": "Package setup for iUUL's #3 challenge",
   "main": "",
   "scripts": {
-    "test": "npm run app-1 && npm run app-2 && npm run app-3 && npm run app-4 && npm run app-5", 
+    "test": "npm run app-1 && npm run app-2 && npm run app-3 && npm run app-4 && npm run app-5",
     "build": "tsc --project tsconfig.json",
     "app-1": "echo ***Testing App 1*** && node ./dist/apps/app-1.js",
     "app-2": "echo ***Testing App 2*** && node ./dist/apps/app-2.js",
     "app-3": "echo ***Testing App 3*** && node ./dist/apps/app-3.js",
     "app-4": "echo ***Testing App 4*** && node ./dist/apps/app-4.js",
-    "app-5": "echo ***Testing App 5*** && node ./dist/apps/app-5.js"
+    "app-5": "echo ***Testing App 5*** && node ./dist/apps/app-5.js",
+    "main": "node ./dist/extras/main.js"
   },
   "author": "Pedro Costa",
   "license": "ISC",
   "devDependencies": {
+    "@types/node": "^20.12.5",
     "typescript": "^5.4.4"
   }
 }
