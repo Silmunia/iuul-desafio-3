@@ -38,16 +38,8 @@ class Controller {
                     this.startUserInput("Insira comando: ");
                     break;
                 case ControllerState_1.default.EMPLOYEE_CREATION:
-                    console.log(">>> Iniciando criação de Funcionário");
-                    this.appData.addEmployee(yield this.objFactory.startEmployeeCreation());
-                    this.currentState = ControllerState_1.default.EMPLOYEE_MENU;
-                    this.runControlLoop();
-                    break;
                 case ControllerState_1.default.EMPLOYEE_LISTING:
-                    console.log(">>> Listando Funcionários");
-                    console.log(this.appData.listEmployees());
-                    this.currentState = ControllerState_1.default.EMPLOYEE_MENU;
-                    this.runControlLoop();
+                    yield this.runEmployeeCommands();
                     break;
                 case ControllerState_1.default.CLIENT_CREATION:
                     console.log(">>> Iniciando criação de Cliente");
@@ -84,6 +76,24 @@ class Controller {
             this.currentState = ControllerState_1.default.MAIN_MENU;
             this.runControlLoop();
         }
+    }
+    runEmployeeCommands() {
+        return __awaiter(this, void 0, void 0, function* () {
+            switch (this.currentState) {
+                case ControllerState_1.default.EMPLOYEE_CREATION:
+                    console.log(">>> Iniciando criação de Funcionário");
+                    this.appData.addEmployee(yield this.objFactory.startEmployeeCreation());
+                    this.currentState = ControllerState_1.default.EMPLOYEE_MENU;
+                    this.runControlLoop();
+                    break;
+                case ControllerState_1.default.EMPLOYEE_LISTING:
+                    console.log(">>> Listando Funcionários");
+                    console.log(this.appData.listEmployees());
+                    this.currentState = ControllerState_1.default.EMPLOYEE_MENU;
+                    this.runControlLoop();
+                    break;
+            }
+        });
     }
     startUserInput(prompt) {
         return __awaiter(this, void 0, void 0, function* () {

@@ -88,33 +88,6 @@ class FactoryRepository {
                     return this.startAccountCreation();
                 }
             }));
-            /*         return new Promise<Conta>(async (resolve) => {
-                        
-                        let newAccount: Conta;
-            
-                        let accountChoice: number = await this.inputHandler.getNumberInput("Escolha um tipo de conta para criar:\n1. Conta Corrente\n2. Conta Poupança\nInsira um comando: ");
-            
-                        if (accountChoice == 1) {
-                            console.log(">>> Criando Conta Corrente");
-            
-                            let number: string = await this.inputHandler.getStringInput("Insira o número da Conta Corrente: ");
-                            let limit: number = await this.inputHandler.getNumberInput("Insira o limite da Conta Corrente: ");
-            
-                            newAccount = new ContaCorrente(number, limit);
-                            resolve(newAccount);
-                        } else if (accountChoice == 2) {
-                            console.log(">>> Criando Conta Poupança");
-            
-                            let number: string = await this.inputHandler.getStringInput("Insira o número da Conta Poupança: ");
-            
-                            newAccount = new ContaPoupanca(number);
-            
-                            resolve(newAccount);
-                        } else {
-                            console.log(">>> Comando inválido");
-                            return await this.startAccountCreation();
-                        }
-                    }); */
         });
     }
 }
