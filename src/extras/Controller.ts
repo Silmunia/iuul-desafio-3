@@ -28,6 +28,12 @@ class Controller {
                 this.currentState = ControllerState.EMPLOYEE_MENU;
                 this.runControlLoop();
                 break;
+            case ControllerState.EMPLOYEE_LISTING:
+                console.log(">>> Listando Funcionários");
+                console.log(this.appData.listEmployees());
+                this.currentState = ControllerState.EMPLOYEE_MENU;
+                this.runControlLoop();
+                break;
             case ControllerState.SHUTDOWN:
                 console.log(">>> Encerrando programa");
                 return;
