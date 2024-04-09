@@ -20,14 +20,16 @@ class FactoryRepository {
     }
     startEmployeeCreation() {
         return __awaiter(this, void 0, void 0, function* () {
-            let employeeName = yield this.inputHandler.getStringInput("Insira o nome do Funcionário: ");
-            let roleName = yield this.inputHandler.getStringInput("Insira o cargo do Funcionário: ");
-            let cpf = yield this.inputHandler.getStringInput("Insira o CPF do Funcionário: ");
-            let phone = yield this.inputHandler.getStringInput("Insira o telefone do Funcionário: ");
-            let salary = yield this.inputHandler.getNumberInput("Insira o salário do Funcionário: ");
-            let newEmployee = new Funcionario_1.default(roleName, cpf, employeeName, phone, salary);
-            console.log(">>> Funcionário criado com sucesso");
-            console.log(newEmployee);
+            return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
+                let employeeName = yield this.inputHandler.getStringInput("Insira o nome do Funcionário: ");
+                let roleName = yield this.inputHandler.getStringInput("Insira o cargo do Funcionário: ");
+                let cpf = yield this.inputHandler.getStringInput("Insira o CPF do Funcionário: ");
+                let phone = yield this.inputHandler.getStringInput("Insira o telefone do Funcionário: ");
+                let salary = yield this.inputHandler.getNumberInput("Insira o salário do Funcionário: ");
+                let newEmployee = new Funcionario_1.default(roleName, cpf, employeeName, phone, salary);
+                console.log(">>> Funcionário criado com sucesso");
+                resolve(newEmployee);
+            }));
         });
     }
 }

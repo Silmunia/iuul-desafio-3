@@ -1,4 +1,5 @@
 import ControllerState from "./ControllerState";
+import DataRepository from "./DataRepository";
 import FactoryRepository from "./FactoryRepository";
 import InputHandler from "./InputHandler";
 import MenuRenderer from "./MenuRenderer";
@@ -8,6 +9,7 @@ class Controller {
     private inputHandler: InputHandler = new InputHandler();
     private menuRenderer: MenuRenderer = new MenuRenderer();
     private objFactory: FactoryRepository = new FactoryRepository();
+    private appData: DataRepository = new DataRepository();
     
     public startProgram() {
         this.runControlLoop();
@@ -22,7 +24,7 @@ class Controller {
                 break;
             case ControllerState.EMPLOYEE_CREATION:
                 console.log(">>> Iniciando criação de Funcionário");
-                await this.objFactory.startEmployeeCreation();
+                this.appData.addEmployee(await this.objFactory.startEmployeeCreation());
                 this.currentState = ControllerState.EMPLOYEE_MENU;
                 this.runControlLoop();
                 break;

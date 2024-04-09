@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const ControllerState_1 = __importDefault(require("./ControllerState"));
+const DataRepository_1 = __importDefault(require("./DataRepository"));
 const FactoryRepository_1 = __importDefault(require("./FactoryRepository"));
 const InputHandler_1 = __importDefault(require("./InputHandler"));
 const MenuRenderer_1 = __importDefault(require("./MenuRenderer"));
@@ -22,6 +23,7 @@ class Controller {
         this.inputHandler = new InputHandler_1.default();
         this.menuRenderer = new MenuRenderer_1.default();
         this.objFactory = new FactoryRepository_1.default();
+        this.appData = new DataRepository_1.default();
     }
     startProgram() {
         this.runControlLoop();
@@ -36,7 +38,7 @@ class Controller {
                     break;
                 case ControllerState_1.default.EMPLOYEE_CREATION:
                     console.log(">>> Iniciando criação de Funcionário");
-                    yield this.objFactory.startEmployeeCreation();
+                    this.appData.addEmployee(yield this.objFactory.startEmployeeCreation());
                     this.currentState = ControllerState_1.default.EMPLOYEE_MENU;
                     this.runControlLoop();
                     break;
