@@ -1,5 +1,5 @@
-import Controller from "./Controller";
+import MainController from "./MainController";
 
-let mainController = new Controller();
+let mainController = new MainController();
 
 mainController.startProgram();

@@ -43,7 +43,6 @@ class MainController {
                     break;
                 case ControllerState_1.default.CLIENT_CREATION:
                 case ControllerState_1.default.CLIENT_LISTING:
-                case ControllerState_1.default.CLIENT_SELECTION:
                     yield this.runClientCommands();
                     break;
                 case ControllerState_1.default.SHUTDOWN:
@@ -112,18 +111,6 @@ class MainController {
                     console.log(this.appData.listClients());
                     this.currentState = ControllerState_1.default.CLIENT_MENU;
                     this.runControlLoop();
-                    break;
-                case ControllerState_1.default.CLIENT_SELECTION:
-                    let storedClients = this.appData.getClients();
-                    console.log(">>> Listando Clientes");
-                    console.log(this.appData.listClients());
-                    if (storedClients.length === 0) {
-                        let selectedIndex = yield this.inputHandler.getNumberInput("Selecione um cliente: ");
-                    }
-                    else {
-                        this.currentState = ControllerState_1.default.CLIENT_MENU;
-                        this.runControlLoop();
-                    }
                     break;
                 default:
                     console.log(">>> Comando desconhecido");

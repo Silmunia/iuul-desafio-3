@@ -4,7 +4,7 @@ import FactoryRepository from "./FactoryRepository";
 import InputHandler from "./InputHandler";
 import MenuRenderer from "./MenuRenderer";
 
-class Controller {
+class MainController {
     private currentState: ControllerState = ControllerState.MAIN_MENU;
     private inputHandler: InputHandler = new InputHandler();
     private menuRenderer: MenuRenderer = new MenuRenderer();
@@ -21,7 +21,7 @@ class Controller {
             case ControllerState.EMPLOYEE_MENU:
             case ControllerState.CLIENT_MENU:
                 this.displayMenu();
-                this.startUserInput("Insira comando: ");
+                this.startCommandInput("Insira comando: ");
                 break;
             case ControllerState.EMPLOYEE_CREATION:
             case ControllerState.EMPLOYEE_LISTING:
@@ -44,6 +44,11 @@ class Controller {
                 this.currentState = ControllerState.RESET;
                 this.runControlLoop();
         }
+    }
+
+    private async startCommandInput(prompt: string) {
+        this.currentState = await this.inputHandler.getNumberInput(prompt);
+        this.runControlLoop();
     }
 
     private displayMenu() {
@@ -81,11 +86,11 @@ class Controller {
     private async runClientCommands() {
         switch(this.currentState) {
             case ControllerState.CLIENT_CREATION:
-            console.log(">>> Iniciando criação de Cliente");
-            this.appData.addClient(await this.objFactory.startClientCreation());
-            this.currentState = ControllerState.CLIENT_MENU;
-            this.runControlLoop();
-            break;
+                console.log(">>> Iniciando criação de Cliente");
+                this.appData.addClient(await this.objFactory.startClientCreation());
+                this.currentState = ControllerState.CLIENT_MENU;
+                this.runControlLoop();
+                break;
             case ControllerState.CLIENT_LISTING:
                 console.log(">>> Listando Clientes");
                 console.log(this.appData.listClients());
@@ -98,23 +103,6 @@ class Controller {
                 this.runControlLoop();
         }
     }
-
-    private async startUserInput(prompt: string) {
-        let input = await this.inputHandler.getStringInput(prompt);
-        this.parseUserInput(input);
-    }
-
-    private parseUserInput(input: unknown) {
-        if (typeof input === 'string') {
-            let parsedInput: number = parseInt(input);
-            
-            this.currentState = parsedInput;
-            this.runControlLoop();
-        } else {
-            this.currentState = ControllerState.RESET;
-            this.runControlLoop();
-        }
-    }
 }
 
-export default Controller;
+export default MainController;
