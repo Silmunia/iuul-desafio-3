@@ -14,7 +14,7 @@ class MenuRenderer {
                 break;
             case ControllerState_1.default.EMPLOYEE_MENU:
                 console.log("***Menu: Gerenciar Funcionários***");
-                console.log("1. Criar Funcionários");
+                console.log(`${ControllerState_1.default.EMPLOYEE_CREATION}. Criar Funcionário`);
                 console.log(`${ControllerState_1.default.MAIN_MENU}. Voltar para Menu Principal`);
                 console.log(`${ControllerState_1.default.SHUTDOWN}. Encerrar`);
                 break;

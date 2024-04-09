@@ -1,4 +1,5 @@
 import ControllerState from "./ControllerState";
+import FactoryRepository from "./FactoryRepository";
 import InputHandler from "./InputHandler";
 import MenuRenderer from "./MenuRenderer";
 
@@ -6,17 +7,24 @@ class Controller {
     private currentState: ControllerState = ControllerState.MAIN_MENU;
     private inputHandler: InputHandler = new InputHandler();
     private menuRenderer: MenuRenderer = new MenuRenderer();
+    private objFactory: FactoryRepository = new FactoryRepository();
     
     public startProgram() {
         this.runControlLoop();
     }
 
-    private runControlLoop() {
+    private async runControlLoop() {
         switch (this.currentState) {
             case ControllerState.MAIN_MENU:
             case ControllerState.EMPLOYEE_MENU:
                 this.displayMenu();
                 this.startUserInput("Insira comando: ");
+                break;
+            case ControllerState.EMPLOYEE_CREATION:
+                console.log(">>> Iniciando criação de Funcionário");
+                await this.objFactory.startEmployeeCreation();
+                this.currentState = ControllerState.EMPLOYEE_MENU;
+                this.runControlLoop();
                 break;
             case ControllerState.SHUTDOWN:
                 console.log(">>> Encerrando programa");
@@ -45,7 +53,8 @@ class Controller {
     }
 
     private async startUserInput(prompt: string) {
-        this.parseUserInput(await this.inputHandler.getInput(prompt));
+        let input = await this.inputHandler.getStringInput(prompt);
+        this.parseUserInput(input);
     }
 
     private parseUserInput(input: unknown) {
@@ -53,7 +62,6 @@ class Controller {
             let parsedInput: number = parseInt(input);
             
             this.currentState = parsedInput;
-
             this.runControlLoop();
         } else {
             this.currentState = ControllerState.RESET;

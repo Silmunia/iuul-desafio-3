@@ -22,9 +22,47 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const readline = __importStar(require("readline"));
 class InputHandler {
+    getStringInput(prompt) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
+                let input = yield this.getInput(prompt);
+                if (typeof input === 'string') {
+                    resolve(input);
+                }
+                else {
+                    console.log(">>> Valor inválido");
+                    return this.getStringInput(prompt);
+                }
+            }));
+        });
+    }
+    getNumberInput(prompt) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
+                let input = yield this.getInput(prompt);
+                if (typeof input === 'string') {
+                    let parsed = parseInt(input);
+                    resolve(parsed);
+                }
+                else {
+                    console.log(">>> Valor inválido");
+                    return this.getNumberInput(prompt);
+                }
+            }));
+        });
+    }
     getInput(message) {
         return new Promise(function (resolve) {
             let readingInterface = readline.createInterface({

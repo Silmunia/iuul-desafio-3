@@ -11,7 +11,7 @@
     "app-3": "echo ***Testing App 3*** && node ./dist/apps/app-3.js",
     "app-4": "echo ***Testing App 4*** && node ./dist/apps/app-4.js",
     "app-5": "echo ***Testing App 5*** && node ./dist/apps/app-5.js",
-    "main": "node ./dist/extras/main.js"
+    "main": "tsc --project tsconfig.json && node ./dist/extras/main.js"
   },
   "author": "Pedro Costa",
   "license": "ISC",
