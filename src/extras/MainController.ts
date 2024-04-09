@@ -1,6 +1,5 @@
 import ControllerState from "./ControllerState";
-import DataRepository from "./DataRepository";
-import FactoryRepository from "./FactoryRepository";
+import DataManager from "./DataManager";
 import InputHandler from "./InputHandler";
 import MenuRenderer from "./MenuRenderer";
 
@@ -8,8 +7,7 @@ class MainController {
     private currentState: ControllerState = ControllerState.MAIN_MENU;
     private inputHandler: InputHandler = new InputHandler();
     private menuRenderer: MenuRenderer = new MenuRenderer();
-    private objFactory: FactoryRepository = new FactoryRepository();
-    private appData: DataRepository = new DataRepository();
+    private dataManager: DataManager = new DataManager();
     
     public startProgram() {
         this.runControlLoop();
@@ -65,14 +63,12 @@ class MainController {
     private async runEmployeeCommands() {
         switch (this.currentState) {
             case ControllerState.EMPLOYEE_CREATION:
-                console.log(">>> Iniciando criação de Funcionário");
-                this.appData.addEmployee(await this.objFactory.startEmployeeCreation());
+                await this.dataManager.addEmployee();
                 this.currentState = ControllerState.EMPLOYEE_MENU;
                 this.runControlLoop();
                 break;
             case ControllerState.EMPLOYEE_LISTING:
-                console.log(">>> Listando Funcionários");
-                console.log(this.appData.listEmployees());
+                this.dataManager.listEmployees();
                 this.currentState = ControllerState.EMPLOYEE_MENU;
                 this.runControlLoop();
                 break;
@@ -86,14 +82,12 @@ class MainController {
     private async runClientCommands() {
         switch(this.currentState) {
             case ControllerState.CLIENT_CREATION:
-                console.log(">>> Iniciando criação de Cliente");
-                this.appData.addClient(await this.objFactory.startClientCreation());
+                await this.dataManager.addClient();
                 this.currentState = ControllerState.CLIENT_MENU;
                 this.runControlLoop();
                 break;
             case ControllerState.CLIENT_LISTING:
-                console.log(">>> Listando Clientes");
-                console.log(this.appData.listClients());
+                this.dataManager.listClients();
                 this.currentState = ControllerState.CLIENT_MENU;
                 this.runControlLoop();
                 break;
