@@ -33,6 +33,7 @@ class Controller {
             switch (this.currentState) {
                 case ControllerState_1.default.MAIN_MENU:
                 case ControllerState_1.default.EMPLOYEE_MENU:
+                case ControllerState_1.default.CLIENT_MENU:
                     this.displayMenu();
                     this.startUserInput("Insira comando: ");
                     break;
@@ -46,6 +47,18 @@ class Controller {
                     console.log(">>> Listando Funcionários");
                     console.log(this.appData.listEmployees());
                     this.currentState = ControllerState_1.default.EMPLOYEE_MENU;
+                    this.runControlLoop();
+                    break;
+                case ControllerState_1.default.CLIENT_CREATION:
+                    console.log(">>> Iniciando criação de Cliente");
+                    this.appData.addClient(yield this.objFactory.startClientCreation());
+                    this.currentState = ControllerState_1.default.CLIENT_MENU;
+                    this.runControlLoop();
+                    break;
+                case ControllerState_1.default.CLIENT_LISTING:
+                    console.log(">>> Listando Clientes");
+                    console.log(this.appData.listClients());
+                    this.currentState = ControllerState_1.default.CLIENT_MENU;
                     this.runControlLoop();
                     break;
                 case ControllerState_1.default.SHUTDOWN:

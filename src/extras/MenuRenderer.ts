@@ -6,12 +6,20 @@ class MenuRenderer {
             case ControllerState.MAIN_MENU:
                 console.log("***Menu Principal***");
                 console.log(`${ControllerState.EMPLOYEE_MENU}. Gerenciar Funcionários`);
+                console.log(`${ControllerState.CLIENT_MENU}. Gerenciar Clientes`);
                 console.log(`${ControllerState.SHUTDOWN}. Encerrar`);
                 break;
             case ControllerState.EMPLOYEE_MENU:
                 console.log("***Menu: Gerenciar Funcionários***");
                 console.log(`${ControllerState.EMPLOYEE_CREATION}. Criar Funcionário`);
                 console.log(`${ControllerState.EMPLOYEE_LISTING}. Listar Funcionários`);
+                console.log(`${ControllerState.MAIN_MENU}. Voltar para Menu Principal`);
+                console.log(`${ControllerState.SHUTDOWN}. Encerrar`);
+                break;
+            case ControllerState.CLIENT_MENU:
+                console.log("***Menu: Gerenciar Clientes***");
+                console.log(`${ControllerState.CLIENT_CREATION}. Criar Cliente`);
+                console.log(`${ControllerState.CLIENT_LISTING}. Listar Clientes`);
                 console.log(`${ControllerState.MAIN_MENU}. Voltar para Menu Principal`);
                 console.log(`${ControllerState.SHUTDOWN}. Encerrar`);
                 break;

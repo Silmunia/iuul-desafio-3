@@ -2,11 +2,9 @@ import * as readline from 'readline';
 
 class InputHandler {
     public async getStringInput(prompt: string): Promise<string> {
-        return new Promise<string>(async (resolve) => {
-            let input = await this.getInput(prompt);
-
+        return this.getInput(prompt).then((input) => {
             if (typeof input === 'string') {
-                resolve(input);
+                return Promise.resolve(input);
             } else {
                 console.log(">>> Valor inválido");
                 return this.getStringInput(prompt);
@@ -15,13 +13,11 @@ class InputHandler {
     }
 
     public async getNumberInput(prompt: string): Promise<number> {
-        return new Promise<number>(async (resolve) => {
-            let input = await this.getInput(prompt);
-
+        return this.getInput(prompt).then((input) => {
             if (typeof input === 'string') {
                 let parsed = parseInt(input);
 
-                resolve(parsed);
+                return Promise.resolve(parsed);
             } else {
                 console.log(">>> Valor inválido");
                 return this.getNumberInput(prompt);
@@ -29,13 +25,33 @@ class InputHandler {
         });
     }
 
+    public async getBooleanInput(prompt: string): Promise<boolean> {
+        return this.getInput(prompt).then((input) => {
+            if (typeof input === 'string') {
+                let lowerCaseInput = input.toLowerCase();
+
+                if (lowerCaseInput.startsWith('s')) {
+                    return Promise.resolve(true);
+                } else if (lowerCaseInput.startsWith('n')) {
+                    return Promise.resolve(false);
+                } else {
+                    console.log(">>> Valor inválido");
+                    return this.getBooleanInput(prompt);
+                }
+            } else {
+                console.log(">>> Valor inválido");
+                return this.getBooleanInput(prompt);
+            }
+        });
+    }
+
     private getInput(message: string) {
+        let readingInterface = readline.createInterface({
+            input: process.stdin,
+            output: process.stdout
+        });
+
         return new Promise(function(resolve) {
-            let readingInterface = readline.createInterface({
-                input: process.stdin,
-                output: process.stdout
-            });
-    
             readingInterface.question(message, input => {
                 readingInterface.close();
                 resolve(input);
