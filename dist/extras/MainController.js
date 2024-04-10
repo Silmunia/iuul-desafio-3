@@ -34,6 +34,7 @@ class MainController {
                 case ControllerState_1.default.EMPLOYEE_MENU:
                 case ControllerState_1.default.CLIENT_MENU:
                 case ControllerState_1.default.EMPLOYEE_EDITING:
+                case ControllerState_1.default.EMPLOYEE_ROLES_MENU:
                     this.displayMenu();
                     this.startCommandInput("Insira comando: ");
                     break;
@@ -113,6 +114,8 @@ class MainController {
                         return ControllerState_1.default.EMPLOYEE_EDIT_SALARY;
                     case ControllerState_1.default.EMPLOYEE_EDIT_CPF:
                         return ControllerState_1.default.EMPLOYEE_EDIT_CPF;
+                    case ControllerState_1.default.EMPLOYEE_ROLES_MENU:
+                        return ControllerState_1.default.EMPLOYEE_ROLES_MENU;
                     case ControllerState_1.default.MAIN_MENU:
                         return ControllerState_1.default.MAIN_MENU;
                     case ControllerState_1.default.SHUTDOWN:
@@ -127,6 +130,18 @@ class MainController {
                         return ControllerState_1.default.CLIENT_CREATION;
                     case ControllerState_1.default.CLIENT_LISTING:
                         return ControllerState_1.default.CLIENT_LISTING;
+                    case ControllerState_1.default.MAIN_MENU:
+                        return ControllerState_1.default.MAIN_MENU;
+                    case ControllerState_1.default.SHUTDOWN:
+                        return ControllerState_1.default.SHUTDOWN;
+                    default:
+                        console.log(">>> Comando desconhecido");
+                        return ControllerState_1.default.RESET;
+                }
+            case ControllerState_1.default.EMPLOYEE_ROLES_MENU:
+                switch (input) {
+                    case ControllerState_1.default.EMPLOYEE_EDITING:
+                        return ControllerState_1.default.EMPLOYEE_EDITING;
                     case ControllerState_1.default.MAIN_MENU:
                         return ControllerState_1.default.MAIN_MENU;
                     case ControllerState_1.default.SHUTDOWN:

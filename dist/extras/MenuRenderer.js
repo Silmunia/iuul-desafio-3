@@ -27,6 +27,15 @@ class MenuRenderer {
                 console.log(`${ControllerState_1.default.EMPLOYEE_EDIT_PHONE}. Editar Telefone`);
                 console.log(`${ControllerState_1.default.EMPLOYEE_EDIT_SALARY}. Editar Salário`);
                 console.log(`${ControllerState_1.default.EMPLOYEE_EDIT_CPF}. Editar CPF`);
+                console.log(`${ControllerState_1.default.EMPLOYEE_ROLES_MENU}. Editar Cargos`);
+                console.log(`${ControllerState_1.default.MAIN_MENU}. Voltar para Menu Principal`);
+                console.log(`${ControllerState_1.default.SHUTDOWN}. Encerrar`);
+                break;
+            case ControllerState_1.default.EMPLOYEE_ROLES_MENU:
+                console.log("\n***Menu: Editar Cargos do Funcionário***");
+                console.log("X. Adicionar Cargo ao Funcionário");
+                console.log("X. Remover Cargo do Funcionário");
+                console.log(`${ControllerState_1.default.EMPLOYEE_EDITING}. Voltar para Menu de Editar Funcionário`);
                 console.log(`${ControllerState_1.default.MAIN_MENU}. Voltar para Menu Principal`);
                 console.log(`${ControllerState_1.default.SHUTDOWN}. Encerrar`);
                 break;

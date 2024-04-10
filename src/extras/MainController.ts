@@ -20,6 +20,7 @@ class MainController {
             case ControllerState.EMPLOYEE_MENU:
             case ControllerState.CLIENT_MENU:
             case ControllerState.EMPLOYEE_EDITING:
+            case ControllerState.EMPLOYEE_ROLES_MENU:
                 this.displayMenu();
                 this.startCommandInput("Insira comando: ");
                 break;
@@ -98,6 +99,8 @@ class MainController {
                         return ControllerState.EMPLOYEE_EDIT_SALARY;
                     case ControllerState.EMPLOYEE_EDIT_CPF:
                         return ControllerState.EMPLOYEE_EDIT_CPF;
+                    case ControllerState.EMPLOYEE_ROLES_MENU:
+                        return ControllerState.EMPLOYEE_ROLES_MENU;
                     case ControllerState.MAIN_MENU:
                         return ControllerState.MAIN_MENU;
                     case ControllerState.SHUTDOWN:
@@ -112,6 +115,18 @@ class MainController {
                         return ControllerState.CLIENT_CREATION;
                     case ControllerState.CLIENT_LISTING:
                         return ControllerState.CLIENT_LISTING;
+                    case ControllerState.MAIN_MENU:
+                        return ControllerState.MAIN_MENU;
+                    case ControllerState.SHUTDOWN:
+                        return ControllerState.SHUTDOWN;
+                    default:
+                        console.log(">>> Comando desconhecido");
+                        return ControllerState.RESET;
+                }
+            case ControllerState.EMPLOYEE_ROLES_MENU:
+                switch (input) {
+                    case ControllerState.EMPLOYEE_EDITING:
+                        return ControllerState.EMPLOYEE_EDITING;
                     case ControllerState.MAIN_MENU:
                         return ControllerState.MAIN_MENU;
                     case ControllerState.SHUTDOWN:
