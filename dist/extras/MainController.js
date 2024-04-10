@@ -44,6 +44,7 @@ class MainController {
                 case ControllerState_1.default.EMPLOYEE_EDIT_NAME:
                 case ControllerState_1.default.EMPLOYEE_EDIT_PHONE:
                 case ControllerState_1.default.EMPLOYEE_EDIT_SALARY:
+                case ControllerState_1.default.EMPLOYEE_EDIT_CPF:
                     yield this.runEmployeeCommands();
                     break;
                 case ControllerState_1.default.CLIENT_CREATION:
@@ -110,6 +111,8 @@ class MainController {
                         return ControllerState_1.default.EMPLOYEE_EDIT_PHONE;
                     case ControllerState_1.default.EMPLOYEE_EDIT_SALARY:
                         return ControllerState_1.default.EMPLOYEE_EDIT_SALARY;
+                    case ControllerState_1.default.EMPLOYEE_EDIT_CPF:
+                        return ControllerState_1.default.EMPLOYEE_EDIT_CPF;
                     case ControllerState_1.default.MAIN_MENU:
                         return ControllerState_1.default.MAIN_MENU;
                     case ControllerState_1.default.SHUTDOWN:
@@ -212,10 +215,25 @@ class MainController {
                 case ControllerState_1.default.EMPLOYEE_EDIT_SALARY:
                     let editEmployeeSalary = this.dataManager.getEditedEmployee();
                     if (editEmployeeSalary instanceof Funcionario_1.default) {
-                        console.log(`Telefone atual do Funcionário: ${editEmployeeSalary.salario}`);
-                        let newSalary = yield this.inputHandler.getNumberInput("Insira o novo Telefone do Funcionário: ");
+                        console.log(`Salário atual do Funcionário: ${editEmployeeSalary.salario}`);
+                        let newSalary = yield this.inputHandler.getNumberInput("Insira o novo Salário do Funcionário: ");
                         editEmployeeSalary.salario = newSalary;
                         console.log(">>> Salário atualizado com sucesso");
+                        this.currentState = ControllerState_1.default.EMPLOYEE_EDITING;
+                    }
+                    else {
+                        console.log(">>> Não foi possível encontrar o Funcionário");
+                        this.currentState = ControllerState_1.default.RESET;
+                    }
+                    this.runControlLoop();
+                    break;
+                case ControllerState_1.default.EMPLOYEE_EDIT_CPF:
+                    let editEmployeeCPF = this.dataManager.getEditedEmployee();
+                    if (editEmployeeCPF instanceof Funcionario_1.default) {
+                        console.log(`CPF atual do Funcionário: ${editEmployeeCPF.cpf}`);
+                        let newCPF = yield this.inputHandler.getStringInput("Insira o novo CPF do Funcionário: ");
+                        editEmployeeCPF.cpf = newCPF;
+                        console.log(">>> CPF atualizado com sucesso");
                         this.currentState = ControllerState_1.default.EMPLOYEE_EDITING;
                     }
                     else {
