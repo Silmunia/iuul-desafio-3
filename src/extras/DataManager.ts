@@ -56,6 +56,21 @@ class DataManager {
         return resultString;
     }
 
+    public removeEditedEmployeeRole(roleName: string): boolean {
+        if (this.editedEmployee instanceof Funcionario) {
+            for (let i = 0; i < this.editedEmployee.cargos.length; i++) {
+                if (this.editedEmployee.cargos[i].nome === roleName) {
+                    this.editedEmployee.cargos.splice(i, 1);
+                    return true;
+                }
+            }
+
+            return false;
+        } else {
+            return false;
+        }
+    }
+
     public async addClient() {
         console.log(">>> Iniciando criação de Cliente");
         this.dataRepository.addClient(

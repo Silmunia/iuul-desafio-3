@@ -53,11 +53,25 @@ class DataManager {
             for (let i = 0; i < employee.cargos.length; i++) {
                 resultString += employee.cargos[i].nome;
                 if (i != employee.cargos.length - 1) {
-                    resultString += " , ";
+                    resultString += ", ";
                 }
             }
         }
         return resultString;
+    }
+    removeEditedEmployeeRole(roleName) {
+        if (this.editedEmployee instanceof Funcionario_1.default) {
+            for (let i = 0; i < this.editedEmployee.cargos.length; i++) {
+                if (this.editedEmployee.cargos[i].nome === roleName) {
+                    this.editedEmployee.cargos.splice(i, 1);
+                    return true;
+                }
+            }
+            return false;
+        }
+        else {
+            return false;
+        }
     }
     addClient() {
         return __awaiter(this, void 0, void 0, function* () {

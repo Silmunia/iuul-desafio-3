@@ -34,6 +34,7 @@ class MainController {
             case ControllerState.EMPLOYEE_EDIT_SALARY:
             case ControllerState.EMPLOYEE_EDIT_CPF:
             case ControllerState.EMPLOYEE_ROLES_CREATION:
+            case ControllerState.EMPLOYEE_ROLES_REMOVAL:
                 await this.runEmployeeCommands()
                 break;
             case ControllerState.CLIENT_CREATION:
@@ -129,6 +130,8 @@ class MainController {
                 switch (input) {
                     case ControllerState.EMPLOYEE_ROLES_CREATION:
                         return ControllerState.EMPLOYEE_ROLES_CREATION;
+                    case ControllerState.EMPLOYEE_ROLES_REMOVAL:
+                        return ControllerState.EMPLOYEE_ROLES_REMOVAL;
                     case ControllerState.EMPLOYEE_EDITING:
                         return ControllerState.EMPLOYEE_EDITING;
                     case ControllerState.MAIN_MENU:
@@ -250,7 +253,7 @@ class MainController {
             case ControllerState.EMPLOYEE_ROLES_CREATION:
                 console.log(">>> Iniciando adição de novo Cargo");
                 let addRoleEmployee = this.dataManager.getEditedEmployee();
-                let employeeRoles = this.dataManager.listEditedEmployeeRoles(addRoleEmployee)
+                let employeeRoles = this.dataManager.listEditedEmployeeRoles(addRoleEmployee);
                 if (employeeRoles === "") {
                     console.log(">>> ERRO FATAL: O Funcionário não possui nenhum Cargo");
                     console.log(">>> O programa será encerrado");
@@ -264,6 +267,37 @@ class MainController {
                     console.log(">>> Cargo adicionado com sucesso")
                     this.currentState = ControllerState.EMPLOYEE_ROLES_MENU;
                     this.runControlLoop();
+                }
+                break;
+            case ControllerState.EMPLOYEE_ROLES_REMOVAL:
+                let removeRoleEmployee = this.dataManager.getEditedEmployee();
+                if (removeRoleEmployee?.cargos.length == 1) {
+                    console.log(">>> O Funcionário possui apenas um Cargo, portanto não é possível remover Cargos");
+                    console.log(">>> Voltando para o Menu de Editar Cargos do Funcionário");
+                    this.currentState = ControllerState.EMPLOYEE_ROLES_MENU;
+                    this.runControlLoop();
+                } else {
+                    let employeeRoles = this.dataManager.listEditedEmployeeRoles(removeRoleEmployee);
+                    if (employeeRoles === "") {
+                        console.log(">>> ERRO FATAL: O Funcionário não possui nenhum Cargo");
+                        console.log(">>> O programa será encerrado");
+                        this.currentState = ControllerState.SHUTDOWN;
+                        this.runControlLoop();
+                    } else {
+                        console.log(`O Funcionário possui os seguintes Cargos: ${employeeRoles}`);
+                        let removedRoleName = await this.inputHandler.getStringInput("Insira o nome do Cargo a remover: ");
+
+                        let removedRole = this.dataManager.removeEditedEmployeeRole(removedRoleName);
+
+                        if (removedRole) {
+                            console.log(">>> Cargo removido com sucesso");
+                            this.currentState = ControllerState.EMPLOYEE_ROLES_MENU;
+                        } else {
+                            console.log(">>> O Funcionário não possui o Cargo escolhido");
+                        }
+
+                        this.runControlLoop();
+                    }
                 }
                 break;
             default:

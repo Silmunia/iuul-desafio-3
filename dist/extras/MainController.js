@@ -48,6 +48,7 @@ class MainController {
                 case ControllerState_1.default.EMPLOYEE_EDIT_SALARY:
                 case ControllerState_1.default.EMPLOYEE_EDIT_CPF:
                 case ControllerState_1.default.EMPLOYEE_ROLES_CREATION:
+                case ControllerState_1.default.EMPLOYEE_ROLES_REMOVAL:
                     yield this.runEmployeeCommands();
                     break;
                 case ControllerState_1.default.CLIENT_CREATION:
@@ -144,6 +145,8 @@ class MainController {
                 switch (input) {
                     case ControllerState_1.default.EMPLOYEE_ROLES_CREATION:
                         return ControllerState_1.default.EMPLOYEE_ROLES_CREATION;
+                    case ControllerState_1.default.EMPLOYEE_ROLES_REMOVAL:
+                        return ControllerState_1.default.EMPLOYEE_ROLES_REMOVAL;
                     case ControllerState_1.default.EMPLOYEE_EDITING:
                         return ControllerState_1.default.EMPLOYEE_EDITING;
                     case ControllerState_1.default.MAIN_MENU:
@@ -267,6 +270,7 @@ class MainController {
                     this.runControlLoop();
                     break;
                 case ControllerState_1.default.EMPLOYEE_ROLES_CREATION:
+                    console.log(">>> Iniciando adição de novo Cargo");
                     let addRoleEmployee = this.dataManager.getEditedEmployee();
                     let employeeRoles = this.dataManager.listEditedEmployeeRoles(addRoleEmployee);
                     if (employeeRoles === "") {
@@ -280,8 +284,40 @@ class MainController {
                         let newRoleName = yield this.inputHandler.getStringInput("Insira o nome do Cargo a adicionar: ");
                         let newRole = new Cargo_1.default(newRoleName);
                         addRoleEmployee === null || addRoleEmployee === void 0 ? void 0 : addRoleEmployee.cargos.push(newRole);
+                        console.log(">>> Cargo adicionado com sucesso");
                         this.currentState = ControllerState_1.default.EMPLOYEE_ROLES_MENU;
                         this.runControlLoop();
+                    }
+                    break;
+                case ControllerState_1.default.EMPLOYEE_ROLES_REMOVAL:
+                    let removeRoleEmployee = this.dataManager.getEditedEmployee();
+                    if ((removeRoleEmployee === null || removeRoleEmployee === void 0 ? void 0 : removeRoleEmployee.cargos.length) == 1) {
+                        console.log(">>> O Funcionário possui apenas um Cargo, portanto não é possível remover Cargos");
+                        console.log(">>> Voltando para o Menu de Editar Cargos do Funcionário");
+                        this.currentState = ControllerState_1.default.EMPLOYEE_ROLES_MENU;
+                        this.runControlLoop();
+                    }
+                    else {
+                        let employeeRoles = this.dataManager.listEditedEmployeeRoles(removeRoleEmployee);
+                        if (employeeRoles === "") {
+                            console.log(">>> ERRO FATAL: O Funcionário não possui nenhum Cargo");
+                            console.log(">>> O programa será encerrado");
+                            this.currentState = ControllerState_1.default.SHUTDOWN;
+                            this.runControlLoop();
+                        }
+                        else {
+                            console.log(`O Funcionário possui os seguintes Cargos: ${employeeRoles}`);
+                            let removedRoleName = yield this.inputHandler.getStringInput("Insira o nome do Cargo a remover: ");
+                            let removedRole = this.dataManager.removeEditedEmployeeRole(removedRoleName);
+                            if (removedRole) {
+                                console.log(">>> Cargo removido com sucesso");
+                                this.currentState = ControllerState_1.default.EMPLOYEE_ROLES_MENU;
+                            }
+                            else {
+                                console.log(">>> O Funcionário não possui o Cargo escolhido");
+                            }
+                            this.runControlLoop();
+                        }
                     }
                     break;
                 default:

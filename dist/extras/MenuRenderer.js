@@ -34,7 +34,7 @@ class MenuRenderer {
             case ControllerState_1.default.EMPLOYEE_ROLES_MENU:
                 console.log("\n***Menu: Editar Cargos do Funcionário***");
                 console.log(`${ControllerState_1.default.EMPLOYEE_ROLES_CREATION}. Adicionar Cargo ao Funcionário`);
-                console.log("X. Remover Cargo do Funcionário");
+                console.log(`${ControllerState_1.default.EMPLOYEE_ROLES_REMOVAL}. Remover Cargo do Funcionário`);
                 console.log(`${ControllerState_1.default.EMPLOYEE_EDITING}. Voltar para Menu de Editar Funcionário`);
                 console.log(`${ControllerState_1.default.MAIN_MENU}. Voltar para Menu Principal`);
                 console.log(`${ControllerState_1.default.SHUTDOWN}. Encerrar`);
