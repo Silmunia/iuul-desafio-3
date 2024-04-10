@@ -51,8 +51,73 @@ class MainController {
     }
 
     private async startCommandInput(prompt: string) {
-        this.currentState = await this.inputHandler.getNumberInput(prompt);
+        let receivedInput = await this.inputHandler.getNumberInput(prompt);
+        this.currentState = this.parseInputForState(receivedInput);
         this.runControlLoop();
+    }
+
+    private parseInputForState(input: number): ControllerState {
+        switch(this.currentState) {
+            case ControllerState.MAIN_MENU:
+                switch (input) {
+                    case ControllerState.EMPLOYEE_MENU:
+                        return ControllerState.EMPLOYEE_MENU;
+                    case ControllerState.CLIENT_MENU:
+                        return ControllerState.CLIENT_MENU;
+                    case ControllerState.SHUTDOWN:
+                        return ControllerState.SHUTDOWN;
+                    default:
+                        console.log(">>> Comando desconhecido");
+                        return ControllerState.RESET;
+                }
+            case ControllerState.EMPLOYEE_MENU:
+                switch (input) {
+                    case ControllerState.EMPLOYEE_CREATION:
+                        return ControllerState.EMPLOYEE_CREATION;
+                    case ControllerState.EMPLOYEE_LISTING:
+                        return ControllerState.EMPLOYEE_LISTING;
+                    case ControllerState.MAIN_MENU:
+                        return ControllerState.MAIN_MENU;
+                    case ControllerState.SHUTDOWN:
+                        return ControllerState.SHUTDOWN;
+                    default:
+                        console.log(">>> Comando desconhecido");
+                        return ControllerState.RESET;
+                }
+            case ControllerState.EMPLOYEE_EDITING:
+                switch (input) {
+                    case ControllerState.EMPLOYEE_EDIT_LIST:
+                        return ControllerState.EMPLOYEE_EDIT_LIST;
+                    case ControllerState.EMPLOYEE_EDIT_NAME:
+                        return ControllerState.EMPLOYEE_EDIT_NAME;
+                    case ControllerState.EMPLOYEE_EDIT_PHONE:
+                        return ControllerState.EMPLOYEE_EDIT_PHONE;
+                    case ControllerState.MAIN_MENU:
+                        return ControllerState.MAIN_MENU;
+                    case ControllerState.SHUTDOWN:
+                        return ControllerState.SHUTDOWN;
+                    default:
+                        console.log(">>> Comando desconhecido");
+                        return ControllerState.RESET;
+                }
+            case ControllerState.CLIENT_MENU:
+                switch (input) {
+                    case ControllerState.CLIENT_CREATION:
+                        return ControllerState.CLIENT_CREATION;
+                    case ControllerState.CLIENT_LISTING:
+                        return ControllerState.CLIENT_LISTING;
+                    case ControllerState.MAIN_MENU:
+                        return ControllerState.MAIN_MENU;
+                    case ControllerState.SHUTDOWN:
+                        return ControllerState.SHUTDOWN;
+                    default:
+                        console.log(">>> Comando desconhecido");
+                        return ControllerState.RESET;
+                }
+            default:
+                console.log(">>> Comando desconhecido");
+                return ControllerState.RESET;
+        }
     }
 
     private displayMenu() {
@@ -129,7 +194,7 @@ class MainController {
                 this.currentState = ControllerState.EMPLOYEE_EDITING;
                 this.runControlLoop();
                 break;
-                default:
+            default:
                 console.log(">>> Comando desconhecido");
                 this.currentState = ControllerState.RESET;
                 this.runControlLoop();

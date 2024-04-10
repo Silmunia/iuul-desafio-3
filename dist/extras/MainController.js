@@ -66,9 +66,73 @@ class MainController {
     }
     startCommandInput(prompt) {
         return __awaiter(this, void 0, void 0, function* () {
-            this.currentState = yield this.inputHandler.getNumberInput(prompt);
+            let receivedInput = yield this.inputHandler.getNumberInput(prompt);
+            this.currentState = this.parseInputForState(receivedInput);
             this.runControlLoop();
         });
+    }
+    parseInputForState(input) {
+        switch (this.currentState) {
+            case ControllerState_1.default.MAIN_MENU:
+                switch (input) {
+                    case ControllerState_1.default.EMPLOYEE_MENU:
+                        return ControllerState_1.default.EMPLOYEE_MENU;
+                    case ControllerState_1.default.CLIENT_MENU:
+                        return ControllerState_1.default.CLIENT_MENU;
+                    case ControllerState_1.default.SHUTDOWN:
+                        return ControllerState_1.default.SHUTDOWN;
+                    default:
+                        console.log(">>> Comando desconhecido");
+                        return ControllerState_1.default.RESET;
+                }
+            case ControllerState_1.default.EMPLOYEE_MENU:
+                switch (input) {
+                    case ControllerState_1.default.EMPLOYEE_CREATION:
+                        return ControllerState_1.default.EMPLOYEE_CREATION;
+                    case ControllerState_1.default.EMPLOYEE_LISTING:
+                        return ControllerState_1.default.EMPLOYEE_LISTING;
+                    case ControllerState_1.default.MAIN_MENU:
+                        return ControllerState_1.default.MAIN_MENU;
+                    case ControllerState_1.default.SHUTDOWN:
+                        return ControllerState_1.default.SHUTDOWN;
+                    default:
+                        console.log(">>> Comando desconhecido");
+                        return ControllerState_1.default.RESET;
+                }
+            case ControllerState_1.default.EMPLOYEE_EDITING:
+                switch (input) {
+                    case ControllerState_1.default.EMPLOYEE_EDIT_LIST:
+                        return ControllerState_1.default.EMPLOYEE_EDIT_LIST;
+                    case ControllerState_1.default.EMPLOYEE_EDIT_NAME:
+                        return ControllerState_1.default.EMPLOYEE_EDIT_NAME;
+                    case ControllerState_1.default.EMPLOYEE_EDIT_PHONE:
+                        return ControllerState_1.default.EMPLOYEE_EDIT_PHONE;
+                    case ControllerState_1.default.MAIN_MENU:
+                        return ControllerState_1.default.MAIN_MENU;
+                    case ControllerState_1.default.SHUTDOWN:
+                        return ControllerState_1.default.SHUTDOWN;
+                    default:
+                        console.log(">>> Comando desconhecido");
+                        return ControllerState_1.default.RESET;
+                }
+            case ControllerState_1.default.CLIENT_MENU:
+                switch (input) {
+                    case ControllerState_1.default.CLIENT_CREATION:
+                        return ControllerState_1.default.CLIENT_CREATION;
+                    case ControllerState_1.default.CLIENT_LISTING:
+                        return ControllerState_1.default.CLIENT_LISTING;
+                    case ControllerState_1.default.MAIN_MENU:
+                        return ControllerState_1.default.MAIN_MENU;
+                    case ControllerState_1.default.SHUTDOWN:
+                        return ControllerState_1.default.SHUTDOWN;
+                    default:
+                        console.log(">>> Comando desconhecido");
+                        return ControllerState_1.default.RESET;
+                }
+            default:
+                console.log(">>> Comando desconhecido");
+                return ControllerState_1.default.RESET;
+        }
     }
     displayMenu() {
         let renderResult = this.menuRenderer.renderMenu(this.currentState);

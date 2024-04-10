@@ -41,7 +41,7 @@ class DataManager {
     }
     listEditedEmployeeInfo() {
         if (this.editedEmployee instanceof Funcionario_1.default) {
-            return `>>> Listando informações do Funcionário\nNome: ${this.editedEmployee.nome}\nCPF: ${this.editedEmployee.cpf}\nTelefone: ${this.editedEmployee.telefone}\nSalário: ${this.editedEmployee.salario}\nCargos: ${this.listEditedEmployeeRoles(this.editedEmployee)}\n`;
+            return `>>> Listando informações do Funcionário\nNome: ${this.editedEmployee.nome}\nCPF: ${this.editedEmployee.cpf}\nCargos: ${this.listEditedEmployeeRoles(this.editedEmployee)}\nTelefone: ${this.editedEmployee.telefone}\nSalário: ${this.editedEmployee.salario}\n`;
         }
         else {
             return ">>> Não foi possível encontrar o Funcionário";
