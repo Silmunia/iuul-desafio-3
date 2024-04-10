@@ -23,6 +23,7 @@ class MenuRenderer {
             case ControllerState_1.default.EMPLOYEE_EDITING:
                 console.log("***Menu: Editar Funcionário***");
                 console.log(`${ControllerState_1.default.EMPLOYEE_EDIT_NAME}. Editar Nome`);
+                console.log(`${ControllerState_1.default.EMPLOYEE_EDIT_PHONE}. Editar Telefone`);
                 console.log(`${ControllerState_1.default.MAIN_MENU}. Voltar para Menu Principal`);
                 console.log(`${ControllerState_1.default.SHUTDOWN}. Encerrar`);
                 break;

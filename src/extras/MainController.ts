@@ -27,6 +27,7 @@ class MainController {
             case ControllerState.EMPLOYEE_LISTING:
             case ControllerState.EMPLOYEE_SELECTION:
             case ControllerState.EMPLOYEE_EDIT_NAME:
+            case ControllerState.EMPLOYEE_EDIT_PHONE:
                 await this.runEmployeeCommands()
                 break;
             case ControllerState.CLIENT_CREATION:
@@ -95,12 +96,26 @@ class MainController {
                 this.runControlLoop();
                 break;
             case ControllerState.EMPLOYEE_EDIT_NAME:
-                let editingEmployee = this.dataManager.getEditedEmployee();
-                if (editingEmployee instanceof Funcionario) {
-                    console.log(`Nome atual do Funcionário: ${editingEmployee.nome}`);
+                let editEmployeeName = this.dataManager.getEditedEmployee();
+                if (editEmployeeName instanceof Funcionario) {
+                    console.log(`Nome atual do Funcionário: ${editEmployeeName.nome}`);
                     let newName = await this.inputHandler.getStringInput("Insira o novo Nome do Funcionário: ");
-                    editingEmployee.nome = newName;
+                    editEmployeeName.nome = newName;
                     console.log(">>> Nome atualizado com sucesso");
+                    this.currentState = ControllerState.EMPLOYEE_EDITING;
+                } else {
+                    console.log(">>> Não foi possível encontrar o Funcionário");
+                    this.currentState = ControllerState.RESET;
+                }
+                this.runControlLoop();
+                break;
+            case ControllerState.EMPLOYEE_EDIT_PHONE:
+                let editEmployeePhone = this.dataManager.getEditedEmployee();
+                if (editEmployeePhone instanceof Funcionario) {
+                    console.log(`Telefone atual do Funcionário: ${editEmployeePhone.telefone}`);
+                    let newPhone = await this.inputHandler.getStringInput("Insira o novo Telefone do Funcionário: ");
+                    editEmployeePhone.telefone = newPhone;
+                    console.log(">>> Telefone atualizado com sucesso");
                     this.currentState = ControllerState.EMPLOYEE_EDITING;
                 } else {
                     console.log(">>> Não foi possível encontrar o Funcionário");

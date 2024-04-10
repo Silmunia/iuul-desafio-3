@@ -41,6 +41,7 @@ class MainController {
                 case ControllerState_1.default.EMPLOYEE_LISTING:
                 case ControllerState_1.default.EMPLOYEE_SELECTION:
                 case ControllerState_1.default.EMPLOYEE_EDIT_NAME:
+                case ControllerState_1.default.EMPLOYEE_EDIT_PHONE:
                     yield this.runEmployeeCommands();
                     break;
                 case ControllerState_1.default.CLIENT_CREATION:
@@ -111,12 +112,27 @@ class MainController {
                     this.runControlLoop();
                     break;
                 case ControllerState_1.default.EMPLOYEE_EDIT_NAME:
-                    let editingEmployee = this.dataManager.getEditedEmployee();
-                    if (editingEmployee instanceof Funcionario_1.default) {
-                        console.log(`Nome atual do Funcionário: ${editingEmployee.nome}`);
+                    let editEmployeeName = this.dataManager.getEditedEmployee();
+                    if (editEmployeeName instanceof Funcionario_1.default) {
+                        console.log(`Nome atual do Funcionário: ${editEmployeeName.nome}`);
                         let newName = yield this.inputHandler.getStringInput("Insira o novo Nome do Funcionário: ");
-                        editingEmployee.nome = newName;
+                        editEmployeeName.nome = newName;
                         console.log(">>> Nome atualizado com sucesso");
+                        this.currentState = ControllerState_1.default.EMPLOYEE_EDITING;
+                    }
+                    else {
+                        console.log(">>> Não foi possível encontrar o Funcionário");
+                        this.currentState = ControllerState_1.default.RESET;
+                    }
+                    this.runControlLoop();
+                    break;
+                case ControllerState_1.default.EMPLOYEE_EDIT_PHONE:
+                    let editEmployeePhone = this.dataManager.getEditedEmployee();
+                    if (editEmployeePhone instanceof Funcionario_1.default) {
+                        console.log(`Telefone atual do Funcionário: ${editEmployeePhone.telefone}`);
+                        let newPhone = yield this.inputHandler.getStringInput("Insira o novo Telefone do Funcionário: ");
+                        editEmployeePhone.telefone = newPhone;
+                        console.log(">>> Telefone atualizado com sucesso");
                         this.currentState = ControllerState_1.default.EMPLOYEE_EDITING;
                     }
                     else {

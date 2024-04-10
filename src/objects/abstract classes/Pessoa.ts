@@ -1,7 +1,7 @@
 abstract class Pessoa {
-    public readonly cpf: string
+    public cpf: string
     public nome: string
-    public readonly telefone: string
+    public telefone: string
 
     constructor(cpf: string, nome: string, telefone: string) {
         this.cpf = cpf;
