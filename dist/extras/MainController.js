@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Funcionario_1 = __importDefault(require("../objects/classes/Funcionario"));
+const Cargo_1 = __importDefault(require("../objects/classes/Cargo"));
 const ControllerState_1 = __importDefault(require("./ControllerState"));
 const DataManager_1 = __importDefault(require("./DataManager"));
 const InputHandler_1 = __importDefault(require("./InputHandler"));
@@ -46,6 +47,7 @@ class MainController {
                 case ControllerState_1.default.EMPLOYEE_EDIT_PHONE:
                 case ControllerState_1.default.EMPLOYEE_EDIT_SALARY:
                 case ControllerState_1.default.EMPLOYEE_EDIT_CPF:
+                case ControllerState_1.default.EMPLOYEE_ROLES_CREATION:
                     yield this.runEmployeeCommands();
                     break;
                 case ControllerState_1.default.CLIENT_CREATION:
@@ -140,6 +142,8 @@ class MainController {
                 }
             case ControllerState_1.default.EMPLOYEE_ROLES_MENU:
                 switch (input) {
+                    case ControllerState_1.default.EMPLOYEE_ROLES_CREATION:
+                        return ControllerState_1.default.EMPLOYEE_ROLES_CREATION;
                     case ControllerState_1.default.EMPLOYEE_EDITING:
                         return ControllerState_1.default.EMPLOYEE_EDITING;
                     case ControllerState_1.default.MAIN_MENU:
@@ -261,6 +265,24 @@ class MainController {
                     console.log(this.dataManager.listEditedEmployeeInfo());
                     this.currentState = ControllerState_1.default.EMPLOYEE_EDITING;
                     this.runControlLoop();
+                    break;
+                case ControllerState_1.default.EMPLOYEE_ROLES_CREATION:
+                    let addRoleEmployee = this.dataManager.getEditedEmployee();
+                    let employeeRoles = this.dataManager.listEditedEmployeeRoles(addRoleEmployee);
+                    if (employeeRoles === "") {
+                        console.log(">>> ERRO FATAL: O Funcionário não possui nenhum Cargo");
+                        console.log(">>> O programa será encerrado");
+                        this.currentState = ControllerState_1.default.SHUTDOWN;
+                        this.runControlLoop();
+                    }
+                    else {
+                        console.log(`O Funcionário possui os seguintes Cargos: ${employeeRoles}`);
+                        let newRoleName = yield this.inputHandler.getStringInput("Insira o nome do Cargo a adicionar: ");
+                        let newRole = new Cargo_1.default(newRoleName);
+                        addRoleEmployee === null || addRoleEmployee === void 0 ? void 0 : addRoleEmployee.cargos.push(newRole);
+                        this.currentState = ControllerState_1.default.EMPLOYEE_ROLES_MENU;
+                        this.runControlLoop();
+                    }
                     break;
                 default:
                     console.log(">>> Comando desconhecido");
