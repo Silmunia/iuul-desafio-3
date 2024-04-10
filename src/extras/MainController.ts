@@ -26,6 +26,7 @@ class MainController {
             case ControllerState.EMPLOYEE_CREATION:
             case ControllerState.EMPLOYEE_LISTING:
             case ControllerState.EMPLOYEE_SELECTION:
+            case ControllerState.EMPLOYEE_EDIT_LIST:
             case ControllerState.EMPLOYEE_EDIT_NAME:
             case ControllerState.EMPLOYEE_EDIT_PHONE:
                 await this.runEmployeeCommands()
@@ -123,7 +124,12 @@ class MainController {
                 }
                 this.runControlLoop();
                 break;
-            default:
+            case ControllerState.EMPLOYEE_EDIT_LIST:
+                console.log(this.dataManager.listEditedEmployeeInfo());
+                this.currentState = ControllerState.EMPLOYEE_EDITING;
+                this.runControlLoop();
+                break;
+                default:
                 console.log(">>> Comando desconhecido");
                 this.currentState = ControllerState.RESET;
                 this.runControlLoop();

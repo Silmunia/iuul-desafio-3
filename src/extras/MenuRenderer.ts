@@ -18,6 +18,7 @@ class MenuRenderer {
                 break;
             case ControllerState.EMPLOYEE_EDITING:
                 console.log("***Menu: Editar Funcionário***");
+                console.log(`${ControllerState.EMPLOYEE_EDIT_LIST}. Listar informações do Funcionário`);
                 console.log(`${ControllerState.EMPLOYEE_EDIT_NAME}. Editar Nome`);
                 console.log(`${ControllerState.EMPLOYEE_EDIT_PHONE}. Editar Telefone`);
                 console.log(`${ControllerState.MAIN_MENU}. Voltar para Menu Principal`);

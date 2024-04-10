@@ -12,6 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const Funcionario_1 = __importDefault(require("../objects/classes/Funcionario"));
 const DataRepository_1 = __importDefault(require("./DataRepository"));
 const FactoryRepository_1 = __importDefault(require("./FactoryRepository"));
 class DataManager {
@@ -37,6 +38,24 @@ class DataManager {
     }
     getEditedEmployee() {
         return this.editedEmployee;
+    }
+    listEditedEmployeeInfo() {
+        if (this.editedEmployee instanceof Funcionario_1.default) {
+            return `>>> Listando informações do Funcionário\nNome: ${this.editedEmployee.nome}\nCPF: ${this.editedEmployee.cpf}\nTelefone: ${this.editedEmployee.telefone}\nSalário: ${this.editedEmployee.salario}\nCargos: ${this.listEditedEmployeeRoles(this.editedEmployee)}\n`;
+        }
+        else {
+            return ">>> Não foi possível encontrar o Funcionário";
+        }
+    }
+    listEditedEmployeeRoles(employee) {
+        let resultString = "";
+        for (let i = 0; i < employee.cargos.length; i++) {
+            resultString += employee.cargos[i].nome;
+            if (i != employee.cargos.length - 1) {
+                resultString += " , ";
+            }
+        }
+        return resultString;
     }
     addClient() {
         return __awaiter(this, void 0, void 0, function* () {

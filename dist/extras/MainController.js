@@ -40,6 +40,7 @@ class MainController {
                 case ControllerState_1.default.EMPLOYEE_CREATION:
                 case ControllerState_1.default.EMPLOYEE_LISTING:
                 case ControllerState_1.default.EMPLOYEE_SELECTION:
+                case ControllerState_1.default.EMPLOYEE_EDIT_LIST:
                 case ControllerState_1.default.EMPLOYEE_EDIT_NAME:
                 case ControllerState_1.default.EMPLOYEE_EDIT_PHONE:
                     yield this.runEmployeeCommands();
@@ -139,6 +140,11 @@ class MainController {
                         console.log(">>> Não foi possível encontrar o Funcionário");
                         this.currentState = ControllerState_1.default.RESET;
                     }
+                    this.runControlLoop();
+                    break;
+                case ControllerState_1.default.EMPLOYEE_EDIT_LIST:
+                    console.log(this.dataManager.listEditedEmployeeInfo());
+                    this.currentState = ControllerState_1.default.EMPLOYEE_EDITING;
                     this.runControlLoop();
                     break;
                 default:

@@ -32,6 +32,28 @@ class DataManager {
         return this.editedEmployee;
     }
 
+    public listEditedEmployeeInfo(): string {
+        if (this.editedEmployee instanceof Funcionario) {
+            return `>>> Listando informações do Funcionário\nNome: ${this.editedEmployee.nome}\nCPF: ${this.editedEmployee.cpf}\nCargos: ${this.listEditedEmployeeRoles(this.editedEmployee)}\nTelefone: ${this.editedEmployee.telefone}\nSalário: ${this.editedEmployee.salario}\n`;
+        } else {
+            return ">>> Não foi possível encontrar o Funcionário";
+        }
+    }
+
+    public listEditedEmployeeRoles(employee: Funcionario): string {
+        let resultString = "";
+
+        for (let i = 0; i < employee.cargos.length; i++) {
+            resultString += employee.cargos[i].nome;
+
+            if (i != employee.cargos.length-1) {
+                resultString += " , ";
+            }
+        }
+
+        return resultString;
+    }
+
     public async addClient() {
         console.log(">>> Iniciando criação de Cliente");
         this.dataRepository.addClient(
