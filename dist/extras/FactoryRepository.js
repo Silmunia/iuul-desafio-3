@@ -71,23 +71,33 @@ class FactoryRepository {
         return __awaiter(this, void 0, void 0, function* () {
             return this.inputHandler.getNumberInput("Escolha um tipo de conta para criar:\n1. Conta Corrente\n2. Conta Poupança\nInsira um comando: ").then((input) => __awaiter(this, void 0, void 0, function* () {
                 if (input == 1) {
-                    console.log(">>> Criando Conta Corrente");
-                    let number = yield this.inputHandler.getStringInput("Insira o número da Conta Corrente: ");
-                    let limit = yield this.inputHandler.getNumberInput("Insira o limite da Conta Corrente: ");
-                    let newAccount = new ContaCorrente_1.default(number, limit);
-                    return Promise.resolve(newAccount);
+                    return this.startCheckingAccountCreation();
                 }
                 else if (input == 2) {
-                    console.log(">>> Criando Conta Poupança");
-                    let number = yield this.inputHandler.getStringInput("Insira o número da Conta Poupança: ");
-                    let newAccount = new ContaPoupanca_1.default(number);
-                    return Promise.resolve(newAccount);
+                    return this.startSavingsAccountCreation();
                 }
                 else {
                     console.log(">>> Comando inválido");
                     return this.startAccountCreation();
                 }
             }));
+        });
+    }
+    startCheckingAccountCreation() {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log(">>> Criando Conta Corrente");
+            let number = yield this.inputHandler.getStringInput("Insira o número da Conta Corrente: ");
+            let limit = yield this.inputHandler.getNumberInput("Insira o limite da Conta Corrente: ");
+            let newAccount = new ContaCorrente_1.default(number, limit);
+            return Promise.resolve(newAccount);
+        });
+    }
+    startSavingsAccountCreation() {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log(">>> Criando Conta Poupança");
+            let number = yield this.inputHandler.getStringInput("Insira o número da Conta Poupança: ");
+            let newAccount = new ContaPoupanca_1.default(number);
+            return Promise.resolve(newAccount);
         });
     }
 }

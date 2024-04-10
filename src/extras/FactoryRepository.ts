@@ -69,25 +69,33 @@ class FactoryRepository {
     public async startAccountCreation(): Promise<Conta> {
         return this.inputHandler.getNumberInput("Escolha um tipo de conta para criar:\n1. Conta Corrente\n2. Conta Poupança\nInsira um comando: ").then(async (input) => {
             if (input == 1) {
-                console.log(">>> Criando Conta Corrente");
-
-                let number: string = await this.inputHandler.getStringInput("Insira o número da Conta Corrente: ");
-                let limit: number = await this.inputHandler.getNumberInput("Insira o limite da Conta Corrente: ");
-
-                let newAccount = new ContaCorrente(number, limit);
-                return Promise.resolve(newAccount);
+                return this.startCheckingAccountCreation();
             } else if (input == 2) {
-                console.log(">>> Criando Conta Poupança");
-
-                let number: string = await this.inputHandler.getStringInput("Insira o número da Conta Poupança: ");
-
-                let newAccount = new ContaPoupanca(number);
-                return Promise.resolve(newAccount);
+                return this.startSavingsAccountCreation();
             } else {
                 console.log(">>> Comando inválido");
                 return this.startAccountCreation();
             }
         });
+    }
+
+    private async startCheckingAccountCreation(): Promise<Conta> {
+        console.log(">>> Criando Conta Corrente");
+
+        let number: string = await this.inputHandler.getStringInput("Insira o número da Conta Corrente: ");
+        let limit: number = await this.inputHandler.getNumberInput("Insira o limite da Conta Corrente: ");
+
+        let newAccount = new ContaCorrente(number, limit);
+        return Promise.resolve(newAccount);
+    }
+
+    private async startSavingsAccountCreation(): Promise<Conta> {
+        console.log(">>> Criando Conta Poupança");
+
+        let number = await this.inputHandler.getStringInput("Insira o número da Conta Poupança: ");
+
+        let newAccount = new ContaPoupanca(number);
+        return Promise.resolve(newAccount);
     }
 }
 
