@@ -17,6 +17,17 @@ class DataRepository {
     listClients() {
         return this.listData(this.clients, ">>> Sem clientes para listar");
     }
+    getEmployee(index) {
+        if (index >= 0 && index < this.employees.length) {
+            return this.employees[index];
+        }
+        else {
+            return undefined;
+        }
+    }
+    getAllEmployees() {
+        return this.employees;
+    }
     listData(dataArray, nullMessage) {
         if (dataArray.length === 0) {
             return nullMessage;

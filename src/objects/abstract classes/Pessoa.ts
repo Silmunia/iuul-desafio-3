@@ -1,6 +1,6 @@
 abstract class Pessoa {
     public readonly cpf: string
-    public readonly nome: string
+    public nome: string
     public readonly telefone: string
 
     constructor(cpf: string, nome: string, telefone: string) {

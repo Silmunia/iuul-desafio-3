@@ -12,7 +12,13 @@ class MenuRenderer {
             case ControllerState.EMPLOYEE_MENU:
                 console.log("***Menu: Gerenciar Funcionários***");
                 console.log(`${ControllerState.EMPLOYEE_CREATION}. Criar Funcionário`);
-                console.log(`${ControllerState.EMPLOYEE_LISTING}. Listar Funcionários`);
+                console.log(`${ControllerState.EMPLOYEE_LISTING}. Editar Funcionários`);
+                console.log(`${ControllerState.MAIN_MENU}. Voltar para Menu Principal`);
+                console.log(`${ControllerState.SHUTDOWN}. Encerrar`);
+                break;
+            case ControllerState.EMPLOYEE_EDITING:
+                console.log("***Menu: Editar Funcionário***");
+                console.log(`${ControllerState.EMPLOYEE_EDIT_NAME}. Editar Nome`);
                 console.log(`${ControllerState.MAIN_MENU}. Voltar para Menu Principal`);
                 console.log(`${ControllerState.SHUTDOWN}. Encerrar`);
                 break;

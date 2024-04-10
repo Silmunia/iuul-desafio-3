@@ -12,10 +12,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const Funcionario_1 = __importDefault(require("../objects/classes/Funcionario"));
 const ControllerState_1 = __importDefault(require("./ControllerState"));
 const DataManager_1 = __importDefault(require("./DataManager"));
-const DataRepository_1 = __importDefault(require("./DataRepository"));
-const FactoryRepository_1 = __importDefault(require("./FactoryRepository"));
 const InputHandler_1 = __importDefault(require("./InputHandler"));
 const MenuRenderer_1 = __importDefault(require("./MenuRenderer"));
 class MainController {
@@ -23,8 +22,6 @@ class MainController {
         this.currentState = ControllerState_1.default.MAIN_MENU;
         this.inputHandler = new InputHandler_1.default();
         this.menuRenderer = new MenuRenderer_1.default();
-        this.objFactory = new FactoryRepository_1.default();
-        this.appData = new DataRepository_1.default();
         this.dataManager = new DataManager_1.default();
     }
     startProgram() {
@@ -36,11 +33,14 @@ class MainController {
                 case ControllerState_1.default.MAIN_MENU:
                 case ControllerState_1.default.EMPLOYEE_MENU:
                 case ControllerState_1.default.CLIENT_MENU:
+                case ControllerState_1.default.EMPLOYEE_EDITING:
                     this.displayMenu();
                     this.startCommandInput("Insira comando: ");
                     break;
                 case ControllerState_1.default.EMPLOYEE_CREATION:
                 case ControllerState_1.default.EMPLOYEE_LISTING:
+                case ControllerState_1.default.EMPLOYEE_SELECTION:
+                case ControllerState_1.default.EMPLOYEE_EDIT_NAME:
                     yield this.runEmployeeCommands();
                     break;
                 case ControllerState_1.default.CLIENT_CREATION:
@@ -81,14 +81,48 @@ class MainController {
         return __awaiter(this, void 0, void 0, function* () {
             switch (this.currentState) {
                 case ControllerState_1.default.EMPLOYEE_CREATION:
-                    console.log(">>> Iniciando criação de Funcionário");
                     yield this.dataManager.addEmployee();
                     this.currentState = ControllerState_1.default.EMPLOYEE_MENU;
                     this.runControlLoop();
                     break;
                 case ControllerState_1.default.EMPLOYEE_LISTING:
                     this.dataManager.listEmployees();
-                    this.currentState = ControllerState_1.default.EMPLOYEE_MENU;
+                    if (this.dataManager.getEmployees().length === 0) {
+                        console.log(">>> Voltando ao Menu de Funcionários");
+                        this.currentState = ControllerState_1.default.EMPLOYEE_MENU;
+                    }
+                    else {
+                        this.currentState = ControllerState_1.default.EMPLOYEE_SELECTION;
+                    }
+                    this.runControlLoop();
+                    break;
+                case ControllerState_1.default.EMPLOYEE_SELECTION:
+                    let selectedIndex = yield this.inputHandler.getNumberInput("Selecione um Funcionário: ");
+                    let parsedIndex = selectedIndex - 1;
+                    if (parsedIndex >= 0
+                        && parsedIndex < this.dataManager.getEmployees().length) {
+                        console.log(`>>> Funcionário ${selectedIndex} selecionado`);
+                        this.dataManager.setEditedEmployee(parsedIndex);
+                        this.currentState = ControllerState_1.default.EMPLOYEE_EDITING;
+                    }
+                    else {
+                        console.log(">>> Funcionário inválido");
+                    }
+                    this.runControlLoop();
+                    break;
+                case ControllerState_1.default.EMPLOYEE_EDIT_NAME:
+                    let editingEmployee = this.dataManager.getEditedEmployee();
+                    if (editingEmployee instanceof Funcionario_1.default) {
+                        console.log(`Nome atual do Funcionário: ${editingEmployee.nome}`);
+                        let newName = yield this.inputHandler.getStringInput("Insira o novo Nome do Funcionário: ");
+                        editingEmployee.nome = newName;
+                        console.log(">>> Nome atualizado com sucesso");
+                        this.currentState = ControllerState_1.default.EMPLOYEE_EDITING;
+                    }
+                    else {
+                        console.log(">>> Não foi possível encontrar o Funcionário");
+                        this.currentState = ControllerState_1.default.RESET;
+                    }
                     this.runControlLoop();
                     break;
                 default:
@@ -102,14 +136,12 @@ class MainController {
         return __awaiter(this, void 0, void 0, function* () {
             switch (this.currentState) {
                 case ControllerState_1.default.CLIENT_CREATION:
-                    console.log(">>> Iniciando criação de Cliente");
-                    this.appData.addClient(yield this.objFactory.startClientCreation());
+                    yield this.dataManager.addClient();
                     this.currentState = ControllerState_1.default.CLIENT_MENU;
                     this.runControlLoop();
                     break;
                 case ControllerState_1.default.CLIENT_LISTING:
-                    console.log(">>> Listando Clientes");
-                    console.log(this.appData.listClients());
+                    this.dataManager.listClients();
                     this.currentState = ControllerState_1.default.CLIENT_MENU;
                     this.runControlLoop();
                     break;

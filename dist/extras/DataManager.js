@@ -21,12 +21,32 @@ class DataManager {
     }
     addEmployee() {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log(">>> Iniciando criação de Funcionário");
             this.dataRepository.addEmployee(yield this.factoryRepository.startEmployeeCreation());
         });
+    }
+    getEmployees() {
+        return this.dataRepository.getAllEmployees();
     }
     listEmployees() {
         console.log(">>> Listando Funcionários");
         console.log(this.dataRepository.listEmployees());
+    }
+    setEditedEmployee(index) {
+        this.editedEmployee = this.dataRepository.getEmployee(index);
+    }
+    getEditedEmployee() {
+        return this.editedEmployee;
+    }
+    addClient() {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log(">>> Iniciando criação de Cliente");
+            this.dataRepository.addClient(yield this.factoryRepository.startClientCreation());
+        });
+    }
+    listClients() {
+        console.log(">>> Listando Clientes");
+        console.log(this.dataRepository.listClients());
     }
 }
 exports.default = DataManager;

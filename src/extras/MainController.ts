@@ -1,3 +1,4 @@
+import Funcionario from "../objects/classes/Funcionario";
 import ControllerState from "./ControllerState";
 import DataManager from "./DataManager";
 import InputHandler from "./InputHandler";
@@ -18,11 +19,14 @@ class MainController {
             case ControllerState.MAIN_MENU:
             case ControllerState.EMPLOYEE_MENU:
             case ControllerState.CLIENT_MENU:
+            case ControllerState.EMPLOYEE_EDITING:
                 this.displayMenu();
                 this.startCommandInput("Insira comando: ");
                 break;
             case ControllerState.EMPLOYEE_CREATION:
             case ControllerState.EMPLOYEE_LISTING:
+            case ControllerState.EMPLOYEE_SELECTION:
+            case ControllerState.EMPLOYEE_EDIT_NAME:
                 await this.runEmployeeCommands()
                 break;
             case ControllerState.CLIENT_CREATION:
@@ -69,7 +73,39 @@ class MainController {
                 break;
             case ControllerState.EMPLOYEE_LISTING:
                 this.dataManager.listEmployees();
-                this.currentState = ControllerState.EMPLOYEE_MENU;
+                if (this.dataManager.getEmployees().length === 0) {
+                    console.log(">>> Voltando ao Menu de Funcionários");
+                    this.currentState = ControllerState.EMPLOYEE_MENU;
+                } else {
+                    this.currentState = ControllerState.EMPLOYEE_SELECTION;
+                }
+                this.runControlLoop();
+                break;
+            case ControllerState.EMPLOYEE_SELECTION:
+                let selectedIndex = await this.inputHandler.getNumberInput("Selecione um Funcionário: ");
+                let parsedIndex = selectedIndex - 1;
+                if (parsedIndex >= 0 
+                    && parsedIndex < this.dataManager.getEmployees().length) {
+                    console.log(`>>> Funcionário ${selectedIndex} selecionado`);
+                    this.dataManager.setEditedEmployee(parsedIndex);
+                    this.currentState = ControllerState.EMPLOYEE_EDITING;
+                } else {
+                    console.log(">>> Funcionário inválido");
+                }
+                this.runControlLoop();
+                break;
+            case ControllerState.EMPLOYEE_EDIT_NAME:
+                let editingEmployee = this.dataManager.getEditedEmployee();
+                if (editingEmployee instanceof Funcionario) {
+                    console.log(`Nome atual do Funcionário: ${editingEmployee.nome}`);
+                    let newName = await this.inputHandler.getStringInput("Insira o novo Nome do Funcionário: ");
+                    editingEmployee.nome = newName;
+                    console.log(">>> Nome atualizado com sucesso");
+                    this.currentState = ControllerState.EMPLOYEE_EDITING;
+                } else {
+                    console.log(">>> Não foi possível encontrar o Funcionário");
+                    this.currentState = ControllerState.RESET;
+                }
                 this.runControlLoop();
                 break;
             default:
