@@ -29,6 +29,7 @@ class MainController {
             case ControllerState.EMPLOYEE_EDIT_LIST:
             case ControllerState.EMPLOYEE_EDIT_NAME:
             case ControllerState.EMPLOYEE_EDIT_PHONE:
+            case ControllerState.EMPLOYEE_EDIT_SALARY:
                 await this.runEmployeeCommands()
                 break;
             case ControllerState.CLIENT_CREATION:
@@ -92,6 +93,8 @@ class MainController {
                         return ControllerState.EMPLOYEE_EDIT_NAME;
                     case ControllerState.EMPLOYEE_EDIT_PHONE:
                         return ControllerState.EMPLOYEE_EDIT_PHONE;
+                    case ControllerState.EMPLOYEE_EDIT_SALARY:
+                        return ControllerState.EMPLOYEE_EDIT_SALARY;
                     case ControllerState.MAIN_MENU:
                         return ControllerState.MAIN_MENU;
                     case ControllerState.SHUTDOWN:
@@ -182,6 +185,20 @@ class MainController {
                     let newPhone = await this.inputHandler.getStringInput("Insira o novo Telefone do Funcionário: ");
                     editEmployeePhone.telefone = newPhone;
                     console.log(">>> Telefone atualizado com sucesso");
+                    this.currentState = ControllerState.EMPLOYEE_EDITING;
+                } else {
+                    console.log(">>> Não foi possível encontrar o Funcionário");
+                    this.currentState = ControllerState.RESET;
+                }
+                this.runControlLoop();
+                break;
+            case ControllerState.EMPLOYEE_EDIT_SALARY:
+                let editEmployeeSalary = this.dataManager.getEditedEmployee();
+                if (editEmployeeSalary instanceof Funcionario) {
+                    console.log(`Telefone atual do Funcionário: ${editEmployeeSalary.salario}`);
+                    let newSalary = await this.inputHandler.getNumberInput("Insira o novo Telefone do Funcionário: ");
+                    editEmployeeSalary.salario = newSalary;
+                    console.log(">>> Salário atualizado com sucesso");
                     this.currentState = ControllerState.EMPLOYEE_EDITING;
                 } else {
                     console.log(">>> Não foi possível encontrar o Funcionário");

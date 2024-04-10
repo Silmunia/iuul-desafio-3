@@ -25,6 +25,7 @@ class MenuRenderer {
                 console.log(`${ControllerState_1.default.EMPLOYEE_EDIT_LIST}. Listar informações do Funcionário`);
                 console.log(`${ControllerState_1.default.EMPLOYEE_EDIT_NAME}. Editar Nome`);
                 console.log(`${ControllerState_1.default.EMPLOYEE_EDIT_PHONE}. Editar Telefone`);
+                console.log(`${ControllerState_1.default.EMPLOYEE_EDIT_SALARY}. Editar Salário`);
                 console.log(`${ControllerState_1.default.MAIN_MENU}. Voltar para Menu Principal`);
                 console.log(`${ControllerState_1.default.SHUTDOWN}. Encerrar`);
                 break;

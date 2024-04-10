@@ -43,6 +43,7 @@ class MainController {
                 case ControllerState_1.default.EMPLOYEE_EDIT_LIST:
                 case ControllerState_1.default.EMPLOYEE_EDIT_NAME:
                 case ControllerState_1.default.EMPLOYEE_EDIT_PHONE:
+                case ControllerState_1.default.EMPLOYEE_EDIT_SALARY:
                     yield this.runEmployeeCommands();
                     break;
                 case ControllerState_1.default.CLIENT_CREATION:
@@ -107,6 +108,8 @@ class MainController {
                         return ControllerState_1.default.EMPLOYEE_EDIT_NAME;
                     case ControllerState_1.default.EMPLOYEE_EDIT_PHONE:
                         return ControllerState_1.default.EMPLOYEE_EDIT_PHONE;
+                    case ControllerState_1.default.EMPLOYEE_EDIT_SALARY:
+                        return ControllerState_1.default.EMPLOYEE_EDIT_SALARY;
                     case ControllerState_1.default.MAIN_MENU:
                         return ControllerState_1.default.MAIN_MENU;
                     case ControllerState_1.default.SHUTDOWN:
@@ -198,6 +201,21 @@ class MainController {
                         let newPhone = yield this.inputHandler.getStringInput("Insira o novo Telefone do Funcionário: ");
                         editEmployeePhone.telefone = newPhone;
                         console.log(">>> Telefone atualizado com sucesso");
+                        this.currentState = ControllerState_1.default.EMPLOYEE_EDITING;
+                    }
+                    else {
+                        console.log(">>> Não foi possível encontrar o Funcionário");
+                        this.currentState = ControllerState_1.default.RESET;
+                    }
+                    this.runControlLoop();
+                    break;
+                case ControllerState_1.default.EMPLOYEE_EDIT_SALARY:
+                    let editEmployeeSalary = this.dataManager.getEditedEmployee();
+                    if (editEmployeeSalary instanceof Funcionario_1.default) {
+                        console.log(`Telefone atual do Funcionário: ${editEmployeeSalary.salario}`);
+                        let newSalary = yield this.inputHandler.getNumberInput("Insira o novo Telefone do Funcionário: ");
+                        editEmployeeSalary.salario = newSalary;
+                        console.log(">>> Salário atualizado com sucesso");
                         this.currentState = ControllerState_1.default.EMPLOYEE_EDITING;
                     }
                     else {
