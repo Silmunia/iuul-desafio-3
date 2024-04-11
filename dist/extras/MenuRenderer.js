@@ -68,15 +68,26 @@ class MenuRenderer {
                 console.log(`${ControllerState_1.default.CLIENT_EDIT_CPF}. Editar CPF`);
                 console.log(`${ControllerState_1.default.CLIENT_EDIT_VIP}. Editar estado VIP`);
                 console.log(`${ControllerState_1.default.CLIENT_ADDRESS_MENU}. Gerenciar Endereço(s)`);
-                console.log(`X. Gerenciar Conta(s)`);
+                console.log(`${ControllerState_1.default.CLIENT_ACCOUNT_MENU}. Gerenciar Conta(s)`);
                 console.log(`${ControllerState_1.default.MAIN_MENU}. Voltar para Menu Principal`);
                 console.log(`${ControllerState_1.default.SHUTDOWN}. Encerrar`);
                 break;
             case ControllerState_1.default.CLIENT_ADDRESS_MENU:
-                console.log("\n***Menu: Editar Endereços do Cliente***");
+                console.log("\n***Menu: Gerenciar Endereços do Cliente***");
                 console.log(`${ControllerState_1.default.CLIENT_ADDRESS_LIST}. Listar Endereços do Cliente`);
                 console.log(`${ControllerState_1.default.CLIENT_ADDRESS_CREATION}. Adicionar Endereço`);
                 console.log(`${ControllerState_1.default.CLIENT_ADDRESS_REMOVAL}. Remover Endereço`);
+                console.log(`${ControllerState_1.default.CLIENT_EDITING}. Voltar para Menu de Editar Cliente`);
+                console.log(`${ControllerState_1.default.MAIN_MENU}. Voltar para Menu Principal`);
+                console.log(`${ControllerState_1.default.SHUTDOWN}. Encerrar`);
+                break;
+            case ControllerState_1.default.CLIENT_ACCOUNT_MENU:
+                console.log("\n***Menu: Gerenciar Contas do Cliente***");
+                console.log(`${ControllerState_1.default.CLIENT_ACCOUNT_LIST}. Listar Contas do Cliente`);
+                console.log(`${ControllerState_1.default.CLIENT_ACCOUNT_DEPOSIT}. Fazer depósito`);
+                console.log(`${ControllerState_1.default.CLIENT_ACCOUNT_WITHDRAW}. Fazer saque`);
+                console.log(`${ControllerState_1.default.CLIENT_ACCOUNT_BALANCE}. Calcular saldo`);
+                console.log(`${ControllerState_1.default.CLIENT_ACCOUNT_TRANSFER}. Fazer transferência`);
                 console.log(`${ControllerState_1.default.CLIENT_EDITING}. Voltar para Menu de Editar Cliente`);
                 console.log(`${ControllerState_1.default.MAIN_MENU}. Voltar para Menu Principal`);
                 console.log(`${ControllerState_1.default.SHUTDOWN}. Encerrar`);
