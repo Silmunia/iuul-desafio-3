@@ -2,7 +2,6 @@ import Funcionario from "../objects/classes/Funcionario";
 import Cliente from "../objects/classes/Cliente";
 import DataRepository from "./DataRepository";
 import FactoryRepository from "./FactoryRepository";
-import Endereco from "../objects/classes/Endereco";
 import Conta from "../objects/abstract classes/Conta";
 
 class DataManager {

@@ -14,15 +14,10 @@ class EmployeeController {
     private inputHandler: InputHandler = new InputHandler();
     private menuRenderer: MenuRenderer = new MenuRenderer();
 
-    constructor(initialState: ControllerState, editedEmployee: Funcionario | undefined, dataManager: DataManager) {
+    constructor(initialState: ControllerState, dataManager: DataManager) {
         this.currentState = initialState
         this.dataManager = dataManager;
-
-        if (editedEmployee instanceof Funcionario) {
-            this.employeeInEditing = editedEmployee;
-        } else {
-            this.employeeInEditing = new Funcionario("", "", "", "", NaN);
-        }
+        this.employeeInEditing = new Funcionario("", "", "", "", NaN);
     }
 
     public async runEmployeeCommands(): Promise<ControllerState> {

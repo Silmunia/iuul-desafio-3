@@ -16,17 +16,13 @@ class ClientController {
     private inputHandler: InputHandler = new InputHandler();
     private menuRenderer: MenuRenderer = new MenuRenderer();
 
-    constructor(initialState: ControllerState, editedEmployee: Cliente | undefined, dataManager: DataManager) {
+    constructor(initialState: ControllerState, dataManager: DataManager) {
         this.currentState = initialState
         this.dataManager = dataManager;
 
-        if (editedEmployee instanceof Cliente) {
-            this.clientInEditing = editedEmployee;
-        } else {
-            let nilAddress = new Endereco("", "", "", "", "", "");
-            let nilAccount = new ContaPoupanca("");
-            this.clientInEditing = new Cliente("", "", "", false, nilAddress, nilAccount);
-        }
+        let nilAddress = new Endereco("", "", "", "", "", "");
+        let nilAccount = new ContaPoupanca("");
+        this.clientInEditing = new Cliente("", "", "", false, nilAddress, nilAccount);
     }
 
     public async runClientCommands(): Promise<ControllerState> {

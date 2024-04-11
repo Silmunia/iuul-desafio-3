@@ -69,16 +69,12 @@ class MainController {
     }
 
     private async delegateEmployeeControl(initialState: ControllerState) {
-        let editedEmployee = this.dataManager.getEditedEmployee();
-
-        this.employeeController = new EmployeeController(initialState, editedEmployee, this.dataManager);
+        this.employeeController = new EmployeeController(initialState, this.dataManager);
         return await this.employeeController.runEmployeeCommands();
     }
 
     private async delegateClientControl(initialState: ControllerState) {
-        let editedClient = this.dataManager.getEditedClient();
-
-        this.clientController = new ClientController(initialState, editedClient, this.dataManager);
+        this.clientController = new ClientController(initialState, this.dataManager);
         return await this.clientController.runClientCommands();
     }
 
