@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Funcionario_1 = __importDefault(require("../objects/classes/Funcionario"));
+const Cliente_1 = __importDefault(require("../objects/classes/Cliente"));
 const DataRepository_1 = __importDefault(require("./DataRepository"));
 const FactoryRepository_1 = __importDefault(require("./FactoryRepository"));
 class DataManager {
@@ -51,6 +52,14 @@ class DataManager {
     listEditedEmployeeInfo() {
         if (this.editedEmployee instanceof Funcionario_1.default) {
             return `\n>>> Listando informações do Funcionário\nNome: ${this.editedEmployee.nome}\nCPF: ${this.editedEmployee.cpf}\nCargos: ${this.listEditedEmployeeRoles(this.editedEmployee)}\nTelefone: ${this.editedEmployee.telefone}\nSalário: ${this.editedEmployee.salario}`;
+        }
+        else {
+            return ">>> Não foi possível encontrar o Funcionário";
+        }
+    }
+    listEditedClientInfo() {
+        if (this.editedClient instanceof Cliente_1.default) {
+            return `\n>>> Listando informações do Cliente\nNome: ${this.editedClient.nome}\nCPF: ${this.editedClient.cpf}\nTelefone: ${this.editedClient.telefone}\nVIP: ${this.editedClient.vip ? "Sim" : "Não"}\nContas: ${this.editedClient.contas}\nEndereços: ${this.editedClient.enderecos}`;
         }
         else {
             return ">>> Não foi possível encontrar o Funcionário";

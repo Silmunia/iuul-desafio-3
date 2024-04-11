@@ -62,8 +62,8 @@ class MenuRenderer {
                 break;
             case ControllerState.CLIENT_EDITING:
                 console.log("\n***Menu: Editar Cliente***");
-                console.log(`X. Listar informações do Cliente`);
-                console.log(`X. Editar Nome`);
+                console.log(`${ControllerState.CLIENT_EDIT_LIST}. Listar informações do Cliente`);
+                console.log(`${ControllerState.CLIENT_EDIT_NAME}. Editar Nome`);
                 console.log(`X. Editar Telefone`);
                 console.log(`X. Editar CPF`);
                 console.log(`X. Gerenciar Endereço(s)`);

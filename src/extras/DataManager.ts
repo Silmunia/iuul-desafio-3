@@ -54,6 +54,14 @@ class DataManager {
         }
     }
 
+    public listEditedClientInfo(): string {
+        if (this.editedClient instanceof Cliente) {
+            return `\n>>> Listando informações do Cliente\nNome: ${this.editedClient.nome}\nCPF: ${this.editedClient.cpf}\nTelefone: ${this.editedClient.telefone}\nVIP: ${this.editedClient.vip ? "Sim" : "Não"}\nContas: ${this.editedClient.contas}\nEndereços: ${this.editedClient.enderecos}`;
+        } else {
+            return ">>> Não foi possível encontrar o Funcionário";
+        }
+    }
+
     public listEditedEmployeeRoles(employee: Funcionario): string {
         let resultString = "";
 

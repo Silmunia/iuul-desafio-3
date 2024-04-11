@@ -79,6 +79,17 @@ class ClientController {
                 this.dataManager.listClients();
                 this.currentState = ControllerState.CLIENT_MENU;
                 return this.runClientCommands();
+            case ControllerState.CLIENT_EDIT_LIST:
+                console.log(this.dataManager.listEditedClientInfo());
+                this.currentState = ControllerState.CLIENT_EDITING;
+                return this.runClientCommands();
+            case ControllerState.CLIENT_EDIT_NAME:
+                console.log(`Nome atual do Cliente: ${this.clientInEditing.nome}`);
+                let newName = await this.inputHandler.getStringInput("Insira o novo Nome do Cliente: ");
+                this.clientInEditing.nome = newName;
+                console.log(">>> Nome atualizado com sucesso");
+                this.currentState = ControllerState.CLIENT_EDITING;
+                return this.runClientCommands();
             default:
                 console.log(">>> Comando desconhecido");
                 this.currentState = ControllerState.RESET;
@@ -123,6 +134,12 @@ class ClientController {
                 break;
             case ControllerState.CLIENT_EDITING:
                 switch (input) {
+                    case ControllerState.CLIENT_EDIT_LIST:
+                        this.currentState = ControllerState.CLIENT_EDIT_LIST;
+                        break;
+                    case ControllerState.CLIENT_EDIT_NAME:
+                        this.currentState = ControllerState.CLIENT_EDIT_NAME;
+                        break;
                     case ControllerState.MAIN_MENU:
                         this.currentState = ControllerState.MAIN_MENU;
                         break;

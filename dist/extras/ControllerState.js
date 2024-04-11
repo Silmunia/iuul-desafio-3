@@ -21,6 +21,8 @@ var ControllerState;
     ControllerState[ControllerState["CLIENT_LISTING"] = 16] = "CLIENT_LISTING";
     ControllerState[ControllerState["CLIENT_SELECTION"] = 17] = "CLIENT_SELECTION";
     ControllerState[ControllerState["CLIENT_EDITING"] = 18] = "CLIENT_EDITING";
+    ControllerState[ControllerState["CLIENT_EDIT_LIST"] = 19] = "CLIENT_EDIT_LIST";
+    ControllerState[ControllerState["CLIENT_EDIT_NAME"] = 20] = "CLIENT_EDIT_NAME";
     ControllerState[ControllerState["SHUTDOWN"] = 999] = "SHUTDOWN";
     ControllerState[ControllerState["RESET"] = 1000] = "RESET";
 })(ControllerState || (ControllerState = {}));
