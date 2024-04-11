@@ -17,7 +17,7 @@ const DataRepository_1 = __importDefault(require("./DataRepository"));
 const FactoryRepository_1 = __importDefault(require("./FactoryRepository"));
 const InputHandler_1 = __importDefault(require("./InputHandler"));
 const MenuRenderer_1 = __importDefault(require("./MenuRenderer"));
-class Controller {
+class MainController {
     constructor() {
         this.currentState = ControllerState_1.default.MAIN_MENU;
         this.inputHandler = new InputHandler_1.default();
@@ -33,20 +33,18 @@ class Controller {
             switch (this.currentState) {
                 case ControllerState_1.default.MAIN_MENU:
                 case ControllerState_1.default.EMPLOYEE_MENU:
+                case ControllerState_1.default.CLIENT_MENU:
                     this.displayMenu();
-                    this.startUserInput("Insira comando: ");
+                    this.startCommandInput("Insira comando: ");
                     break;
                 case ControllerState_1.default.EMPLOYEE_CREATION:
-                    console.log(">>> Iniciando criação de Funcionário");
-                    this.appData.addEmployee(yield this.objFactory.startEmployeeCreation());
-                    this.currentState = ControllerState_1.default.EMPLOYEE_MENU;
-                    this.runControlLoop();
-                    break;
                 case ControllerState_1.default.EMPLOYEE_LISTING:
-                    console.log(">>> Listando Funcionários");
-                    console.log(this.appData.listEmployees());
-                    this.currentState = ControllerState_1.default.EMPLOYEE_MENU;
-                    this.runControlLoop();
+                    yield this.runEmployeeCommands();
+                    break;
+                case ControllerState_1.default.CLIENT_CREATION:
+                case ControllerState_1.default.CLIENT_LISTING:
+                case ControllerState_1.default.CLIENT_SELECTION:
+                    yield this.runClientCommands();
                     break;
                 case ControllerState_1.default.SHUTDOWN:
                     console.log(">>> Encerrando programa");
@@ -63,6 +61,12 @@ class Controller {
             }
         });
     }
+    startCommandInput(prompt) {
+        return __awaiter(this, void 0, void 0, function* () {
+            this.currentState = yield this.inputHandler.getNumberInput(prompt);
+            this.runControlLoop();
+        });
+    }
     displayMenu() {
         let renderResult = this.menuRenderer.renderMenu(this.currentState);
         if (!renderResult) {
@@ -72,22 +76,61 @@ class Controller {
             this.runControlLoop();
         }
     }
-    startUserInput(prompt) {
+    runEmployeeCommands() {
         return __awaiter(this, void 0, void 0, function* () {
-            let input = yield this.inputHandler.getStringInput(prompt);
-            this.parseUserInput(input);
+            switch (this.currentState) {
+                case ControllerState_1.default.EMPLOYEE_CREATION:
+                    console.log(">>> Iniciando criação de Funcionário");
+                    this.appData.addEmployee(yield this.objFactory.startEmployeeCreation());
+                    this.currentState = ControllerState_1.default.EMPLOYEE_MENU;
+                    this.runControlLoop();
+                    break;
+                case ControllerState_1.default.EMPLOYEE_LISTING:
+                    console.log(">>> Listando Funcionários");
+                    console.log(this.appData.listEmployees());
+                    this.currentState = ControllerState_1.default.EMPLOYEE_MENU;
+                    this.runControlLoop();
+                    break;
+                default:
+                    console.log(">>> Comando desconhecido");
+                    this.currentState = ControllerState_1.default.RESET;
+                    this.runControlLoop();
+            }
         });
     }
-    parseUserInput(input) {
-        if (typeof input === 'string') {
-            let parsedInput = parseInt(input);
-            this.currentState = parsedInput;
-            this.runControlLoop();
-        }
-        else {
-            this.currentState = ControllerState_1.default.RESET;
-            this.runControlLoop();
-        }
+    runClientCommands() {
+        return __awaiter(this, void 0, void 0, function* () {
+            switch (this.currentState) {
+                case ControllerState_1.default.CLIENT_CREATION:
+                    console.log(">>> Iniciando criação de Cliente");
+                    this.appData.addClient(yield this.objFactory.startClientCreation());
+                    this.currentState = ControllerState_1.default.CLIENT_MENU;
+                    this.runControlLoop();
+                    break;
+                case ControllerState_1.default.CLIENT_LISTING:
+                    console.log(">>> Listando Clientes");
+                    console.log(this.appData.listClients());
+                    this.currentState = ControllerState_1.default.CLIENT_MENU;
+                    this.runControlLoop();
+                    break;
+                case ControllerState_1.default.CLIENT_SELECTION:
+                    let storedClients = this.appData.getClients();
+                    console.log(">>> Listando Clientes");
+                    console.log(this.appData.listClients());
+                    if (storedClients.length === 0) {
+                        let selectedIndex = yield this.inputHandler.getNumberInput("Selecione um cliente: ");
+                    }
+                    else {
+                        this.currentState = ControllerState_1.default.CLIENT_MENU;
+                        this.runControlLoop();
+                    }
+                    break;
+                default:
+                    console.log(">>> Comando desconhecido");
+                    this.currentState = ControllerState_1.default.RESET;
+                    this.runControlLoop();
+            }
+        });
     }
 }
-exports.default = Controller;
+exports.default = MainController;

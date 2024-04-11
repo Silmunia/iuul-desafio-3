@@ -36,39 +36,60 @@ const readline = __importStar(require("readline"));
 class InputHandler {
     getStringInput(prompt) {
         return __awaiter(this, void 0, void 0, function* () {
-            return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
-                let input = yield this.getInput(prompt);
+            return this.getInput(prompt).then((input) => {
                 if (typeof input === 'string') {
-                    resolve(input);
+                    return Promise.resolve(input);
                 }
                 else {
                     console.log(">>> Valor inválido");
                     return this.getStringInput(prompt);
                 }
-            }));
+            });
         });
     }
     getNumberInput(prompt) {
         return __awaiter(this, void 0, void 0, function* () {
-            return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
-                let input = yield this.getInput(prompt);
+            return this.getInput(prompt).then((input) => {
                 if (typeof input === 'string') {
                     let parsed = parseInt(input);
-                    resolve(parsed);
+                    return Promise.resolve(parsed);
                 }
                 else {
                     console.log(">>> Valor inválido");
                     return this.getNumberInput(prompt);
                 }
-            }));
+            });
+        });
+    }
+    getBooleanInput(prompt) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this.getInput(prompt).then((input) => {
+                if (typeof input === 'string') {
+                    let lowerCaseInput = input.toLowerCase();
+                    if (lowerCaseInput.startsWith('s')) {
+                        return Promise.resolve(true);
+                    }
+                    else if (lowerCaseInput.startsWith('n')) {
+                        return Promise.resolve(false);
+                    }
+                    else {
+                        console.log(">>> Valor inválido");
+                        return this.getBooleanInput(prompt);
+                    }
+                }
+                else {
+                    console.log(">>> Valor inválido");
+                    return this.getBooleanInput(prompt);
+                }
+            });
         });
     }
     getInput(message) {
+        let readingInterface = readline.createInterface({
+            input: process.stdin,
+            output: process.stdout
+        });
         return new Promise(function (resolve) {
-            let readingInterface = readline.createInterface({
-                input: process.stdin,
-                output: process.stdout
-            });
             readingInterface.question(message, input => {
                 readingInterface.close();
                 resolve(input);

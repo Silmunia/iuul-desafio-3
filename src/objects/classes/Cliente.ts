@@ -7,8 +7,8 @@ import ContaCorrente from "./ContaCorrente";
 
 class Cliente extends Pessoa implements IUsuario {
 
-    public readonly vip: boolean
-    private enderecos: Array<Endereco> = []
+    public vip: boolean
+    public enderecos: Array<Endereco> = []
     public contas: Array<Conta> = []
 
     constructor(cpf: string, nome: string, telefone: string, vip: boolean, endereco: Endereco, conta: Conta) {
