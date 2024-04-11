@@ -2,6 +2,7 @@ import Funcionario from "../objects/classes/Funcionario";
 import Cliente from "../objects/classes/Cliente";
 import DataRepository from "./DataRepository";
 import FactoryRepository from "./FactoryRepository";
+import Endereco from "../objects/classes/Endereco";
 
 class DataManager {
     private factoryRepository = new FactoryRepository();
@@ -130,6 +131,19 @@ class DataManager {
             }
 
             return false;
+        } else {
+            return false;
+        }
+    }
+
+    public removeEditedClientAddress(index: number): boolean {
+        if (this.editedClient instanceof Cliente) {
+            if (this.editedClient.enderecos.length > 1 && index >= 0 && index < this.editedClient.enderecos.length) {
+                this.editedClient.enderecos.splice(index, 1);
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }

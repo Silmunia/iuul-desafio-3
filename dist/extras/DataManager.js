@@ -126,6 +126,20 @@ class DataManager {
             return false;
         }
     }
+    removeEditedClientAddress(index) {
+        if (this.editedClient instanceof Cliente_1.default) {
+            if (this.editedClient.enderecos.length > 1 && index >= 0 && index < this.editedClient.enderecos.length) {
+                this.editedClient.enderecos.splice(index, 1);
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
+    }
     addClient() {
         return __awaiter(this, void 0, void 0, function* () {
             console.log(">>> Iniciando criação de Cliente");

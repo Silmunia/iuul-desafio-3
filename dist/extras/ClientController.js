@@ -62,11 +62,11 @@ class ClientController {
                     }
                 case ControllerState_1.default.CLIENT_SELECTION:
                     let selectedIndex = yield this.inputHandler.getNumberInput("Selecione um Cliente: ");
-                    let parsedIndex = selectedIndex - 1;
-                    if (parsedIndex >= 0
-                        && parsedIndex < this.dataManager.getClients().length) {
+                    let parsedClientIndex = selectedIndex - 1;
+                    if (parsedClientIndex >= 0
+                        && parsedClientIndex < this.dataManager.getClients().length) {
                         console.log(`>>> Cliente ${selectedIndex} selecionado`);
-                        this.dataManager.setEditedClient(parsedIndex);
+                        this.dataManager.setEditedClient(parsedClientIndex);
                         let selectedClient = this.dataManager.getEditedClient();
                         if (selectedClient instanceof Cliente_1.default) {
                             this.clientInEditing = selectedClient;
@@ -127,6 +127,20 @@ class ClientController {
                     }
                     else {
                         console.log(">>> Não foi possível adicionar o novo Endereço ao Cliente selecionado");
+                    }
+                    this.currentState = ControllerState_1.default.CLIENT_ADDRESS_MENU;
+                    return this.runClientCommands();
+                case ControllerState_1.default.CLIENT_ADDRESS_REMOVAL:
+                    console.log("Listando Endereços do Cliente");
+                    console.log(this.dataManager.listEditedClientAddresses());
+                    let selectedAddress = yield this.inputHandler.getNumberInput("Insira o índice do Endereço a remover: ");
+                    let parsedAddressIndex = selectedAddress - 1;
+                    let addressRemovalResult = this.dataManager.removeEditedClientAddress(parsedAddressIndex);
+                    if (addressRemovalResult) {
+                        console.log(">>> Endereço removido com sucesso");
+                    }
+                    else {
+                        console.log(">>> Não foi possível remover o Endereço selecionado");
                     }
                     this.currentState = ControllerState_1.default.CLIENT_ADDRESS_MENU;
                     return this.runClientCommands();

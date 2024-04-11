@@ -62,7 +62,6 @@ class FactoryRepository {
                 let extraInfo = yield this.inputHandler.getStringInput("Insira o complemento do Endereço: ");
                 let zipCode = yield this.inputHandler.getStringInput("Insira o CEP do Endereço: ");
                 let newAddress = new Endereco_1.default(zipCode, street, number, extraInfo, city, state);
-                console.log(">>> Endereço criado com sucesso");
                 resolve(newAddress);
             }));
         });
