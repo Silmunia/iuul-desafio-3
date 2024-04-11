@@ -21,19 +21,14 @@ const ContaCorrente_1 = __importDefault(require("../objects/classes/ContaCorrent
 const ContaPoupanca_1 = __importDefault(require("../objects/classes/ContaPoupanca"));
 const Conta_1 = __importDefault(require("../objects/abstract classes/Conta"));
 class ClientController {
-    constructor(initialState, editedEmployee, dataManager) {
+    constructor(initialState, dataManager) {
         this.inputHandler = new InputHandler_1.default();
         this.menuRenderer = new MenuRenderer_1.default();
         this.currentState = initialState;
         this.dataManager = dataManager;
-        if (editedEmployee instanceof Cliente_1.default) {
-            this.clientInEditing = editedEmployee;
-        }
-        else {
-            let nilAddress = new Endereco_1.default("", "", "", "", "", "");
-            let nilAccount = new ContaPoupanca_1.default("");
-            this.clientInEditing = new Cliente_1.default("", "", "", false, nilAddress, nilAccount);
-        }
+        let nilAddress = new Endereco_1.default("", "", "", "", "", "");
+        let nilAccount = new ContaPoupanca_1.default("");
+        this.clientInEditing = new Cliente_1.default("", "", "", false, nilAddress, nilAccount);
     }
     runClientCommands() {
         return __awaiter(this, void 0, void 0, function* () {

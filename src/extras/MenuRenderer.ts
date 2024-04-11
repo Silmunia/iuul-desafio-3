@@ -1,4 +1,5 @@
 import ControllerState from "./ControllerState";
+import EmployeeControllerState from "./EmployeeControllerState";
 
 class MenuRenderer {
     public renderMainMenu(state: ControllerState): boolean {
@@ -16,33 +17,33 @@ class MenuRenderer {
         return true;
     }
 
-    public renderEmployeeMenus(state: ControllerState): boolean {
+    public renderEmployeeMenus(state: EmployeeControllerState): boolean {
         switch (state) {
-            case ControllerState.EMPLOYEE_MENU:
+            case EmployeeControllerState.EMPLOYEE_MENU:
                 console.log("\n***Menu: Gerenciar Funcionários***");
-                console.log(`${ControllerState.EMPLOYEE_CREATION}. Criar Funcionário`);
-                console.log(`${ControllerState.EMPLOYEE_LISTING}. Editar Funcionários`);
-                console.log(`${ControllerState.MAIN_MENU}. Voltar para Menu Principal`);
-                console.log(`${ControllerState.SHUTDOWN}. Encerrar`);
+                console.log(`${EmployeeControllerState.EMPLOYEE_CREATION}. Criar Funcionário`);
+                console.log(`${EmployeeControllerState.EMPLOYEE_LISTING}. Editar Funcionários`);
+                console.log(`${EmployeeControllerState.RETURN_TO_MAIN}. Voltar para Menu Principal`);
+                console.log(`${EmployeeControllerState.SHUTDOWN}. Encerrar`);
                 break;
-            case ControllerState.EMPLOYEE_EDITING:
+            case EmployeeControllerState.EMPLOYEE_EDITING:
                 console.log("\n***Menu: Editar Funcionário***");
-                console.log(`${ControllerState.EMPLOYEE_EDIT_LIST}. Listar informações do Funcionário`);
-                console.log(`${ControllerState.EMPLOYEE_EDIT_NAME}. Editar Nome`);
-                console.log(`${ControllerState.EMPLOYEE_EDIT_PHONE}. Editar Telefone`);
-                console.log(`${ControllerState.EMPLOYEE_EDIT_SALARY}. Editar Salário`);
-                console.log(`${ControllerState.EMPLOYEE_EDIT_CPF}. Editar CPF`);
-                console.log(`${ControllerState.EMPLOYEE_ROLES_MENU}. Editar Cargos`);
-                console.log(`${ControllerState.MAIN_MENU}. Voltar para Menu Principal`);
-                console.log(`${ControllerState.SHUTDOWN}. Encerrar`);
+                console.log(`${EmployeeControllerState.EMPLOYEE_EDIT_LIST}. Listar informações do Funcionário`);
+                console.log(`${EmployeeControllerState.EMPLOYEE_EDIT_NAME}. Editar Nome`);
+                console.log(`${EmployeeControllerState.EMPLOYEE_EDIT_PHONE}. Editar Telefone`);
+                console.log(`${EmployeeControllerState.EMPLOYEE_EDIT_SALARY}. Editar Salário`);
+                console.log(`${EmployeeControllerState.EMPLOYEE_EDIT_CPF}. Editar CPF`);
+                console.log(`${EmployeeControllerState.EMPLOYEE_ROLES_MENU}. Editar Cargos`);
+                console.log(`${EmployeeControllerState.RETURN_TO_MAIN}. Voltar para Menu Principal`);
+                console.log(`${EmployeeControllerState.SHUTDOWN}. Encerrar`);
                 break;
-            case ControllerState.EMPLOYEE_ROLES_MENU:
+            case EmployeeControllerState.EMPLOYEE_ROLES_MENU:
                 console.log("\n***Menu: Editar Cargos do Funcionário***");
-                console.log(`${ControllerState.EMPLOYEE_ROLES_CREATION}. Adicionar Cargo ao Funcionário`);
-                console.log(`${ControllerState.EMPLOYEE_ROLES_REMOVAL}. Remover Cargo do Funcionário`);
-                console.log(`${ControllerState.EMPLOYEE_EDITING}. Voltar para Menu de Editar Funcionário`);
-                console.log(`${ControllerState.MAIN_MENU}. Voltar para Menu Principal`);
-                console.log(`${ControllerState.SHUTDOWN}. Encerrar`);
+                console.log(`${EmployeeControllerState.EMPLOYEE_ROLES_CREATION}. Adicionar Cargo ao Funcionário`);
+                console.log(`${EmployeeControllerState.EMPLOYEE_ROLES_REMOVAL}. Remover Cargo do Funcionário`);
+                console.log(`${EmployeeControllerState.EMPLOYEE_EDITING}. Voltar para Menu de Editar Funcionário`);
+                console.log(`${EmployeeControllerState.RETURN_TO_MAIN}. Voltar para Menu Principal`);
+                console.log(`${EmployeeControllerState.SHUTDOWN}. Encerrar`);
                 break;
             default:
                 return false;

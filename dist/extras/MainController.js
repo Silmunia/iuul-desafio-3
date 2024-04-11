@@ -63,7 +63,7 @@ class MainController {
                 case ControllerState_1.default.MAIN_MENU:
                     switch (input) {
                         case ControllerState_1.default.EMPLOYEE_MENU:
-                            this.currentState = yield this.delegateEmployeeControl(input);
+                            this.currentState = yield this.delegateEmployeeControl();
                             break;
                         case ControllerState_1.default.CLIENT_MENU:
                             this.currentState = yield this.delegateClientControl(input);
@@ -82,17 +82,15 @@ class MainController {
             }
         });
     }
-    delegateEmployeeControl(initialState) {
+    delegateEmployeeControl() {
         return __awaiter(this, void 0, void 0, function* () {
-            let editedEmployee = this.dataManager.getEditedEmployee();
-            this.employeeController = new EmployeeController_1.default(initialState, editedEmployee, this.dataManager);
+            this.employeeController = new EmployeeController_1.default(this.dataManager);
             return yield this.employeeController.runEmployeeCommands();
         });
     }
     delegateClientControl(initialState) {
         return __awaiter(this, void 0, void 0, function* () {
-            let editedClient = this.dataManager.getEditedClient();
-            this.clientController = new ClientController_1.default(initialState, editedClient, this.dataManager);
+            this.clientController = new ClientController_1.default(initialState, this.dataManager);
             return yield this.clientController.runClientCommands();
         });
     }
