@@ -21,6 +21,19 @@ class DataManager {
         this.factoryRepository = new FactoryRepository_1.default();
         this.dataRepository = new DataRepository_1.default();
     }
+    getEditedClientAccount(accountNumber) {
+        if (this.editedClient instanceof Cliente_1.default) {
+            for (let i = 0; i < this.editedClient.contas.length; i++) {
+                if (this.editedClient.contas[i].numero === accountNumber) {
+                    return this.editedClient.contas[i];
+                }
+            }
+            return undefined;
+        }
+        else {
+            return undefined;
+        }
+    }
     addEmployee() {
         return __awaiter(this, void 0, void 0, function* () {
             console.log(">>> Iniciando criação de Funcionário");

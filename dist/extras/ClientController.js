@@ -17,7 +17,9 @@ const MenuRenderer_1 = __importDefault(require("./MenuRenderer"));
 const ControllerState_1 = __importDefault(require("./ControllerState"));
 const InputHandler_1 = __importDefault(require("./InputHandler"));
 const Endereco_1 = __importDefault(require("../objects/classes/Endereco"));
+const ContaCorrente_1 = __importDefault(require("../objects/classes/ContaCorrente"));
 const ContaPoupanca_1 = __importDefault(require("../objects/classes/ContaPoupanca"));
+const Conta_1 = __importDefault(require("../objects/abstract classes/Conta"));
 class ClientController {
     constructor(initialState, editedEmployee, dataManager) {
         this.inputHandler = new InputHandler_1.default();
@@ -155,6 +157,53 @@ class ClientController {
                     console.log(this.dataManager.listEditedClientAccounts());
                     this.currentState = ControllerState_1.default.CLIENT_ACCOUNT_MENU;
                     return this.runClientCommands();
+                case ControllerState_1.default.CLIENT_ACCOUNT_DEPOSIT:
+                    let accountDepositNumber = yield this.inputHandler.getStringInput("Insira o número da Conta recebedora do depósito: ");
+                    let depositAccount = this.dataManager.getEditedClientAccount(accountDepositNumber);
+                    if (depositAccount instanceof Conta_1.default) {
+                        let depositValue = yield this.inputHandler.getNumberInput("Insira o valor do depósito: ");
+                        depositAccount.depositar(depositValue);
+                        console.log(">> Depósito realizado com sucesso");
+                    }
+                    else {
+                        console.log(">>> Não foi possível encontrar uma Conta com o número inserido");
+                    }
+                    this.currentState = ControllerState_1.default.CLIENT_ACCOUNT_MENU;
+                    return this.runClientCommands();
+                case ControllerState_1.default.CLIENT_ACCOUNT_WITHDRAW:
+                    let accountWithdrawNumber = yield this.inputHandler.getStringInput("Insira o número da Conta para fazer o saque: ");
+                    let withdrawAccount = this.dataManager.getEditedClientAccount(accountWithdrawNumber);
+                    if (withdrawAccount instanceof Conta_1.default) {
+                        let withdrawValue = yield this.inputHandler.getNumberInput("Insira o valor do saque: ");
+                        try {
+                            if (withdrawAccount instanceof ContaCorrente_1.default) {
+                                withdrawAccount.fazerSaque(withdrawValue);
+                            }
+                            else if (withdrawAccount instanceof ContaPoupanca_1.default) {
+                                withdrawAccount.fazerSaque(withdrawValue);
+                            }
+                            console.log(">>> Saque realizado com sucesso");
+                        }
+                        catch (error) {
+                            console.log(`>>> Não foi possível concluir o saque. ${error instanceof Error ? error.message : ""}`);
+                        }
+                    }
+                    else {
+                        console.log(">>> Não foi possível encontrar uma Conta com o número inserido");
+                    }
+                    this.currentState = ControllerState_1.default.CLIENT_ACCOUNT_MENU;
+                    return this.runClientCommands();
+                case ControllerState_1.default.CLIENT_ACCOUNT_BALANCE:
+                    let accountBalanceNumber = yield this.inputHandler.getStringInput("Insira o número da Conta para calcular o saldo: ");
+                    let balanceAccount = this.dataManager.getEditedClientAccount(accountBalanceNumber);
+                    if (balanceAccount instanceof Conta_1.default) {
+                        console.log(`>>> O saldo da conta é $${balanceAccount === null || balanceAccount === void 0 ? void 0 : balanceAccount.calcularSaldo()}`);
+                    }
+                    else {
+                        console.log(">>> Não foi possível encontrar uma Conta com o número inserido");
+                    }
+                    this.currentState = ControllerState_1.default.CLIENT_ACCOUNT_MENU;
+                    return this.runClientCommands();
                 default:
                     console.log(">>> Comando desconhecido");
                     this.currentState = ControllerState_1.default.RESET;
@@ -258,6 +307,15 @@ class ClientController {
                     switch (input) {
                         case ControllerState_1.default.CLIENT_ACCOUNT_LIST:
                             this.currentState = ControllerState_1.default.CLIENT_ACCOUNT_LIST;
+                            break;
+                        case ControllerState_1.default.CLIENT_ACCOUNT_WITHDRAW:
+                            this.currentState = ControllerState_1.default.CLIENT_ACCOUNT_WITHDRAW;
+                            break;
+                        case ControllerState_1.default.CLIENT_ACCOUNT_DEPOSIT:
+                            this.currentState = ControllerState_1.default.CLIENT_ACCOUNT_DEPOSIT;
+                            break;
+                        case ControllerState_1.default.CLIENT_ACCOUNT_BALANCE:
+                            this.currentState = ControllerState_1.default.CLIENT_ACCOUNT_BALANCE;
                             break;
                         case ControllerState_1.default.CLIENT_EDITING:
                             this.currentState = ControllerState_1.default.CLIENT_EDITING;

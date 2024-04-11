@@ -34,6 +34,7 @@ var ControllerState;
     ControllerState[ControllerState["CLIENT_ACCOUNT_LIST"] = 29] = "CLIENT_ACCOUNT_LIST";
     ControllerState[ControllerState["CLIENT_ACCOUNT_WITHDRAW"] = 30] = "CLIENT_ACCOUNT_WITHDRAW";
     ControllerState[ControllerState["CLIENT_ACCOUNT_DEPOSIT"] = 31] = "CLIENT_ACCOUNT_DEPOSIT";
+    ControllerState[ControllerState["CLIENT_ACCOUNT_BALANCE"] = 32] = "CLIENT_ACCOUNT_BALANCE";
     ControllerState[ControllerState["SHUTDOWN"] = 999] = "SHUTDOWN";
     ControllerState[ControllerState["RESET"] = 1000] = "RESET";
 })(ControllerState || (ControllerState = {}));
