@@ -188,6 +188,31 @@ class ClientController {
                 }
                 this.currentState = ControllerState.CLIENT_ACCOUNT_MENU;
                 return this.runClientCommands();
+            case ControllerState.CLIENT_ACCOUNT_TRANSFER:
+                let originAccountNumber = await this.inputHandler.getStringInput("Insira o número da Conta de origem da transferência: ");
+                let originAccount = this.dataManager.getEditedClientAccount(originAccountNumber);
+                if (originAccount instanceof ContaCorrente) {
+                    let targetAccountNumber = await this.inputHandler.getStringInput("Insira o número da Conta de destino da transferência: ");
+                    let targetAccount = this.dataManager.getTargetAccountForTransfer(targetAccountNumber);
+
+                    if (targetAccount instanceof Conta) {
+
+                        let transferValue = await this.inputHandler.getNumberInput("Insira o valor a ser transferido: ");
+
+                        try {
+                            originAccount.transferir(targetAccount, transferValue);
+                            console.log(">>> Transferência realizada com sucesso");
+                        } catch (error) {
+                            console.log(`>>> Não foi possível concluir a transferência. ${error instanceof Error ? error.message : ""}`);
+                        }
+                    } else {
+                        console.log(`>>> Não foi possível encontrar uma Conta de destino com número ${targetAccountNumber}`);
+                    }
+                } else {
+                    console.log(">>> Não é possível fazer transferências a partir de uma Conta Poupança");
+                }
+                this.currentState = ControllerState.CLIENT_ACCOUNT_MENU;
+                return this.runClientCommands();
             default:
                 console.log(">>> Comando desconhecido");
                 this.currentState = ControllerState.RESET;
@@ -294,6 +319,9 @@ class ClientController {
                         break;
                     case ControllerState.CLIENT_ACCOUNT_WITHDRAW:
                         this.currentState = ControllerState.CLIENT_ACCOUNT_WITHDRAW;
+                        break;
+                    case ControllerState.CLIENT_ACCOUNT_TRANSFER:
+                        this.currentState = ControllerState.CLIENT_ACCOUNT_TRANSFER;
                         break;
                     case ControllerState.CLIENT_ACCOUNT_DEPOSIT:
                         this.currentState = ControllerState.CLIENT_ACCOUNT_DEPOSIT;

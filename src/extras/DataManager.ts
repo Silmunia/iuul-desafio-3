@@ -12,6 +12,22 @@ class DataManager {
     private editedEmployee: Funcionario | undefined;
     private editedClient: Cliente | undefined;
 
+    public getTargetAccountForTransfer(accountNumber: string): Conta | undefined {
+        let allClients = this.dataRepository.getAllClients();
+
+        for (let i = 0; i < allClients.length; i++) {
+            let currentAccounts = allClients[i].contas;
+
+            for (let j = 0; j < currentAccounts.length; j++) {
+                if (accountNumber === currentAccounts[j].numero) {
+                    return currentAccounts[j];
+                }
+            }
+        }
+
+        return undefined;
+    }
+
     public getEditedClientAccount(accountNumber: string): Conta | undefined {
         if (this.editedClient instanceof Cliente) {
             for (let i = 0; i < this.editedClient.contas.length; i++) {

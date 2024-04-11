@@ -87,6 +87,7 @@ class MenuRenderer {
                 console.log(`${ControllerState.CLIENT_ACCOUNT_DEPOSIT}. Fazer depósito`);
                 console.log(`${ControllerState.CLIENT_ACCOUNT_WITHDRAW}. Fazer saque`);
                 console.log(`${ControllerState.CLIENT_ACCOUNT_BALANCE}. Calcular saldo`);
+                console.log(`${ControllerState.CLIENT_ACCOUNT_TRANSFER}. Fazer transferência`);
                 console.log(`${ControllerState.CLIENT_EDITING}. Voltar para Menu de Editar Cliente`);
                 console.log(`${ControllerState.MAIN_MENU}. Voltar para Menu Principal`);
                 console.log(`${ControllerState.SHUTDOWN}. Encerrar`);
