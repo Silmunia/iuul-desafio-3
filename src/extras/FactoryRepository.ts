@@ -59,8 +59,6 @@ class FactoryRepository {
 
             let newAddress = new Endereco(zipCode, street, number, extraInfo, city, state);
 
-            console.log(">>> Endereço criado com sucesso");
-
             resolve(newAddress);
 
         });

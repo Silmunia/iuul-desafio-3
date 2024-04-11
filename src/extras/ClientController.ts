@@ -111,6 +111,15 @@ class ClientController {
                 console.log(">>> Estado VIP atualizado com sucesso");
                 this.currentState = ControllerState.CLIENT_EDITING;
                 return this.runClientCommands();
+            case ControllerState.CLIENT_ADDRESS_CREATION:
+                let addressCreationResult = await this.dataManager.addAddressToEditedClient();
+                if (addressCreationResult) {
+                    console.log(">>> Endereço adicionado com sucesso");
+                } else {
+                    console.log(">>> Não foi possível adicionar o novo Endereço ao Cliente selecionado");
+                }
+                this.currentState = ControllerState.CLIENT_ADDRESS_MENU;
+                return this.runClientCommands();
             default:
                 console.log(">>> Comando desconhecido");
                 this.currentState = ControllerState.RESET;
@@ -185,6 +194,12 @@ class ClientController {
                 break;
             case ControllerState.CLIENT_ADDRESS_MENU:
                 switch (input) {
+                    case ControllerState.CLIENT_ADDRESS_CREATION:
+                        this.currentState = ControllerState.CLIENT_ADDRESS_CREATION;
+                        break;
+                    case ControllerState.CLIENT_ADDRESS_REMOVAL:
+                        this.currentState = ControllerState.CLIENT_ADDRESS_REMOVAL;
+                        break;
                     case ControllerState.CLIENT_EDITING:
                         this.currentState = ControllerState.CLIENT_EDITING;
                         break;

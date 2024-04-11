@@ -27,6 +27,8 @@ var ControllerState;
     ControllerState[ControllerState["CLIENT_EDIT_CPF"] = 22] = "CLIENT_EDIT_CPF";
     ControllerState[ControllerState["CLIENT_EDIT_VIP"] = 23] = "CLIENT_EDIT_VIP";
     ControllerState[ControllerState["CLIENT_ADDRESS_MENU"] = 24] = "CLIENT_ADDRESS_MENU";
+    ControllerState[ControllerState["CLIENT_ADDRESS_CREATION"] = 25] = "CLIENT_ADDRESS_CREATION";
+    ControllerState[ControllerState["CLIENT_ADDRESS_REMOVAL"] = 26] = "CLIENT_ADDRESS_REMOVAL";
     ControllerState[ControllerState["SHUTDOWN"] = 999] = "SHUTDOWN";
     ControllerState[ControllerState["RESET"] = 1000] = "RESET";
 })(ControllerState || (ControllerState = {}));

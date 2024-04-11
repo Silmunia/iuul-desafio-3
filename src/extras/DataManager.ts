@@ -95,6 +95,17 @@ class DataManager {
         }
     }
 
+    public async addAddressToEditedClient(): Promise<boolean> {
+        let newAddress = await this.factoryRepository.startAddressCreation();
+
+        if (this.editedClient instanceof Cliente) {
+            this.editedClient.enderecos.push(newAddress);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public listEditedEmployeeRoles(employee: Funcionario): string {
         let resultString = "";
 

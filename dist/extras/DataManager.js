@@ -90,6 +90,18 @@ class DataManager {
             return ">>> Não foi possível encontrar o Cliente";
         }
     }
+    addAddressToEditedClient() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let newAddress = yield this.factoryRepository.startAddressCreation();
+            if (this.editedClient instanceof Cliente_1.default) {
+                this.editedClient.enderecos.push(newAddress);
+                return true;
+            }
+            else {
+                return false;
+            }
+        });
+    }
     listEditedEmployeeRoles(employee) {
         let resultString = "";
         for (let i = 0; i < employee.cargos.length; i++) {

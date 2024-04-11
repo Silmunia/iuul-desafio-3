@@ -74,8 +74,8 @@ class MenuRenderer {
                 break;
             case ControllerState_1.default.CLIENT_ADDRESS_MENU:
                 console.log("\n***Menu: Editar Endereços do Cliente***");
-                console.log(`X. Adicionar Endereço`);
-                console.log(`X. Remover Endereço`);
+                console.log(`${ControllerState_1.default.CLIENT_ADDRESS_CREATION}. Adicionar Endereço`);
+                console.log(`${ControllerState_1.default.CLIENT_ADDRESS_REMOVAL}. Remover Endereço`);
                 console.log(`${ControllerState_1.default.CLIENT_EDITING}. Voltar para Menu de Editar Cliente`);
                 console.log(`${ControllerState_1.default.MAIN_MENU}. Voltar para Menu Principal`);
                 console.log(`${ControllerState_1.default.SHUTDOWN}. Encerrar`);
