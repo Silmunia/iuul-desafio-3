@@ -90,6 +90,27 @@ class ClientController {
                 console.log(">>> Nome atualizado com sucesso");
                 this.currentState = ControllerState.CLIENT_EDITING;
                 return this.runClientCommands();
+            case ControllerState.CLIENT_EDIT_PHONE:
+                console.log(`Telefone atual do Cliente: ${this.clientInEditing.telefone}`);
+                let newPhone = await this.inputHandler.getStringInput("Insira o novo Telefone do Cliente: ");
+                this.clientInEditing.telefone = newPhone;
+                console.log(">>> Telefone atualizado com sucesso");
+                this.currentState = ControllerState.CLIENT_EDITING;
+                return this.runClientCommands();
+            case ControllerState.CLIENT_EDIT_CPF:
+                console.log(`CPF atual do Cliente: ${this.clientInEditing.cpf}`);
+                let newCPF = await this.inputHandler.getStringInput("Insira o novo CPF do Cliente: ");
+                this.clientInEditing.cpf = newCPF;
+                console.log(">>> CPF atualizado com sucesso");
+                this.currentState = ControllerState.CLIENT_EDITING;
+                return this.runClientCommands();
+            case ControllerState.CLIENT_EDIT_VIP:
+                console.log(`Estado VIP atual do Cliente: ${this.clientInEditing.vip ? "VIP" : "Normal"}`);
+                let newVIP = await this.inputHandler.getBooleanInput(`${this.clientInEditing.vip ? "O Cliente continua VIP? (s/n): " : "O Cliente se torna VIP? (s/n): "}`);
+                this.clientInEditing.vip = newVIP;
+                console.log(">>> Estado VIP atualizado com sucesso");
+                this.currentState = ControllerState.CLIENT_EDITING;
+                return this.runClientCommands();
             default:
                 console.log(">>> Comando desconhecido");
                 this.currentState = ControllerState.RESET;
@@ -139,6 +160,15 @@ class ClientController {
                         break;
                     case ControllerState.CLIENT_EDIT_NAME:
                         this.currentState = ControllerState.CLIENT_EDIT_NAME;
+                        break;
+                    case ControllerState.CLIENT_EDIT_PHONE:
+                        this.currentState = ControllerState.CLIENT_EDIT_PHONE;
+                        break;
+                    case ControllerState.CLIENT_EDIT_CPF:
+                        this.currentState = ControllerState.CLIENT_EDIT_CPF;
+                        break;
+                    case ControllerState.CLIENT_EDIT_VIP:
+                        this.currentState = ControllerState.CLIENT_EDIT_VIP;
                         break;
                     case ControllerState.MAIN_MENU:
                         this.currentState = ControllerState.MAIN_MENU;

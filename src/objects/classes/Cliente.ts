@@ -7,7 +7,7 @@ import ContaCorrente from "./ContaCorrente";
 
 class Cliente extends Pessoa implements IUsuario {
 
-    public readonly vip: boolean
+    public vip: boolean
     public enderecos: Array<Endereco> = []
     public contas: Array<Conta> = []
 

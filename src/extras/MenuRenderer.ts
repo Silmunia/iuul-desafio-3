@@ -64,8 +64,9 @@ class MenuRenderer {
                 console.log("\n***Menu: Editar Cliente***");
                 console.log(`${ControllerState.CLIENT_EDIT_LIST}. Listar informações do Cliente`);
                 console.log(`${ControllerState.CLIENT_EDIT_NAME}. Editar Nome`);
-                console.log(`X. Editar Telefone`);
-                console.log(`X. Editar CPF`);
+                console.log(`${ControllerState.CLIENT_EDIT_PHONE}. Editar Telefone`);
+                console.log(`${ControllerState.CLIENT_EDIT_CPF}. Editar CPF`);
+                console.log(`${ControllerState.CLIENT_EDIT_VIP}. Editar estado VIP`);
                 console.log(`X. Gerenciar Endereço(s)`);
                 console.log(`X. Gerenciar Conta(s)`);
                 console.log(`${ControllerState.MAIN_MENU}. Voltar para Menu Principal`);
