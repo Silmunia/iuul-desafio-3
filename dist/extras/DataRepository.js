@@ -25,6 +25,14 @@ class DataRepository {
             return undefined;
         }
     }
+    getClient(index) {
+        if (index >= 0 && index < this.clients.length) {
+            return this.clients[index];
+        }
+        else {
+            return undefined;
+        }
+    }
     getAllEmployees() {
         return this.employees;
     }

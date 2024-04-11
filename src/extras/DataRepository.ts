@@ -29,6 +29,14 @@ class DataRepository {
         }
     }
 
+    public getClient(index: number) {
+        if (index >= 0 && index < this.clients.length) {
+            return this.clients[index];
+        } else {
+            return undefined;
+        }
+    }
+
     public getAllEmployees(): Array<Funcionario> {
         return this.employees;
     }

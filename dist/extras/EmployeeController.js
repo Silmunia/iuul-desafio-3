@@ -37,6 +37,10 @@ class EmployeeController {
                     return ControllerState_1.default.MAIN_MENU;
                 case ControllerState_1.default.SHUTDOWN:
                     return ControllerState_1.default.SHUTDOWN;
+                case ControllerState_1.default.RESET:
+                    console.log(">>> Voltando ao Menu de Funcionários");
+                    this.currentState = ControllerState_1.default.EMPLOYEE_MENU;
+                    return this.runEmployeeCommands();
                 case ControllerState_1.default.EMPLOYEE_MENU:
                 case ControllerState_1.default.EMPLOYEE_EDITING:
                 case ControllerState_1.default.EMPLOYEE_ROLES_MENU:

@@ -1,9 +1,9 @@
-import Funcionario from "../objects/classes/Funcionario";
 import ControllerState from "./ControllerState";
 import DataManager from "./DataManager";
 import InputHandler from "./InputHandler";
 import MenuRenderer from "./MenuRenderer";
 import EmployeeController from "./EmployeeController";
+import ClientController from "./ClientController";
 
 class MainController {
     private currentState: ControllerState = ControllerState.MAIN_MENU;
@@ -11,6 +11,7 @@ class MainController {
     private menuRenderer: MenuRenderer = new MenuRenderer();
     private dataManager: DataManager = new DataManager();
     private employeeController: EmployeeController | undefined;
+    private clientController: ClientController | undefined;
     
     public startProgram() {
         this.runControlLoop();
@@ -19,13 +20,8 @@ class MainController {
     private async runControlLoop() {
         switch (this.currentState) {
             case ControllerState.MAIN_MENU:
-            case ControllerState.CLIENT_MENU:
                 this.displayMenu();
                 await this.startCommandInput("Insira comando: ");
-                break;
-            case ControllerState.CLIENT_CREATION:
-            case ControllerState.CLIENT_LISTING:
-                await this.runClientCommands();
                 break;
             case ControllerState.SHUTDOWN:
                 console.log(">>> Encerrando programa");
@@ -53,29 +49,10 @@ class MainController {
             case ControllerState.MAIN_MENU:
                 switch (input) {
                     case ControllerState.EMPLOYEE_MENU:
-                        this.currentState = await this.delegateEmployeeEditing(input);
+                        this.currentState = await this.delegateEmployeeControl(input);
                         break;
                     case ControllerState.CLIENT_MENU:
-                        this.currentState = ControllerState.CLIENT_MENU;
-                        break;
-                    case ControllerState.SHUTDOWN:
-                        this.currentState = ControllerState.SHUTDOWN;
-                        break;
-                    default:
-                        console.log(">>> Comando desconhecido");
-                        this.currentState = ControllerState.RESET;
-                }
-                break;
-            case ControllerState.CLIENT_MENU:
-                switch (input) {
-                    case ControllerState.CLIENT_CREATION:
-                        this.currentState = ControllerState.CLIENT_CREATION;
-                        break;
-                    case ControllerState.CLIENT_LISTING:
-                        this.currentState = ControllerState.CLIENT_LISTING;
-                        break;
-                    case ControllerState.MAIN_MENU:
-                        this.currentState = ControllerState.MAIN_MENU;
+                        this.currentState = await this.delegateClientControl(input);
                         break;
                     case ControllerState.SHUTDOWN:
                         this.currentState = ControllerState.SHUTDOWN;
@@ -91,11 +68,18 @@ class MainController {
         }
     }
 
-    private async delegateEmployeeEditing(initialState: ControllerState) {
+    private async delegateEmployeeControl(initialState: ControllerState) {
         let editedEmployee = this.dataManager.getEditedEmployee();
 
         this.employeeController = new EmployeeController(initialState, editedEmployee, this.dataManager);
         return await this.employeeController.runEmployeeCommands();
+    }
+
+    private async delegateClientControl(initialState: ControllerState) {
+        let editedClient = this.dataManager.getEditedClient();
+
+        this.clientController = new ClientController(initialState, editedClient, this.dataManager);
+        return await this.clientController.runClientCommands();
     }
 
     private displayMenu() {
@@ -106,25 +90,6 @@ class MainController {
             console.log(">>> Voltando para o Menu Principal");
             this.currentState = ControllerState.MAIN_MENU;
             this.runControlLoop();
-        }
-    }
-
-    private async runClientCommands() {
-        switch(this.currentState) {
-            case ControllerState.CLIENT_CREATION:
-                await this.dataManager.addClient();
-                this.currentState = ControllerState.CLIENT_MENU;
-                this.runControlLoop();
-                break;
-            case ControllerState.CLIENT_LISTING:
-                this.dataManager.listClients();
-                this.currentState = ControllerState.CLIENT_MENU;
-                this.runControlLoop();
-                break;
-            default:
-                console.log(">>> Comando desconhecido");
-                this.currentState = ControllerState.RESET;
-                this.runControlLoop();
         }
     }
 }

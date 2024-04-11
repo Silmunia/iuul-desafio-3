@@ -17,6 +17,7 @@ const DataManager_1 = __importDefault(require("./DataManager"));
 const InputHandler_1 = __importDefault(require("./InputHandler"));
 const MenuRenderer_1 = __importDefault(require("./MenuRenderer"));
 const EmployeeController_1 = __importDefault(require("./EmployeeController"));
+const ClientController_1 = __importDefault(require("./ClientController"));
 class MainController {
     constructor() {
         this.currentState = ControllerState_1.default.MAIN_MENU;
@@ -31,13 +32,8 @@ class MainController {
         return __awaiter(this, void 0, void 0, function* () {
             switch (this.currentState) {
                 case ControllerState_1.default.MAIN_MENU:
-                case ControllerState_1.default.CLIENT_MENU:
                     this.displayMenu();
                     yield this.startCommandInput("Insira comando: ");
-                    break;
-                case ControllerState_1.default.CLIENT_CREATION:
-                case ControllerState_1.default.CLIENT_LISTING:
-                    yield this.runClientCommands();
                     break;
                 case ControllerState_1.default.SHUTDOWN:
                     console.log(">>> Encerrando programa");
@@ -67,29 +63,10 @@ class MainController {
                 case ControllerState_1.default.MAIN_MENU:
                     switch (input) {
                         case ControllerState_1.default.EMPLOYEE_MENU:
-                            this.currentState = yield this.delegateEmployeeEditing(input);
+                            this.currentState = yield this.delegateEmployeeControl(input);
                             break;
                         case ControllerState_1.default.CLIENT_MENU:
-                            this.currentState = ControllerState_1.default.CLIENT_MENU;
-                            break;
-                        case ControllerState_1.default.SHUTDOWN:
-                            this.currentState = ControllerState_1.default.SHUTDOWN;
-                            break;
-                        default:
-                            console.log(">>> Comando desconhecido");
-                            this.currentState = ControllerState_1.default.RESET;
-                    }
-                    break;
-                case ControllerState_1.default.CLIENT_MENU:
-                    switch (input) {
-                        case ControllerState_1.default.CLIENT_CREATION:
-                            this.currentState = ControllerState_1.default.CLIENT_CREATION;
-                            break;
-                        case ControllerState_1.default.CLIENT_LISTING:
-                            this.currentState = ControllerState_1.default.CLIENT_LISTING;
-                            break;
-                        case ControllerState_1.default.MAIN_MENU:
-                            this.currentState = ControllerState_1.default.MAIN_MENU;
+                            this.currentState = yield this.delegateClientControl(input);
                             break;
                         case ControllerState_1.default.SHUTDOWN:
                             this.currentState = ControllerState_1.default.SHUTDOWN;
@@ -105,11 +82,18 @@ class MainController {
             }
         });
     }
-    delegateEmployeeEditing(initialState) {
+    delegateEmployeeControl(initialState) {
         return __awaiter(this, void 0, void 0, function* () {
             let editedEmployee = this.dataManager.getEditedEmployee();
             this.employeeController = new EmployeeController_1.default(initialState, editedEmployee, this.dataManager);
             return yield this.employeeController.runEmployeeCommands();
+        });
+    }
+    delegateClientControl(initialState) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let editedClient = this.dataManager.getEditedClient();
+            this.clientController = new ClientController_1.default(initialState, editedClient, this.dataManager);
+            return yield this.clientController.runClientCommands();
         });
     }
     displayMenu() {
@@ -120,26 +104,6 @@ class MainController {
             this.currentState = ControllerState_1.default.MAIN_MENU;
             this.runControlLoop();
         }
-    }
-    runClientCommands() {
-        return __awaiter(this, void 0, void 0, function* () {
-            switch (this.currentState) {
-                case ControllerState_1.default.CLIENT_CREATION:
-                    yield this.dataManager.addClient();
-                    this.currentState = ControllerState_1.default.CLIENT_MENU;
-                    this.runControlLoop();
-                    break;
-                case ControllerState_1.default.CLIENT_LISTING:
-                    this.dataManager.listClients();
-                    this.currentState = ControllerState_1.default.CLIENT_MENU;
-                    this.runControlLoop();
-                    break;
-                default:
-                    console.log(">>> Comando desconhecido");
-                    this.currentState = ControllerState_1.default.RESET;
-                    this.runControlLoop();
-            }
-        });
     }
 }
 exports.default = MainController;

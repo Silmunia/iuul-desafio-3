@@ -1,4 +1,5 @@
 import Funcionario from "../objects/classes/Funcionario";
+import Cliente from "../objects/classes/Cliente";
 import DataRepository from "./DataRepository";
 import FactoryRepository from "./FactoryRepository";
 
@@ -7,6 +8,7 @@ class DataManager {
     private dataRepository = new DataRepository();
 
     private editedEmployee: Funcionario | undefined;
+    private editedClient: Cliente | undefined;
 
     public async addEmployee() {
         console.log(">>> Iniciando criação de Funcionário");
@@ -30,6 +32,14 @@ class DataManager {
 
     public getEditedEmployee(): Funcionario | undefined {
         return this.editedEmployee;
+    }
+
+    public setEditedClient(index: number) {
+        this.editedClient = this.dataRepository.getClient(index);
+    }
+
+    public getEditedClient(): Cliente | undefined {
+        return this.editedClient;
     }
 
     public listEditedEmployeeInfo(): string {

@@ -39,6 +39,12 @@ class DataManager {
     getEditedEmployee() {
         return this.editedEmployee;
     }
+    setEditedClient(index) {
+        this.editedClient = this.dataRepository.getClient(index);
+    }
+    getEditedClient() {
+        return this.editedClient;
+    }
     listEditedEmployeeInfo() {
         if (this.editedEmployee instanceof Funcionario_1.default) {
             return `\n>>> Listando informações do Funcionário\nNome: ${this.editedEmployee.nome}\nCPF: ${this.editedEmployee.cpf}\nCargos: ${this.listEditedEmployeeRoles(this.editedEmployee)}\nTelefone: ${this.editedEmployee.telefone}\nSalário: ${this.editedEmployee.salario}`;
