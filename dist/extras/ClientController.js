@@ -46,6 +46,7 @@ class ClientController {
                 case ControllerState_1.default.CLIENT_MENU:
                 case ControllerState_1.default.CLIENT_EDITING:
                 case ControllerState_1.default.CLIENT_ADDRESS_MENU:
+                case ControllerState_1.default.CLIENT_ACCOUNT_MENU:
                     this.displayMenu();
                     yield this.startCommandInput("Insira comando: ");
                     return this.runClientCommands();
@@ -149,6 +150,11 @@ class ClientController {
                     console.log(this.dataManager.listEditedClientAddresses());
                     this.currentState = ControllerState_1.default.CLIENT_ADDRESS_MENU;
                     return this.runClientCommands();
+                case ControllerState_1.default.CLIENT_ACCOUNT_LIST:
+                    console.log(">>> Listando Contas do Cliente");
+                    console.log(this.dataManager.listEditedClientAccounts());
+                    this.currentState = ControllerState_1.default.CLIENT_ACCOUNT_MENU;
+                    return this.runClientCommands();
                 default:
                     console.log(">>> Comando desconhecido");
                     this.currentState = ControllerState_1.default.RESET;
@@ -211,6 +217,9 @@ class ClientController {
                         case ControllerState_1.default.CLIENT_ADDRESS_MENU:
                             this.currentState = ControllerState_1.default.CLIENT_ADDRESS_MENU;
                             break;
+                        case ControllerState_1.default.CLIENT_ACCOUNT_MENU:
+                            this.currentState = ControllerState_1.default.CLIENT_ACCOUNT_MENU;
+                            break;
                         case ControllerState_1.default.MAIN_MENU:
                             this.currentState = ControllerState_1.default.MAIN_MENU;
                             break;
@@ -231,6 +240,24 @@ class ClientController {
                             break;
                         case ControllerState_1.default.CLIENT_ADDRESS_LIST:
                             this.currentState = ControllerState_1.default.CLIENT_ADDRESS_LIST;
+                            break;
+                        case ControllerState_1.default.CLIENT_EDITING:
+                            this.currentState = ControllerState_1.default.CLIENT_EDITING;
+                            break;
+                        case ControllerState_1.default.MAIN_MENU:
+                            this.currentState = ControllerState_1.default.MAIN_MENU;
+                            break;
+                        case ControllerState_1.default.SHUTDOWN:
+                            this.currentState = ControllerState_1.default.SHUTDOWN;
+                            break;
+                        default:
+                            console.log(">>> Comando desconhecido");
+                    }
+                    break;
+                case ControllerState_1.default.CLIENT_ACCOUNT_MENU:
+                    switch (input) {
+                        case ControllerState_1.default.CLIENT_ACCOUNT_LIST:
+                            this.currentState = ControllerState_1.default.CLIENT_ACCOUNT_LIST;
                             break;
                         case ControllerState_1.default.CLIENT_EDITING:
                             this.currentState = ControllerState_1.default.CLIENT_EDITING;
