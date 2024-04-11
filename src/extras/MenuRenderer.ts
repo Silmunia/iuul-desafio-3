@@ -68,15 +68,25 @@ class MenuRenderer {
                 console.log(`${ControllerState.CLIENT_EDIT_CPF}. Editar CPF`);
                 console.log(`${ControllerState.CLIENT_EDIT_VIP}. Editar estado VIP`);
                 console.log(`${ControllerState.CLIENT_ADDRESS_MENU}. Gerenciar Endereço(s)`);
-                console.log(`X. Gerenciar Conta(s)`);
+                console.log(`${ControllerState.CLIENT_ACCOUNT_MENU}. Gerenciar Conta(s)`);
                 console.log(`${ControllerState.MAIN_MENU}. Voltar para Menu Principal`);
                 console.log(`${ControllerState.SHUTDOWN}. Encerrar`);
                 break;
             case ControllerState.CLIENT_ADDRESS_MENU:
-                console.log("\n***Menu: Editar Endereços do Cliente***");
+                console.log("\n***Menu: Gerenciar Endereços do Cliente***");
                 console.log(`${ControllerState.CLIENT_ADDRESS_LIST}. Listar Endereços do Cliente`);
                 console.log(`${ControllerState.CLIENT_ADDRESS_CREATION}. Adicionar Endereço`);
                 console.log(`${ControllerState.CLIENT_ADDRESS_REMOVAL}. Remover Endereço`);
+                console.log(`${ControllerState.CLIENT_EDITING}. Voltar para Menu de Editar Cliente`);
+                console.log(`${ControllerState.MAIN_MENU}. Voltar para Menu Principal`);
+                console.log(`${ControllerState.SHUTDOWN}. Encerrar`);
+                break;
+            case ControllerState.CLIENT_ACCOUNT_MENU:
+                console.log("\n***Menu: Gerenciar Contas do Cliente***");
+                console.log(`${ControllerState.CLIENT_ACCOUNT_LIST}. Listar Contas do Cliente`);
+                console.log(`${ControllerState.CLIENT_ACCOUNT_DEPOSIT}. Fazer depósito`);
+                console.log(`${ControllerState.CLIENT_ACCOUNT_WITHDRAW}. Fazer saque`);
+                console.log(`${ControllerState.CLIENT_ACCOUNT_BALANCE}. Calcular saldo`);
                 console.log(`${ControllerState.CLIENT_EDITING}. Voltar para Menu de Editar Cliente`);
                 console.log(`${ControllerState.MAIN_MENU}. Voltar para Menu Principal`);
                 console.log(`${ControllerState.SHUTDOWN}. Encerrar`);

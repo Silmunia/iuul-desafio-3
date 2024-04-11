@@ -3,6 +3,7 @@ import Cliente from "../objects/classes/Cliente";
 import DataRepository from "./DataRepository";
 import FactoryRepository from "./FactoryRepository";
 import Endereco from "../objects/classes/Endereco";
+import Conta from "../objects/abstract classes/Conta";
 
 class DataManager {
     private factoryRepository = new FactoryRepository();
@@ -10,6 +11,20 @@ class DataManager {
 
     private editedEmployee: Funcionario | undefined;
     private editedClient: Cliente | undefined;
+
+    public getEditedClientAccount(accountNumber: string): Conta | undefined {
+        if (this.editedClient instanceof Cliente) {
+            for (let i = 0; i < this.editedClient.contas.length; i++) {
+                if (this.editedClient.contas[i].numero === accountNumber) {
+                    return this.editedClient.contas[i];
+                }
+            }
+
+            return undefined;
+        } else {
+            return undefined;
+        }
+    }
 
     public async addEmployee() {
         console.log(">>> Iniciando criação de Funcionário");
