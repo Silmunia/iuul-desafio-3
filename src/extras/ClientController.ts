@@ -121,7 +121,7 @@ class ClientController {
                 this.currentState = ControllerState.CLIENT_ADDRESS_MENU;
                 return this.runClientCommands();
             case ControllerState.CLIENT_ADDRESS_REMOVAL:
-                console.log("Listando Endereços do Cliente");
+                console.log(">>> Listando Endereços do Cliente");
                 console.log(this.dataManager.listEditedClientAddresses());
                 let selectedAddress = await this.inputHandler.getNumberInput("Insira o índice do Endereço a remover: ");
                 let parsedAddressIndex = selectedAddress-1;
@@ -131,6 +131,11 @@ class ClientController {
                 } else {
                     console.log(">>> Não foi possível remover o Endereço selecionado");
                 }
+                this.currentState = ControllerState.CLIENT_ADDRESS_MENU;
+                return this.runClientCommands();
+            case ControllerState.CLIENT_ADDRESS_LIST:
+                console.log(">>> Listando Endereços do Cliente");
+                console.log(this.dataManager.listEditedClientAddresses());
                 this.currentState = ControllerState.CLIENT_ADDRESS_MENU;
                 return this.runClientCommands();
             default:
@@ -212,6 +217,9 @@ class ClientController {
                         break;
                     case ControllerState.CLIENT_ADDRESS_REMOVAL:
                         this.currentState = ControllerState.CLIENT_ADDRESS_REMOVAL;
+                        break;
+                    case ControllerState.CLIENT_ADDRESS_LIST:
+                        this.currentState = ControllerState.CLIENT_ADDRESS_LIST;
                         break;
                     case ControllerState.CLIENT_EDITING:
                         this.currentState = ControllerState.CLIENT_EDITING;
