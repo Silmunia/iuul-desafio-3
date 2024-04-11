@@ -4,12 +4,14 @@ import ControllerState from "./ControllerState";
 import DataManager from "./DataManager";
 import InputHandler from "./InputHandler";
 import MenuRenderer from "./MenuRenderer";
+import EmployeeController from "./EmployeeController";
 
 class MainController {
     private currentState: ControllerState = ControllerState.MAIN_MENU;
     private inputHandler: InputHandler = new InputHandler();
     private menuRenderer: MenuRenderer = new MenuRenderer();
     private dataManager: DataManager = new DataManager();
+    private employeeController: EmployeeController | undefined;
     
     public startProgram() {
         this.runControlLoop();
@@ -23,7 +25,7 @@ class MainController {
             case ControllerState.EMPLOYEE_EDITING:
             case ControllerState.EMPLOYEE_ROLES_MENU:
                 this.displayMenu();
-                this.startCommandInput("Insira comando: ");
+                await this.startCommandInput("Insira comando: ");
                 break;
             case ControllerState.EMPLOYEE_CREATION:
             case ControllerState.EMPLOYEE_LISTING:
@@ -35,7 +37,7 @@ class MainController {
             case ControllerState.EMPLOYEE_EDIT_CPF:
             case ControllerState.EMPLOYEE_ROLES_CREATION:
             case ControllerState.EMPLOYEE_ROLES_REMOVAL:
-                await this.runEmployeeCommands()
+                await this.runEmployeeCommands();
                 break;
             case ControllerState.CLIENT_CREATION:
             case ControllerState.CLIENT_LISTING:
@@ -58,93 +60,122 @@ class MainController {
 
     private async startCommandInput(prompt: string) {
         let receivedInput = await this.inputHandler.getNumberInput(prompt);
-        this.currentState = this.parseInputForState(receivedInput);
+        await this.parseInputForState(receivedInput);
         this.runControlLoop();
     }
 
-    private parseInputForState(input: number): ControllerState {
+    private async parseInputForState(input: number) {
         switch(this.currentState) {
             case ControllerState.MAIN_MENU:
                 switch (input) {
                     case ControllerState.EMPLOYEE_MENU:
-                        return ControllerState.EMPLOYEE_MENU;
+                        this.currentState = ControllerState.EMPLOYEE_MENU;
+                        break;
                     case ControllerState.CLIENT_MENU:
-                        return ControllerState.CLIENT_MENU;
+                        this.currentState = ControllerState.CLIENT_MENU;
+                        break;
                     case ControllerState.SHUTDOWN:
-                        return ControllerState.SHUTDOWN;
+                        this.currentState = ControllerState.SHUTDOWN;
+                        break;
                     default:
                         console.log(">>> Comando desconhecido");
-                        return ControllerState.RESET;
+                        this.currentState = ControllerState.RESET;
                 }
+                break;
             case ControllerState.EMPLOYEE_MENU:
                 switch (input) {
                     case ControllerState.EMPLOYEE_CREATION:
-                        return ControllerState.EMPLOYEE_CREATION;
+                        this.currentState = ControllerState.EMPLOYEE_CREATION;
+                        break;
                     case ControllerState.EMPLOYEE_LISTING:
-                        return ControllerState.EMPLOYEE_LISTING;
+                        this.currentState = ControllerState.EMPLOYEE_LISTING;
+                        break;
                     case ControllerState.MAIN_MENU:
-                        return ControllerState.MAIN_MENU;
+                        this.currentState = ControllerState.MAIN_MENU;
+                        break;
                     case ControllerState.SHUTDOWN:
-                        return ControllerState.SHUTDOWN;
+                        this.currentState = ControllerState.SHUTDOWN;
+                        break;
                     default:
                         console.log(">>> Comando desconhecido");
-                        return ControllerState.RESET;
+                        this.currentState = ControllerState.RESET;
                 }
+                break;
             case ControllerState.EMPLOYEE_EDITING:
                 switch (input) {
                     case ControllerState.EMPLOYEE_EDIT_LIST:
-                        return ControllerState.EMPLOYEE_EDIT_LIST;
                     case ControllerState.EMPLOYEE_EDIT_NAME:
-                        return ControllerState.EMPLOYEE_EDIT_NAME;
                     case ControllerState.EMPLOYEE_EDIT_PHONE:
-                        return ControllerState.EMPLOYEE_EDIT_PHONE;
                     case ControllerState.EMPLOYEE_EDIT_SALARY:
-                        return ControllerState.EMPLOYEE_EDIT_SALARY;
                     case ControllerState.EMPLOYEE_EDIT_CPF:
-                        return ControllerState.EMPLOYEE_EDIT_CPF;
+                        this.currentState = await this.delegateEmployeeEditing(input);
+                        break;
                     case ControllerState.EMPLOYEE_ROLES_MENU:
-                        return ControllerState.EMPLOYEE_ROLES_MENU;
+                        this.currentState = ControllerState.EMPLOYEE_ROLES_MENU;
+                        break;
                     case ControllerState.MAIN_MENU:
-                        return ControllerState.MAIN_MENU;
+                        this.currentState = ControllerState.MAIN_MENU;
+                        break;
                     case ControllerState.SHUTDOWN:
-                        return ControllerState.SHUTDOWN;
+                        this.currentState = ControllerState.SHUTDOWN;
+                        break;
                     default:
                         console.log(">>> Comando desconhecido");
-                        return ControllerState.RESET;
+                        this.currentState = ControllerState.RESET;
                 }
+                break;
             case ControllerState.CLIENT_MENU:
                 switch (input) {
                     case ControllerState.CLIENT_CREATION:
-                        return ControllerState.CLIENT_CREATION;
+                        this.currentState = ControllerState.CLIENT_CREATION;
+                        break;
                     case ControllerState.CLIENT_LISTING:
-                        return ControllerState.CLIENT_LISTING;
+                        this.currentState = ControllerState.CLIENT_LISTING;
+                        break;
                     case ControllerState.MAIN_MENU:
-                        return ControllerState.MAIN_MENU;
+                        this.currentState = ControllerState.MAIN_MENU;
+                        break;
                     case ControllerState.SHUTDOWN:
-                        return ControllerState.SHUTDOWN;
+                        this.currentState = ControllerState.SHUTDOWN;
+                        break;
                     default:
                         console.log(">>> Comando desconhecido");
-                        return ControllerState.RESET;
+                        this.currentState = ControllerState.RESET;
                 }
+                break;
             case ControllerState.EMPLOYEE_ROLES_MENU:
                 switch (input) {
                     case ControllerState.EMPLOYEE_ROLES_CREATION:
-                        return ControllerState.EMPLOYEE_ROLES_CREATION;
                     case ControllerState.EMPLOYEE_ROLES_REMOVAL:
-                        return ControllerState.EMPLOYEE_ROLES_REMOVAL;
                     case ControllerState.EMPLOYEE_EDITING:
-                        return ControllerState.EMPLOYEE_EDITING;
+                        this.currentState = await this.delegateEmployeeEditing(input);
+                        break;
                     case ControllerState.MAIN_MENU:
-                        return ControllerState.MAIN_MENU;
+                        this.currentState = ControllerState.MAIN_MENU;
+                        break;
                     case ControllerState.SHUTDOWN:
-                        return ControllerState.SHUTDOWN;
+                        this.currentState = ControllerState.SHUTDOWN;
+                        break;
                     default:
                         console.log(">>> Comando desconhecido");
-                        return ControllerState.RESET;
+                        this.currentState = ControllerState.RESET;
                 }
+                break;
             default:
                 console.log(">>> Comando desconhecido");
-                return ControllerState.RESET;
+                this.currentState = ControllerState.RESET;
+        }
+    }
+
+    private async delegateEmployeeEditing(initialState: ControllerState) {
+        let editedEmployee = this.dataManager.getEditedEmployee();
+
+        if (editedEmployee instanceof Funcionario) {
+            this.employeeController = new EmployeeController(initialState, editedEmployee, this.dataManager);
+            return await this.employeeController.runEmployeeCommands();
+        } else {
+            console.log(">>> Não foi possível encontrar o Funcionário");
+            return ControllerState.RESET;
         }
     }
 
@@ -188,117 +219,6 @@ class MainController {
                     console.log(">>> Funcionário inválido");
                 }
                 this.runControlLoop();
-                break;
-            case ControllerState.EMPLOYEE_EDIT_NAME:
-                let editEmployeeName = this.dataManager.getEditedEmployee();
-                if (editEmployeeName instanceof Funcionario) {
-                    console.log(`Nome atual do Funcionário: ${editEmployeeName.nome}`);
-                    let newName = await this.inputHandler.getStringInput("Insira o novo Nome do Funcionário: ");
-                    editEmployeeName.nome = newName;
-                    console.log(">>> Nome atualizado com sucesso");
-                    this.currentState = ControllerState.EMPLOYEE_EDITING;
-                } else {
-                    console.log(">>> Não foi possível encontrar o Funcionário");
-                    this.currentState = ControllerState.RESET;
-                }
-                this.runControlLoop();
-                break;
-            case ControllerState.EMPLOYEE_EDIT_PHONE:
-                let editEmployeePhone = this.dataManager.getEditedEmployee();
-                if (editEmployeePhone instanceof Funcionario) {
-                    console.log(`Telefone atual do Funcionário: ${editEmployeePhone.telefone}`);
-                    let newPhone = await this.inputHandler.getStringInput("Insira o novo Telefone do Funcionário: ");
-                    editEmployeePhone.telefone = newPhone;
-                    console.log(">>> Telefone atualizado com sucesso");
-                    this.currentState = ControllerState.EMPLOYEE_EDITING;
-                } else {
-                    console.log(">>> Não foi possível encontrar o Funcionário");
-                    this.currentState = ControllerState.RESET;
-                }
-                this.runControlLoop();
-                break;
-            case ControllerState.EMPLOYEE_EDIT_SALARY:
-                let editEmployeeSalary = this.dataManager.getEditedEmployee();
-                if (editEmployeeSalary instanceof Funcionario) {
-                    console.log(`Salário atual do Funcionário: ${editEmployeeSalary.salario}`);
-                    let newSalary = await this.inputHandler.getNumberInput("Insira o novo Salário do Funcionário: ");
-                    editEmployeeSalary.salario = newSalary;
-                    console.log(">>> Salário atualizado com sucesso");
-                    this.currentState = ControllerState.EMPLOYEE_EDITING;
-                } else {
-                    console.log(">>> Não foi possível encontrar o Funcionário");
-                    this.currentState = ControllerState.RESET;
-                }
-                this.runControlLoop();
-                break;
-            case ControllerState.EMPLOYEE_EDIT_CPF:
-                let editEmployeeCPF = this.dataManager.getEditedEmployee();
-                if (editEmployeeCPF instanceof Funcionario) {
-                    console.log(`CPF atual do Funcionário: ${editEmployeeCPF.cpf}`);
-                    let newCPF = await this.inputHandler.getStringInput("Insira o novo CPF do Funcionário: ");
-                    editEmployeeCPF.cpf = newCPF;
-                    console.log(">>> CPF atualizado com sucesso");
-                    this.currentState = ControllerState.EMPLOYEE_EDITING;
-                } else {
-                    console.log(">>> Não foi possível encontrar o Funcionário");
-                    this.currentState = ControllerState.RESET;
-                }
-                this.runControlLoop();
-                break;
-            case ControllerState.EMPLOYEE_EDIT_LIST:
-                console.log(this.dataManager.listEditedEmployeeInfo());
-                this.currentState = ControllerState.EMPLOYEE_EDITING;
-                this.runControlLoop();
-                break;
-            case ControllerState.EMPLOYEE_ROLES_CREATION:
-                console.log(">>> Iniciando adição de novo Cargo");
-                let addRoleEmployee = this.dataManager.getEditedEmployee();
-                let employeeRoles = this.dataManager.listEditedEmployeeRoles(addRoleEmployee);
-                if (employeeRoles === "") {
-                    console.log(">>> ERRO FATAL: O Funcionário não possui nenhum Cargo");
-                    console.log(">>> O programa será encerrado");
-                    this.currentState = ControllerState.SHUTDOWN;
-                    this.runControlLoop();
-                } else {
-                    console.log(`O Funcionário possui os seguintes Cargos: ${employeeRoles}`);
-                    let newRoleName = await this.inputHandler.getStringInput("Insira o nome do Cargo a adicionar: ");
-                    let newRole = new Cargo(newRoleName);
-                    addRoleEmployee?.cargos.push(newRole);
-                    console.log(">>> Cargo adicionado com sucesso")
-                    this.currentState = ControllerState.EMPLOYEE_ROLES_MENU;
-                    this.runControlLoop();
-                }
-                break;
-            case ControllerState.EMPLOYEE_ROLES_REMOVAL:
-                let removeRoleEmployee = this.dataManager.getEditedEmployee();
-                if (removeRoleEmployee?.cargos.length == 1) {
-                    console.log(">>> O Funcionário possui apenas um Cargo, portanto não é possível remover Cargos");
-                    console.log(">>> Voltando para o Menu de Editar Cargos do Funcionário");
-                    this.currentState = ControllerState.EMPLOYEE_ROLES_MENU;
-                    this.runControlLoop();
-                } else {
-                    let employeeRoles = this.dataManager.listEditedEmployeeRoles(removeRoleEmployee);
-                    if (employeeRoles === "") {
-                        console.log(">>> ERRO FATAL: O Funcionário não possui nenhum Cargo");
-                        console.log(">>> O programa será encerrado");
-                        this.currentState = ControllerState.SHUTDOWN;
-                        this.runControlLoop();
-                    } else {
-                        console.log(`O Funcionário possui os seguintes Cargos: ${employeeRoles}`);
-                        let removedRoleName = await this.inputHandler.getStringInput("Insira o nome do Cargo a remover: ");
-
-                        let removedRole = this.dataManager.removeEditedEmployeeRole(removedRoleName);
-
-                        if (removedRole) {
-                            console.log(">>> Cargo removido com sucesso");
-                            this.currentState = ControllerState.EMPLOYEE_ROLES_MENU;
-                        } else {
-                            console.log(">>> O Funcionário não possui o Cargo escolhido");
-                        }
-
-                        this.runControlLoop();
-                    }
-                }
                 break;
             default:
                 console.log(">>> Comando desconhecido");

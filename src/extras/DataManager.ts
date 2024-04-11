@@ -40,16 +40,14 @@ class DataManager {
         }
     }
 
-    public listEditedEmployeeRoles(employee: Funcionario | undefined): string {
+    public listEditedEmployeeRoles(employee: Funcionario): string {
         let resultString = "";
 
-        if (employee instanceof Funcionario) {
-            for (let i = 0; i < employee.cargos.length; i++) {
-                resultString += employee.cargos[i].nome;
-    
-                if (i != employee.cargos.length-1) {
-                    resultString += ", ";
-                }
+        for (let i = 0; i < employee.cargos.length; i++) {
+            resultString += employee.cargos[i].nome;
+
+            if (i != employee.cargos.length-1) {
+                resultString += ", ";
             }
         }
 

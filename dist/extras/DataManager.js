@@ -49,12 +49,10 @@ class DataManager {
     }
     listEditedEmployeeRoles(employee) {
         let resultString = "";
-        if (employee instanceof Funcionario_1.default) {
-            for (let i = 0; i < employee.cargos.length; i++) {
-                resultString += employee.cargos[i].nome;
-                if (i != employee.cargos.length - 1) {
-                    resultString += ", ";
-                }
+        for (let i = 0; i < employee.cargos.length; i++) {
+            resultString += employee.cargos[i].nome;
+            if (i != employee.cargos.length - 1) {
+                resultString += ", ";
             }
         }
         return resultString;
