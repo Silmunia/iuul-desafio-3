@@ -28,9 +28,8 @@ class EmployeeController {
     public async runEmployeeCommands(): Promise<ControllerState> {
         switch (this.currentState) {
             case ControllerState.MAIN_MENU:
-                return ControllerState.MAIN_MENU;
             case ControllerState.SHUTDOWN:
-                return ControllerState.SHUTDOWN;
+                return this.currentState;
             case ControllerState.RESET:
                 console.log(">>> Voltando ao Menu de Funcionários");
                 this.currentState = ControllerState.EMPLOYEE_MENU;

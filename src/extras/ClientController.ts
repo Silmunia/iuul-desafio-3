@@ -31,15 +31,15 @@ class ClientController {
     public async runClientCommands(): Promise<ControllerState> {
         switch(this.currentState) {
             case ControllerState.MAIN_MENU:
-                return ControllerState.MAIN_MENU;
             case ControllerState.SHUTDOWN:
-                return ControllerState.SHUTDOWN;
+                return this.currentState;
             case ControllerState.RESET:
                 console.log(">>> Voltando ao Menu de Clientes");
                 this.currentState = ControllerState.CLIENT_MENU;
                 return this.runClientCommands();
             case ControllerState.CLIENT_MENU:
             case ControllerState.CLIENT_EDITING:
+            case ControllerState.CLIENT_ADDRESS_MENU:
                 this.displayMenu();
                 await this.startCommandInput("Insira comando: ");
                 return this.runClientCommands();
@@ -169,6 +169,24 @@ class ClientController {
                         break;
                     case ControllerState.CLIENT_EDIT_VIP:
                         this.currentState = ControllerState.CLIENT_EDIT_VIP;
+                        break;
+                    case ControllerState.CLIENT_ADDRESS_MENU:
+                        this.currentState = ControllerState.CLIENT_ADDRESS_MENU;
+                        break;
+                    case ControllerState.MAIN_MENU:
+                        this.currentState = ControllerState.MAIN_MENU;
+                        break;
+                    case ControllerState.SHUTDOWN:
+                        this.currentState = ControllerState.SHUTDOWN;
+                        break;
+                    default:
+                        console.log(">>> Comando desconhecido");
+                }
+                break;
+            case ControllerState.CLIENT_ADDRESS_MENU:
+                switch (input) {
+                    case ControllerState.CLIENT_EDITING:
+                        this.currentState = ControllerState.CLIENT_EDITING;
                         break;
                     case ControllerState.MAIN_MENU:
                         this.currentState = ControllerState.MAIN_MENU;

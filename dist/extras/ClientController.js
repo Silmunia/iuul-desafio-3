@@ -37,15 +37,15 @@ class ClientController {
         return __awaiter(this, void 0, void 0, function* () {
             switch (this.currentState) {
                 case ControllerState_1.default.MAIN_MENU:
-                    return ControllerState_1.default.MAIN_MENU;
                 case ControllerState_1.default.SHUTDOWN:
-                    return ControllerState_1.default.SHUTDOWN;
+                    return this.currentState;
                 case ControllerState_1.default.RESET:
                     console.log(">>> Voltando ao Menu de Clientes");
                     this.currentState = ControllerState_1.default.CLIENT_MENU;
                     return this.runClientCommands();
                 case ControllerState_1.default.CLIENT_MENU:
                 case ControllerState_1.default.CLIENT_EDITING:
+                case ControllerState_1.default.CLIENT_ADDRESS_MENU:
                     this.displayMenu();
                     yield this.startCommandInput("Insira comando: ");
                     return this.runClientCommands();
@@ -178,6 +178,24 @@ class ClientController {
                             break;
                         case ControllerState_1.default.CLIENT_EDIT_VIP:
                             this.currentState = ControllerState_1.default.CLIENT_EDIT_VIP;
+                            break;
+                        case ControllerState_1.default.CLIENT_ADDRESS_MENU:
+                            this.currentState = ControllerState_1.default.CLIENT_ADDRESS_MENU;
+                            break;
+                        case ControllerState_1.default.MAIN_MENU:
+                            this.currentState = ControllerState_1.default.MAIN_MENU;
+                            break;
+                        case ControllerState_1.default.SHUTDOWN:
+                            this.currentState = ControllerState_1.default.SHUTDOWN;
+                            break;
+                        default:
+                            console.log(">>> Comando desconhecido");
+                    }
+                    break;
+                case ControllerState_1.default.CLIENT_ADDRESS_MENU:
+                    switch (input) {
+                        case ControllerState_1.default.CLIENT_EDITING:
+                            this.currentState = ControllerState_1.default.CLIENT_EDITING;
                             break;
                         case ControllerState_1.default.MAIN_MENU:
                             this.currentState = ControllerState_1.default.MAIN_MENU;

@@ -23,6 +23,7 @@ enum ControllerState {
     CLIENT_EDIT_PHONE,
     CLIENT_EDIT_CPF,
     CLIENT_EDIT_VIP,
+    CLIENT_ADDRESS_MENU,
     SHUTDOWN = 999,
     RESET = 1000
 }

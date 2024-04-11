@@ -59,10 +59,35 @@ class DataManager {
     }
     listEditedClientInfo() {
         if (this.editedClient instanceof Cliente_1.default) {
-            return `\n>>> Listando informações do Cliente\nNome: ${this.editedClient.nome}\nCPF: ${this.editedClient.cpf}\nTelefone: ${this.editedClient.telefone}\nVIP: ${this.editedClient.vip ? "Sim" : "Não"}\nContas: ${this.editedClient.contas}\nEndereços: ${this.editedClient.enderecos}`;
+            return `\n>>> Listando informações do Cliente\nNome: ${this.editedClient.nome}\nCPF: ${this.editedClient.cpf}\nTelefone: ${this.editedClient.telefone}\nVIP: ${this.editedClient.vip ? "Sim" : "Não"}\nContas: ${this.listEditedClientAccounts()}\nEndereços: ${this.listEditedClientAddresses()}`;
         }
         else {
-            return ">>> Não foi possível encontrar o Funcionário";
+            return ">>> Não foi possível encontrar o Cliente";
+        }
+    }
+    listEditedClientAccounts() {
+        if (this.editedClient instanceof Cliente_1.default) {
+            let accountString = "";
+            for (let i = 0; i < this.editedClient.contas.length; i++) {
+                accountString += `\n${i + 1}. Conta número ${this.editedClient.contas[i].numero}`;
+            }
+            return accountString;
+        }
+        else {
+            return ">>> Não foi possível encontrar o Cliente";
+        }
+    }
+    listEditedClientAddresses() {
+        if (this.editedClient instanceof Cliente_1.default) {
+            let addressString = "";
+            for (let i = 0; i < this.editedClient.enderecos.length; i++) {
+                let currentAddress = this.editedClient.enderecos[i];
+                addressString += `\n${i + 1}. UF ${currentAddress.uf}, Cidade ${currentAddress.cidade}, ${currentAddress.logradouro}, número ${currentAddress.numero}, ${currentAddress.complemento}, CEP ${currentAddress.cep}`;
+            }
+            return addressString;
+        }
+        else {
+            return ">>> Não foi possível encontrar o Cliente";
         }
     }
     listEditedEmployeeRoles(employee) {

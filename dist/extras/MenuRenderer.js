@@ -67,8 +67,16 @@ class MenuRenderer {
                 console.log(`${ControllerState_1.default.CLIENT_EDIT_PHONE}. Editar Telefone`);
                 console.log(`${ControllerState_1.default.CLIENT_EDIT_CPF}. Editar CPF`);
                 console.log(`${ControllerState_1.default.CLIENT_EDIT_VIP}. Editar estado VIP`);
-                console.log(`X. Gerenciar Endereço(s)`);
+                console.log(`${ControllerState_1.default.CLIENT_ADDRESS_MENU}. Gerenciar Endereço(s)`);
                 console.log(`X. Gerenciar Conta(s)`);
+                console.log(`${ControllerState_1.default.MAIN_MENU}. Voltar para Menu Principal`);
+                console.log(`${ControllerState_1.default.SHUTDOWN}. Encerrar`);
+                break;
+            case ControllerState_1.default.CLIENT_ADDRESS_MENU:
+                console.log("\n***Menu: Editar Endereços do Cliente***");
+                console.log(`X. Adicionar Endereço`);
+                console.log(`X. Remover Endereço`);
+                console.log(`${ControllerState_1.default.CLIENT_EDITING}. Voltar para Menu de Editar Cliente`);
                 console.log(`${ControllerState_1.default.MAIN_MENU}. Voltar para Menu Principal`);
                 console.log(`${ControllerState_1.default.SHUTDOWN}. Encerrar`);
                 break;

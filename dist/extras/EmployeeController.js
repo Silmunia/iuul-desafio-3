@@ -34,9 +34,8 @@ class EmployeeController {
         return __awaiter(this, void 0, void 0, function* () {
             switch (this.currentState) {
                 case ControllerState_1.default.MAIN_MENU:
-                    return ControllerState_1.default.MAIN_MENU;
                 case ControllerState_1.default.SHUTDOWN:
-                    return ControllerState_1.default.SHUTDOWN;
+                    return this.currentState;
                 case ControllerState_1.default.RESET:
                     console.log(">>> Voltando ao Menu de Funcionários");
                     this.currentState = ControllerState_1.default.EMPLOYEE_MENU;
