@@ -41,6 +41,10 @@ class DataRepository {
         return this.employees;
     }
 
+    public getAllClients(): Array<Cliente> {
+        return this.clients;
+    }
+
     private listData(dataArray: Array<Funcionario | Cliente>, nullMessage: string): string {
         if (dataArray.length === 0) {
             return nullMessage;

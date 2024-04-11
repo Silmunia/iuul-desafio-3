@@ -16,6 +16,8 @@ enum ControllerState {
     CLIENT_MENU,
     CLIENT_CREATION,
     CLIENT_LISTING,
+    CLIENT_SELECTION,
+    CLIENT_EDITING,
     SHUTDOWN = 999,
     RESET = 1000
 }

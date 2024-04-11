@@ -21,6 +21,10 @@ class DataManager {
         return this.dataRepository.getAllEmployees();
     }
 
+    public getClients(): Array<Cliente> {
+        return this.dataRepository.getAllClients();
+    }
+
     public listEmployees() {
         console.log(">>> Listando Funcionários");
         console.log(this.dataRepository.listEmployees());

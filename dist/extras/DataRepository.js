@@ -36,6 +36,9 @@ class DataRepository {
     getAllEmployees() {
         return this.employees;
     }
+    getAllClients() {
+        return this.clients;
+    }
     listData(dataArray, nullMessage) {
         if (dataArray.length === 0) {
             return nullMessage;

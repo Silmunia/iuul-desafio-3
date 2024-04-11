@@ -56,7 +56,18 @@ class MenuRenderer {
             case ControllerState.CLIENT_MENU:
                 console.log("\n***Menu: Gerenciar Clientes***");
                 console.log(`${ControllerState.CLIENT_CREATION}. Criar Cliente`);
-                console.log(`${ControllerState.CLIENT_LISTING}. Listar Clientes`);
+                console.log(`${ControllerState.CLIENT_LISTING}. Editar Clientes`);
+                console.log(`${ControllerState.MAIN_MENU}. Voltar para Menu Principal`);
+                console.log(`${ControllerState.SHUTDOWN}. Encerrar`);
+                break;
+            case ControllerState.CLIENT_EDITING:
+                console.log("\n***Menu: Editar Cliente***");
+                console.log(`X. Listar informações do Cliente`);
+                console.log(`X. Editar Nome`);
+                console.log(`X. Editar Telefone`);
+                console.log(`X. Editar CPF`);
+                console.log(`X. Gerenciar Endereço(s)`);
+                console.log(`X. Gerenciar Conta(s)`);
                 console.log(`${ControllerState.MAIN_MENU}. Voltar para Menu Principal`);
                 console.log(`${ControllerState.SHUTDOWN}. Encerrar`);
                 break;

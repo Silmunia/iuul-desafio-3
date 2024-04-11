@@ -45,8 +45,40 @@ class ClientController {
                     this.currentState = ControllerState_1.default.CLIENT_MENU;
                     return this.runClientCommands();
                 case ControllerState_1.default.CLIENT_MENU:
+                case ControllerState_1.default.CLIENT_EDITING:
                     this.displayMenu();
                     yield this.startCommandInput("Insira comando: ");
+                    return this.runClientCommands();
+                case ControllerState_1.default.CLIENT_LISTING:
+                    this.dataManager.listClients();
+                    if (this.dataManager.getClients().length === 0) {
+                        console.log(">>> Voltando ao Menu de Clientes");
+                        this.currentState = ControllerState_1.default.CLIENT_MENU;
+                        return this.runClientCommands();
+                    }
+                    else {
+                        this.currentState = ControllerState_1.default.CLIENT_SELECTION;
+                        return this.runClientCommands();
+                    }
+                case ControllerState_1.default.CLIENT_SELECTION:
+                    let selectedIndex = yield this.inputHandler.getNumberInput("Selecione um Cliente: ");
+                    let parsedIndex = selectedIndex - 1;
+                    if (parsedIndex >= 0
+                        && parsedIndex < this.dataManager.getClients().length) {
+                        console.log(`>>> Cliente ${selectedIndex} selecionado`);
+                        this.dataManager.setEditedClient(parsedIndex);
+                        let selectedClient = this.dataManager.getEditedClient();
+                        if (selectedClient instanceof Cliente_1.default) {
+                            this.clientInEditing = selectedClient;
+                        }
+                        else {
+                            console.log(">>> Não foi possível encontrar o Cliente selecionado");
+                        }
+                        this.currentState = ControllerState_1.default.CLIENT_EDITING;
+                    }
+                    else {
+                        console.log(">>> Cliente inválido");
+                    }
                     return this.runClientCommands();
                 case ControllerState_1.default.CLIENT_CREATION:
                     yield this.dataManager.addClient();
@@ -96,7 +128,18 @@ class ClientController {
                             break;
                         default:
                             console.log(">>> Comando desconhecido");
-                            this.currentState = ControllerState_1.default.RESET;
+                    }
+                    break;
+                case ControllerState_1.default.CLIENT_EDITING:
+                    switch (input) {
+                        case ControllerState_1.default.MAIN_MENU:
+                            this.currentState = ControllerState_1.default.MAIN_MENU;
+                            break;
+                        case ControllerState_1.default.SHUTDOWN:
+                            this.currentState = ControllerState_1.default.SHUTDOWN;
+                            break;
+                        default:
+                            console.log(">>> Comando desconhecido");
                     }
                     break;
                 default:

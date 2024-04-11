@@ -39,8 +39,37 @@ class ClientController {
                 this.currentState = ControllerState.CLIENT_MENU;
                 return this.runClientCommands();
             case ControllerState.CLIENT_MENU:
+            case ControllerState.CLIENT_EDITING:
                 this.displayMenu();
                 await this.startCommandInput("Insira comando: ");
+                return this.runClientCommands();
+            case ControllerState.CLIENT_LISTING:
+                this.dataManager.listClients();
+                if (this.dataManager.getClients().length === 0) {
+                    console.log(">>> Voltando ao Menu de Clientes");
+                    this.currentState = ControllerState.CLIENT_MENU;
+                    return this.runClientCommands();
+                } else {
+                    this.currentState = ControllerState.CLIENT_SELECTION;
+                    return this.runClientCommands();
+                }
+            case ControllerState.CLIENT_SELECTION:
+                let selectedIndex = await this.inputHandler.getNumberInput("Selecione um Cliente: ");
+                let parsedIndex = selectedIndex - 1;
+                if (parsedIndex >= 0 
+                    && parsedIndex < this.dataManager.getClients().length) {
+                    console.log(`>>> Cliente ${selectedIndex} selecionado`);
+                    this.dataManager.setEditedClient(parsedIndex);
+                    let selectedClient = this.dataManager.getEditedClient();
+                    if (selectedClient instanceof Cliente) {
+                        this.clientInEditing = selectedClient;
+                    } else {
+                        console.log(">>> Não foi possível encontrar o Cliente selecionado");
+                    }
+                    this.currentState = ControllerState.CLIENT_EDITING;
+                } else {
+                    console.log(">>> Cliente inválido");
+                }
                 return this.runClientCommands();
             case ControllerState.CLIENT_CREATION:
                 await this.dataManager.addClient();
@@ -90,7 +119,18 @@ class ClientController {
                         break;
                     default:
                         console.log(">>> Comando desconhecido");
-                        this.currentState = ControllerState.RESET;
+                }
+                break;
+            case ControllerState.CLIENT_EDITING:
+                switch (input) {
+                    case ControllerState.MAIN_MENU:
+                        this.currentState = ControllerState.MAIN_MENU;
+                        break;
+                    case ControllerState.SHUTDOWN:
+                        this.currentState = ControllerState.SHUTDOWN;
+                        break;
+                    default:
+                        console.log(">>> Comando desconhecido");
                 }
                 break;
             default:

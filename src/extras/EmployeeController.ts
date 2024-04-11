@@ -194,7 +194,6 @@ class EmployeeController {
                         break;
                     default:
                         console.log(">>> Comando desconhecido");
-                        this.currentState = ControllerState.RESET;
                 }
                 break;
             case ControllerState.EMPLOYEE_EDITING:
@@ -225,7 +224,6 @@ class EmployeeController {
                         break;
                     default:
                         console.log(">>> Comando desconhecido");
-                        this.currentState = ControllerState.RESET;
                 }
                 break;
             case ControllerState.EMPLOYEE_ROLES_MENU:
@@ -247,7 +245,6 @@ class EmployeeController {
                         break;
                     default:
                         console.log(">>> Comando desconhecido");
-                        this.currentState = ControllerState.RESET;
                 }
                 break;
             default:
