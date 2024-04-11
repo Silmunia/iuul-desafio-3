@@ -21,6 +21,18 @@ class DataManager {
         this.factoryRepository = new FactoryRepository_1.default();
         this.dataRepository = new DataRepository_1.default();
     }
+    getTargetAccountForTransfer(accountNumber) {
+        let allClients = this.dataRepository.getAllClients();
+        for (let i = 0; i < allClients.length; i++) {
+            let currentAccounts = allClients[i].contas;
+            for (let j = 0; j < currentAccounts.length; j++) {
+                if (accountNumber === currentAccounts[j].numero) {
+                    return currentAccounts[j];
+                }
+            }
+        }
+        return undefined;
+    }
     getEditedClientAccount(accountNumber) {
         if (this.editedClient instanceof Cliente_1.default) {
             for (let i = 0; i < this.editedClient.contas.length; i++) {
