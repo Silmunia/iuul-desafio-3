@@ -97,7 +97,7 @@ class MainController {
         });
     }
     displayMenu() {
-        let renderResult = this.menuRenderer.renderMenu(this.currentState);
+        let renderResult = this.menuRenderer.renderMainMenu(this.currentState);
         if (!renderResult) {
             console.log(">>> Menu desconhecido");
             console.log(">>> Voltando para o Menu Principal");

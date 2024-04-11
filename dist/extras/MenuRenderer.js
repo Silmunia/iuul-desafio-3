@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const ControllerState_1 = __importDefault(require("./ControllerState"));
 class MenuRenderer {
-    renderMenu(state) {
+    renderMainMenu(state) {
         switch (state) {
             case ControllerState_1.default.MAIN_MENU:
                 console.log("\n***Menu Principal***");
@@ -13,6 +13,13 @@ class MenuRenderer {
                 console.log(`${ControllerState_1.default.CLIENT_MENU}. Gerenciar Clientes`);
                 console.log(`${ControllerState_1.default.SHUTDOWN}. Encerrar`);
                 break;
+            default:
+                return false;
+        }
+        return true;
+    }
+    renderEmployeeMenus(state) {
+        switch (state) {
             case ControllerState_1.default.EMPLOYEE_MENU:
                 console.log("\n***Menu: Gerenciar Funcionários***");
                 console.log(`${ControllerState_1.default.EMPLOYEE_CREATION}. Criar Funcionário`);
@@ -39,6 +46,13 @@ class MenuRenderer {
                 console.log(`${ControllerState_1.default.MAIN_MENU}. Voltar para Menu Principal`);
                 console.log(`${ControllerState_1.default.SHUTDOWN}. Encerrar`);
                 break;
+            default:
+                return false;
+        }
+        return true;
+    }
+    renderClientMenus(state) {
+        switch (state) {
             case ControllerState_1.default.CLIENT_MENU:
                 console.log("\n***Menu: Gerenciar Clientes***");
                 console.log(`${ControllerState_1.default.CLIENT_CREATION}. Criar Cliente`);

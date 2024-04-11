@@ -58,7 +58,7 @@ class ClientController {
     }
 
     private displayMenu() {
-        let renderResult = this.menuRenderer.renderMenu(this.currentState);
+        let renderResult = this.menuRenderer.renderClientMenus(this.currentState);
 
         if (!renderResult) {
             console.log(">>> Menu desconhecido");

@@ -162,7 +162,7 @@ class EmployeeController {
     }
 
     private displayMenu() {
-        let renderResult = this.menuRenderer.renderMenu(this.currentState);
+        let renderResult = this.menuRenderer.renderEmployeeMenus(this.currentState);
 
         if (!renderResult) {
             console.log(">>> Menu desconhecido");

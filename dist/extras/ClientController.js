@@ -64,7 +64,7 @@ class ClientController {
         });
     }
     displayMenu() {
-        let renderResult = this.menuRenderer.renderMenu(this.currentState);
+        let renderResult = this.menuRenderer.renderClientMenus(this.currentState);
         if (!renderResult) {
             console.log(">>> Menu desconhecido");
             console.log(">>> Voltando para o Menu de Clintes");

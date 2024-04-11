@@ -1,7 +1,7 @@
 import ControllerState from "./ControllerState";
 
 class MenuRenderer {
-    public renderMenu(state: ControllerState): boolean {
+    public renderMainMenu(state: ControllerState): boolean {
         switch (state) {
             case ControllerState.MAIN_MENU:
                 console.log("\n***Menu Principal***");
@@ -9,6 +9,15 @@ class MenuRenderer {
                 console.log(`${ControllerState.CLIENT_MENU}. Gerenciar Clientes`);
                 console.log(`${ControllerState.SHUTDOWN}. Encerrar`);
                 break;
+            default:
+                return false;
+        }
+
+        return true;
+    }
+
+    public renderEmployeeMenus(state: ControllerState): boolean {
+        switch (state) {
             case ControllerState.EMPLOYEE_MENU:
                 console.log("\n***Menu: Gerenciar Funcionários***");
                 console.log(`${ControllerState.EMPLOYEE_CREATION}. Criar Funcionário`);
@@ -35,6 +44,15 @@ class MenuRenderer {
                 console.log(`${ControllerState.MAIN_MENU}. Voltar para Menu Principal`);
                 console.log(`${ControllerState.SHUTDOWN}. Encerrar`);
                 break;
+            default:
+                return false;
+        }
+
+        return true;
+    }
+
+    public renderClientMenus(state: ControllerState): boolean {
+        switch (state) {
             case ControllerState.CLIENT_MENU:
                 console.log("\n***Menu: Gerenciar Clientes***");
                 console.log(`${ControllerState.CLIENT_CREATION}. Criar Cliente`);
