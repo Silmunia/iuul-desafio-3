@@ -12,7 +12,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Funcionario_1 = __importDefault(require("../objects/classes/Funcionario"));
 const ControllerState_1 = __importDefault(require("./ControllerState"));
 const DataManager_1 = __importDefault(require("./DataManager"));
 const InputHandler_1 = __importDefault(require("./InputHandler"));
@@ -32,24 +31,9 @@ class MainController {
         return __awaiter(this, void 0, void 0, function* () {
             switch (this.currentState) {
                 case ControllerState_1.default.MAIN_MENU:
-                case ControllerState_1.default.EMPLOYEE_MENU:
                 case ControllerState_1.default.CLIENT_MENU:
-                case ControllerState_1.default.EMPLOYEE_EDITING:
-                case ControllerState_1.default.EMPLOYEE_ROLES_MENU:
                     this.displayMenu();
                     yield this.startCommandInput("Insira comando: ");
-                    break;
-                case ControllerState_1.default.EMPLOYEE_CREATION:
-                case ControllerState_1.default.EMPLOYEE_LISTING:
-                case ControllerState_1.default.EMPLOYEE_SELECTION:
-                case ControllerState_1.default.EMPLOYEE_EDIT_LIST:
-                case ControllerState_1.default.EMPLOYEE_EDIT_NAME:
-                case ControllerState_1.default.EMPLOYEE_EDIT_PHONE:
-                case ControllerState_1.default.EMPLOYEE_EDIT_SALARY:
-                case ControllerState_1.default.EMPLOYEE_EDIT_CPF:
-                case ControllerState_1.default.EMPLOYEE_ROLES_CREATION:
-                case ControllerState_1.default.EMPLOYEE_ROLES_REMOVAL:
-                    yield this.runEmployeeCommands();
                     break;
                 case ControllerState_1.default.CLIENT_CREATION:
                 case ControllerState_1.default.CLIENT_LISTING:
@@ -83,52 +67,10 @@ class MainController {
                 case ControllerState_1.default.MAIN_MENU:
                     switch (input) {
                         case ControllerState_1.default.EMPLOYEE_MENU:
-                            this.currentState = ControllerState_1.default.EMPLOYEE_MENU;
+                            this.currentState = yield this.delegateEmployeeEditing(input);
                             break;
                         case ControllerState_1.default.CLIENT_MENU:
                             this.currentState = ControllerState_1.default.CLIENT_MENU;
-                            break;
-                        case ControllerState_1.default.SHUTDOWN:
-                            this.currentState = ControllerState_1.default.SHUTDOWN;
-                            break;
-                        default:
-                            console.log(">>> Comando desconhecido");
-                            this.currentState = ControllerState_1.default.RESET;
-                    }
-                    break;
-                case ControllerState_1.default.EMPLOYEE_MENU:
-                    switch (input) {
-                        case ControllerState_1.default.EMPLOYEE_CREATION:
-                            this.currentState = ControllerState_1.default.EMPLOYEE_CREATION;
-                            break;
-                        case ControllerState_1.default.EMPLOYEE_LISTING:
-                            this.currentState = ControllerState_1.default.EMPLOYEE_LISTING;
-                            break;
-                        case ControllerState_1.default.MAIN_MENU:
-                            this.currentState = ControllerState_1.default.MAIN_MENU;
-                            break;
-                        case ControllerState_1.default.SHUTDOWN:
-                            this.currentState = ControllerState_1.default.SHUTDOWN;
-                            break;
-                        default:
-                            console.log(">>> Comando desconhecido");
-                            this.currentState = ControllerState_1.default.RESET;
-                    }
-                    break;
-                case ControllerState_1.default.EMPLOYEE_EDITING:
-                    switch (input) {
-                        case ControllerState_1.default.EMPLOYEE_EDIT_LIST:
-                        case ControllerState_1.default.EMPLOYEE_EDIT_NAME:
-                        case ControllerState_1.default.EMPLOYEE_EDIT_PHONE:
-                        case ControllerState_1.default.EMPLOYEE_EDIT_SALARY:
-                        case ControllerState_1.default.EMPLOYEE_EDIT_CPF:
-                            this.currentState = yield this.delegateEmployeeEditing(input);
-                            break;
-                        case ControllerState_1.default.EMPLOYEE_ROLES_MENU:
-                            this.currentState = ControllerState_1.default.EMPLOYEE_ROLES_MENU;
-                            break;
-                        case ControllerState_1.default.MAIN_MENU:
-                            this.currentState = ControllerState_1.default.MAIN_MENU;
                             break;
                         case ControllerState_1.default.SHUTDOWN:
                             this.currentState = ControllerState_1.default.SHUTDOWN;
@@ -157,24 +99,6 @@ class MainController {
                             this.currentState = ControllerState_1.default.RESET;
                     }
                     break;
-                case ControllerState_1.default.EMPLOYEE_ROLES_MENU:
-                    switch (input) {
-                        case ControllerState_1.default.EMPLOYEE_ROLES_CREATION:
-                        case ControllerState_1.default.EMPLOYEE_ROLES_REMOVAL:
-                        case ControllerState_1.default.EMPLOYEE_EDITING:
-                            this.currentState = yield this.delegateEmployeeEditing(input);
-                            break;
-                        case ControllerState_1.default.MAIN_MENU:
-                            this.currentState = ControllerState_1.default.MAIN_MENU;
-                            break;
-                        case ControllerState_1.default.SHUTDOWN:
-                            this.currentState = ControllerState_1.default.SHUTDOWN;
-                            break;
-                        default:
-                            console.log(">>> Comando desconhecido");
-                            this.currentState = ControllerState_1.default.RESET;
-                    }
-                    break;
                 default:
                     console.log(">>> Comando desconhecido");
                     this.currentState = ControllerState_1.default.RESET;
@@ -184,14 +108,8 @@ class MainController {
     delegateEmployeeEditing(initialState) {
         return __awaiter(this, void 0, void 0, function* () {
             let editedEmployee = this.dataManager.getEditedEmployee();
-            if (editedEmployee instanceof Funcionario_1.default) {
-                this.employeeController = new EmployeeController_1.default(initialState, editedEmployee, this.dataManager);
-                return yield this.employeeController.runEmployeeCommands();
-            }
-            else {
-                console.log(">>> Não foi possível encontrar o Funcionário");
-                return ControllerState_1.default.RESET;
-            }
+            this.employeeController = new EmployeeController_1.default(initialState, editedEmployee, this.dataManager);
+            return yield this.employeeController.runEmployeeCommands();
         });
     }
     displayMenu() {
@@ -202,46 +120,6 @@ class MainController {
             this.currentState = ControllerState_1.default.MAIN_MENU;
             this.runControlLoop();
         }
-    }
-    runEmployeeCommands() {
-        return __awaiter(this, void 0, void 0, function* () {
-            switch (this.currentState) {
-                case ControllerState_1.default.EMPLOYEE_CREATION:
-                    yield this.dataManager.addEmployee();
-                    this.currentState = ControllerState_1.default.EMPLOYEE_MENU;
-                    this.runControlLoop();
-                    break;
-                case ControllerState_1.default.EMPLOYEE_LISTING:
-                    this.dataManager.listEmployees();
-                    if (this.dataManager.getEmployees().length === 0) {
-                        console.log(">>> Voltando ao Menu de Funcionários");
-                        this.currentState = ControllerState_1.default.EMPLOYEE_MENU;
-                    }
-                    else {
-                        this.currentState = ControllerState_1.default.EMPLOYEE_SELECTION;
-                    }
-                    this.runControlLoop();
-                    break;
-                case ControllerState_1.default.EMPLOYEE_SELECTION:
-                    let selectedIndex = yield this.inputHandler.getNumberInput("Selecione um Funcionário: ");
-                    let parsedIndex = selectedIndex - 1;
-                    if (parsedIndex >= 0
-                        && parsedIndex < this.dataManager.getEmployees().length) {
-                        console.log(`>>> Funcionário ${selectedIndex} selecionado`);
-                        this.dataManager.setEditedEmployee(parsedIndex);
-                        this.currentState = ControllerState_1.default.EMPLOYEE_EDITING;
-                    }
-                    else {
-                        console.log(">>> Funcionário inválido");
-                    }
-                    this.runControlLoop();
-                    break;
-                default:
-                    console.log(">>> Comando desconhecido");
-                    this.currentState = ControllerState_1.default.RESET;
-                    this.runControlLoop();
-            }
-        });
     }
     runClientCommands() {
         return __awaiter(this, void 0, void 0, function* () {
