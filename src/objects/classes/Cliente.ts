@@ -11,7 +11,7 @@ class Cliente extends Pessoa implements IUsuario {
     private _enderecos: Array<Endereco> = []
     private _contas: Array<Conta> = []
 
-    constructor(cpf: string, nome: string, telefone: string, vip: boolean, enderecoInicial: Endereco, outrosEnderecos: Array<Endereco> = [], contaInicial: Conta, outrasContas: Array<Conta> = []) {
+    constructor(cpf: string, nome: string, telefone: string, vip: boolean, enderecoInicial: Endereco, contaInicial: Conta, outrasContas: Array<Conta> = [], outrosEnderecos: Array<Endereco> = []) {
         super(cpf, nome, telefone);
         this._vip = vip;
 

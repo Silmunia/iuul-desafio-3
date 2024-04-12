@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Pessoa_1 = __importDefault(require("../abstract classes/Pessoa"));
 const ContaCorrente_1 = __importDefault(require("./ContaCorrente"));
 class Cliente extends Pessoa_1.default {
-    constructor(cpf, nome, telefone, vip, enderecoInicial, outrosEnderecos = [], contaInicial, outrasContas = []) {
+    constructor(cpf, nome, telefone, vip, enderecoInicial, contaInicial, outrasContas = [], outrosEnderecos = []) {
         super(cpf, nome, telefone);
         this._enderecos = [];
         this._contas = [];

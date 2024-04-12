@@ -8,7 +8,7 @@ class Funcionario extends Pessoa implements IUsuario {
     private _cargos: Array<Cargo> = [];
     private _salario: number;
 
-    constructor(cargoInicial: Cargo, outrosCargos: Array<Cargo> = [], cpf: string, nome: string, telefone: string, salario: number) {
+    constructor(cargoInicial: Cargo, cpf: string, nome: string, telefone: string, salario: number, outrosCargos: Array<Cargo> = []) {
         super(cpf, nome, telefone);
 
         this._cargos.push(cargoInicial);
