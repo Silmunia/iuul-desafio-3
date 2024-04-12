@@ -4,13 +4,17 @@ import Credito from "../classes/Credito";
 import Debito from "../classes/Debito";
 
 abstract class Conta {
-    public readonly numero: string
-    protected creditos: Array<Credito> = []
-    protected debitos: Array<Debito> = []
-    private _cliente: Cliente | undefined;
+    protected _numero: string
+    protected _creditos: Array<Credito> = []
+    protected _debitos: Array<Debito> = []
+    protected _cliente: Cliente | undefined;
     
     constructor(numero: string) {
-        this.numero = numero;
+        this._numero = numero;
+    }
+
+    public get numero(): string {
+        return this._numero;
     }
 
     public get cliente(): Cliente {
@@ -25,7 +29,7 @@ abstract class Conta {
         this._cliente = cliente;
     }
 
-    calcularTotal(montante: Array<Credito | Debito>): number {
+    public calcularTotal(montante: Array<Credito | Debito>): number {
 
         let total: number = 0;
 
@@ -36,16 +40,16 @@ abstract class Conta {
         return total;
     }
 
-    depositar(valor: number) {
+    public depositar(valor: number) {
         let novoCredito = new Credito(valor, new Date());
 
-        this.creditos.push(novoCredito);
+        this._creditos.push(novoCredito);
     }
 
-    sacar(valor: number) {
+    public sacar(valor: number) {
         let novoDebito = new Debito(valor, new Date());
 
-        this.debitos.push(novoDebito);
+        this._debitos.push(novoDebito);
     }
 
     abstract calcularSaldo(): number;

@@ -48,13 +48,13 @@ class Cliente extends Pessoa implements IUsuario {
         throw new Error(`Conta de numero ${numero} não foi encontrada no cliente de CPF ${this.cpf}`);
     }
 
-    calcularSaldoDeConta(numeroDaConta: string): number {
+    public calcularSaldoDeConta(numeroDaConta: string): number {
         let conta = this.encontrarConta(numeroDaConta);
 
         return conta.calcularSaldo();
     }
 
-    fazerTransferencia(numeroContaOrigem: string, clienteDestino: Cliente, numeroContaDestino: string, valor: number) {
+    public fazerTransferencia(numeroContaOrigem: string, clienteDestino: Cliente, numeroContaDestino: string, valor: number) {
         let contaOrigem = this.encontrarConta(numeroContaOrigem);
 
         if (contaOrigem instanceof ContaCorrente) {
@@ -67,26 +67,26 @@ class Cliente extends Pessoa implements IUsuario {
 
     }
 
-    fazerDeposito(numeroDaConta: string, valor: number) {
+    public fazerDeposito(numeroDaConta: string, valor: number) {
         let conta = this.encontrarConta(numeroDaConta);
 
         conta.depositar(valor);
     }
 
-    fazerSaque(numeroDaConta: string, valor: number) {
+    public fazerSaque(numeroDaConta: string, valor: number) {
         let conta = this.encontrarConta(numeroDaConta);
 
         conta.sacar(valor);
     }
 
-    listarEnderecos() {
+    public listarEnderecos() {
         console.log(`Listando enderecos de cliente com CPF ${this.cpf}`);
         for (let i = 0; i < this._enderecos.length; i++) {
             console.log(`${i+1}. ${this._enderecos[i].listarInformaçoes()}`); 
         }
     }
 
-    autenticar(): boolean {
+    public autenticar(): boolean {
         return true;
     }
 }

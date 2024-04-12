@@ -2,15 +2,15 @@
 import Conta from "../abstract classes/Conta";
 
 class ContaPoupanca extends Conta {
-    calcularSaldo(): number {
-        let creditoTotal = this.calcularTotal(this.creditos);
+    public calcularSaldo(): number {
+        let creditoTotal = this.calcularTotal(this._creditos);
 
-        let debitoTotal = this.calcularTotal(this.debitos);
+        let debitoTotal = this.calcularTotal(this._debitos);
 
         return (creditoTotal - debitoTotal);
     }
 
-    fazerSaque(valor: number) {
+    public fazerSaque(valor: number) {
         if (this.calcularSaldo() - valor >= 0) {
             this.sacar(valor);
         } else {

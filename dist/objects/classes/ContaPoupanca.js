@@ -6,8 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Conta_1 = __importDefault(require("../abstract classes/Conta"));
 class ContaPoupanca extends Conta_1.default {
     calcularSaldo() {
-        let creditoTotal = this.calcularTotal(this.creditos);
-        let debitoTotal = this.calcularTotal(this.debitos);
+        let creditoTotal = this.calcularTotal(this._creditos);
+        let debitoTotal = this.calcularTotal(this._debitos);
         return (creditoTotal - debitoTotal);
     }
     fazerSaque(valor) {
