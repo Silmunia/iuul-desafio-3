@@ -1,0 +1,22 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var EmployeeControllerState;
+(function (EmployeeControllerState) {
+    EmployeeControllerState[EmployeeControllerState["RETURN_TO_MAIN"] = 0] = "RETURN_TO_MAIN";
+    EmployeeControllerState[EmployeeControllerState["EMPLOYEE_MENU"] = 1] = "EMPLOYEE_MENU";
+    EmployeeControllerState[EmployeeControllerState["EMPLOYEE_CREATION"] = 2] = "EMPLOYEE_CREATION";
+    EmployeeControllerState[EmployeeControllerState["EMPLOYEE_LISTING"] = 3] = "EMPLOYEE_LISTING";
+    EmployeeControllerState[EmployeeControllerState["EMPLOYEE_SELECTION"] = 4] = "EMPLOYEE_SELECTION";
+    EmployeeControllerState[EmployeeControllerState["EMPLOYEE_EDITING"] = 5] = "EMPLOYEE_EDITING";
+    EmployeeControllerState[EmployeeControllerState["EMPLOYEE_EDIT_LIST"] = 6] = "EMPLOYEE_EDIT_LIST";
+    EmployeeControllerState[EmployeeControllerState["EMPLOYEE_EDIT_NAME"] = 7] = "EMPLOYEE_EDIT_NAME";
+    EmployeeControllerState[EmployeeControllerState["EMPLOYEE_EDIT_PHONE"] = 8] = "EMPLOYEE_EDIT_PHONE";
+    EmployeeControllerState[EmployeeControllerState["EMPLOYEE_EDIT_SALARY"] = 9] = "EMPLOYEE_EDIT_SALARY";
+    EmployeeControllerState[EmployeeControllerState["EMPLOYEE_EDIT_CPF"] = 10] = "EMPLOYEE_EDIT_CPF";
+    EmployeeControllerState[EmployeeControllerState["EMPLOYEE_ROLES_MENU"] = 11] = "EMPLOYEE_ROLES_MENU";
+    EmployeeControllerState[EmployeeControllerState["EMPLOYEE_ROLES_CREATION"] = 12] = "EMPLOYEE_ROLES_CREATION";
+    EmployeeControllerState[EmployeeControllerState["EMPLOYEE_ROLES_REMOVAL"] = 13] = "EMPLOYEE_ROLES_REMOVAL";
+    EmployeeControllerState[EmployeeControllerState["SHUTDOWN"] = 999] = "SHUTDOWN";
+    EmployeeControllerState[EmployeeControllerState["RESET"] = 1000] = "RESET";
+})(EmployeeControllerState || (EmployeeControllerState = {}));
+exports.default = EmployeeControllerState;

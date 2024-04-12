@@ -13,11 +13,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const ControllerState_1 = __importDefault(require("./ControllerState"));
-const DataManager_1 = __importDefault(require("./DataManager"));
-const InputHandler_1 = __importDefault(require("./InputHandler"));
-const MenuRenderer_1 = __importDefault(require("./MenuRenderer"));
-const EmployeeController_1 = __importDefault(require("./EmployeeController"));
-const ClientController_1 = __importDefault(require("./ClientController"));
+const DataManager_1 = __importDefault(require("../Commons/DataManager"));
+const InputHandler_1 = __importDefault(require("../Commons/InputHandler"));
+const MenuRenderer_1 = __importDefault(require("../Commons/MenuRenderer"));
+const EmployeeController_1 = __importDefault(require("../Employee/EmployeeController"));
+const ClientController_1 = __importDefault(require("../Client/ClientController"));
 class MainController {
     constructor() {
         this.currentState = ControllerState_1.default.MAIN_MENU;
