@@ -52,7 +52,7 @@ class MainController {
                         this.currentState = await this.delegateEmployeeControl();
                         break;
                     case ControllerState.CLIENT_MENU:
-                        this.currentState = await this.delegateClientControl(input);
+                        this.currentState = await this.delegateClientControl();
                         break;
                     case ControllerState.SHUTDOWN:
                         this.currentState = ControllerState.SHUTDOWN;
@@ -73,8 +73,8 @@ class MainController {
         return await this.employeeController.runEmployeeCommands();
     }
 
-    private async delegateClientControl(initialState: ControllerState) {
-        this.clientController = new ClientController(initialState, this.dataManager);
+    private async delegateClientControl() {
+        this.clientController = new ClientController(this.dataManager);
         return await this.clientController.runClientCommands();
     }
 

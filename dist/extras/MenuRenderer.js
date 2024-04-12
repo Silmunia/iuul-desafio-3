@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const ControllerState_1 = __importDefault(require("./ControllerState"));
 const EmployeeControllerState_1 = __importDefault(require("./EmployeeControllerState"));
+const ClientControllerState_1 = __importDefault(require("./ClientControllerState"));
 class MenuRenderer {
     renderMainMenu(state) {
         switch (state) {
@@ -54,44 +55,44 @@ class MenuRenderer {
     }
     renderClientMenus(state) {
         switch (state) {
-            case ControllerState_1.default.CLIENT_MENU:
+            case ClientControllerState_1.default.CLIENT_MENU:
                 console.log("\n***Menu: Gerenciar Clientes***");
-                console.log(`${ControllerState_1.default.CLIENT_CREATION}. Criar Cliente`);
-                console.log(`${ControllerState_1.default.CLIENT_LISTING}. Editar Clientes`);
-                console.log(`${ControllerState_1.default.MAIN_MENU}. Voltar para Menu Principal`);
-                console.log(`${ControllerState_1.default.SHUTDOWN}. Encerrar`);
+                console.log(`${ClientControllerState_1.default.CLIENT_CREATION}. Criar Cliente`);
+                console.log(`${ClientControllerState_1.default.CLIENT_LISTING}. Editar Clientes`);
+                console.log(`${ClientControllerState_1.default.RETURN_TO_MAIN}. Voltar para Menu Principal`);
+                console.log(`${ClientControllerState_1.default.SHUTDOWN}. Encerrar`);
                 break;
-            case ControllerState_1.default.CLIENT_EDITING:
+            case ClientControllerState_1.default.CLIENT_EDITING:
                 console.log("\n***Menu: Editar Cliente***");
-                console.log(`${ControllerState_1.default.CLIENT_EDIT_LIST}. Listar informações do Cliente`);
-                console.log(`${ControllerState_1.default.CLIENT_EDIT_NAME}. Editar Nome`);
-                console.log(`${ControllerState_1.default.CLIENT_EDIT_PHONE}. Editar Telefone`);
-                console.log(`${ControllerState_1.default.CLIENT_EDIT_CPF}. Editar CPF`);
-                console.log(`${ControllerState_1.default.CLIENT_EDIT_VIP}. Editar estado VIP`);
-                console.log(`${ControllerState_1.default.CLIENT_ADDRESS_MENU}. Gerenciar Endereço(s)`);
-                console.log(`${ControllerState_1.default.CLIENT_ACCOUNT_MENU}. Gerenciar Conta(s)`);
-                console.log(`${ControllerState_1.default.MAIN_MENU}. Voltar para Menu Principal`);
-                console.log(`${ControllerState_1.default.SHUTDOWN}. Encerrar`);
+                console.log(`${ClientControllerState_1.default.CLIENT_EDIT_LIST}. Listar informações do Cliente`);
+                console.log(`${ClientControllerState_1.default.CLIENT_EDIT_NAME}. Editar Nome`);
+                console.log(`${ClientControllerState_1.default.CLIENT_EDIT_PHONE}. Editar Telefone`);
+                console.log(`${ClientControllerState_1.default.CLIENT_EDIT_CPF}. Editar CPF`);
+                console.log(`${ClientControllerState_1.default.CLIENT_EDIT_VIP}. Editar estado VIP`);
+                console.log(`${ClientControllerState_1.default.CLIENT_ADDRESS_MENU}. Gerenciar Endereço(s)`);
+                console.log(`${ClientControllerState_1.default.CLIENT_ACCOUNT_MENU}. Gerenciar Conta(s)`);
+                console.log(`${ClientControllerState_1.default.RETURN_TO_MAIN}. Voltar para Menu Principal`);
+                console.log(`${ClientControllerState_1.default.SHUTDOWN}. Encerrar`);
                 break;
-            case ControllerState_1.default.CLIENT_ADDRESS_MENU:
+            case ClientControllerState_1.default.CLIENT_ADDRESS_MENU:
                 console.log("\n***Menu: Gerenciar Endereços do Cliente***");
-                console.log(`${ControllerState_1.default.CLIENT_ADDRESS_LIST}. Listar Endereços do Cliente`);
-                console.log(`${ControllerState_1.default.CLIENT_ADDRESS_CREATION}. Adicionar Endereço`);
-                console.log(`${ControllerState_1.default.CLIENT_ADDRESS_REMOVAL}. Remover Endereço`);
-                console.log(`${ControllerState_1.default.CLIENT_EDITING}. Voltar para Menu de Editar Cliente`);
-                console.log(`${ControllerState_1.default.MAIN_MENU}. Voltar para Menu Principal`);
-                console.log(`${ControllerState_1.default.SHUTDOWN}. Encerrar`);
+                console.log(`${ClientControllerState_1.default.CLIENT_ADDRESS_LIST}. Listar Endereços do Cliente`);
+                console.log(`${ClientControllerState_1.default.CLIENT_ADDRESS_CREATION}. Adicionar Endereço`);
+                console.log(`${ClientControllerState_1.default.CLIENT_ADDRESS_REMOVAL}. Remover Endereço`);
+                console.log(`${ClientControllerState_1.default.CLIENT_EDITING}. Voltar para Menu de Editar Cliente`);
+                console.log(`${ClientControllerState_1.default.RETURN_TO_MAIN}. Voltar para Menu Principal`);
+                console.log(`${ClientControllerState_1.default.SHUTDOWN}. Encerrar`);
                 break;
-            case ControllerState_1.default.CLIENT_ACCOUNT_MENU:
+            case ClientControllerState_1.default.CLIENT_ACCOUNT_MENU:
                 console.log("\n***Menu: Gerenciar Contas do Cliente***");
-                console.log(`${ControllerState_1.default.CLIENT_ACCOUNT_LIST}. Listar Contas do Cliente`);
-                console.log(`${ControllerState_1.default.CLIENT_ACCOUNT_DEPOSIT}. Fazer depósito`);
-                console.log(`${ControllerState_1.default.CLIENT_ACCOUNT_WITHDRAW}. Fazer saque`);
-                console.log(`${ControllerState_1.default.CLIENT_ACCOUNT_BALANCE}. Calcular saldo`);
-                console.log(`${ControllerState_1.default.CLIENT_ACCOUNT_TRANSFER}. Fazer transferência`);
-                console.log(`${ControllerState_1.default.CLIENT_EDITING}. Voltar para Menu de Editar Cliente`);
-                console.log(`${ControllerState_1.default.MAIN_MENU}. Voltar para Menu Principal`);
-                console.log(`${ControllerState_1.default.SHUTDOWN}. Encerrar`);
+                console.log(`${ClientControllerState_1.default.CLIENT_ACCOUNT_LIST}. Listar Contas do Cliente`);
+                console.log(`${ClientControllerState_1.default.CLIENT_ACCOUNT_DEPOSIT}. Fazer depósito`);
+                console.log(`${ClientControllerState_1.default.CLIENT_ACCOUNT_WITHDRAW}. Fazer saque`);
+                console.log(`${ClientControllerState_1.default.CLIENT_ACCOUNT_BALANCE}. Calcular saldo`);
+                console.log(`${ClientControllerState_1.default.CLIENT_ACCOUNT_TRANSFER}. Fazer transferência`);
+                console.log(`${ClientControllerState_1.default.CLIENT_EDITING}. Voltar para Menu de Editar Cliente`);
+                console.log(`${ClientControllerState_1.default.RETURN_TO_MAIN}. Voltar para Menu Principal`);
+                console.log(`${ClientControllerState_1.default.SHUTDOWN}. Encerrar`);
                 break;
             default:
                 return false;
