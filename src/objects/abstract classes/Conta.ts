@@ -29,7 +29,7 @@ abstract class Conta {
         this._cliente = cliente;
     }
 
-    calcularTotal(montante: Array<Credito | Debito>): number {
+    public calcularTotal(montante: Array<Credito | Debito>): number {
 
         let total: number = 0;
 
@@ -40,13 +40,13 @@ abstract class Conta {
         return total;
     }
 
-    depositar(valor: number) {
+    public depositar(valor: number) {
         let novoCredito = new Credito(valor, new Date());
 
         this._creditos.push(novoCredito);
     }
 
-    sacar(valor: number) {
+    public sacar(valor: number) {
         let novoDebito = new Debito(valor, new Date());
 
         this._debitos.push(novoDebito);
