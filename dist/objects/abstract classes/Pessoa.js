@@ -6,5 +6,8 @@ class Pessoa {
         this._nome = nome;
         this._telefone = telefone;
     }
+    get cpf() {
+        return this._cpf;
+    }
 }
 exports.default = Pessoa;

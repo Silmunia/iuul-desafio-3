@@ -8,6 +8,10 @@ abstract class Pessoa {
         this._nome = nome;
         this._telefone = telefone;
     }
+
+    public get cpf(): string {
+        return this._cpf;
+    }
 }
 
 export default Pessoa;

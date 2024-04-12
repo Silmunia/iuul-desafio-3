@@ -8,9 +8,12 @@ const Credito_1 = __importDefault(require("../classes/Credito"));
 const Debito_1 = __importDefault(require("../classes/Debito"));
 class Conta {
     constructor(numero) {
-        this.creditos = [];
-        this.debitos = [];
-        this.numero = numero;
+        this._creditos = [];
+        this._debitos = [];
+        this._numero = numero;
+    }
+    get numero() {
+        return this._numero;
     }
     get cliente() {
         if (this._cliente instanceof Cliente_1.default) {
@@ -32,11 +35,11 @@ class Conta {
     }
     depositar(valor) {
         let novoCredito = new Credito_1.default(valor, new Date());
-        this.creditos.push(novoCredito);
+        this._creditos.push(novoCredito);
     }
     sacar(valor) {
         let novoDebito = new Debito_1.default(valor, new Date());
-        this.debitos.push(novoDebito);
+        this._debitos.push(novoDebito);
     }
 }
 exports.default = Conta;

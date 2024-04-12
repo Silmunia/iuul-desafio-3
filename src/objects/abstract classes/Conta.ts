@@ -13,6 +13,10 @@ abstract class Conta {
         this._numero = numero;
     }
 
+    public get numero(): string {
+        return this._numero;
+    }
+
     public get cliente(): Cliente {
         if (this._cliente instanceof Cliente) {
             return this._cliente;
