@@ -21,6 +21,18 @@ class Funcionario extends Pessoa implements IUsuario {
         }
     }
 
+    public get cargos(): Array<Cargo> {
+        return this._cargos;
+    }
+
+    public get salario(): number {
+        return this._salario;
+    }
+
+    public set salario(novoSalario: number) {
+        this._salario = novoSalario;
+    }
+
     public autenticar(): boolean {
         return true;
     }
