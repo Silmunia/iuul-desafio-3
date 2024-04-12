@@ -38,6 +38,14 @@ class Cliente extends Pessoa implements IUsuario {
         this._vip = novoVIP;
     }
 
+    public get contas(): Array<Conta> {
+        return this._contas;
+    }
+
+    public get enderecos(): Array<Endereco> {
+        return this._enderecos;
+    }
+
     public adicionarEnderecos(enderecos: Array<Endereco>) {
         this._enderecos = this._enderecos.concat(enderecos);
 

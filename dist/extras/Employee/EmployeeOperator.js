@@ -20,7 +20,7 @@ class EmployeeOperator {
     constructor(dataManager) {
         this.inputHandler = new InputHandler_1.default();
         this.dataManager = dataManager;
-        this.employeeInEditing = new Funcionario_1.default("", "", "", "", NaN);
+        this.employeeInEditing = new Funcionario_1.default(new Cargo_1.default(""), "", "", "", NaN);
     }
     createEmployeeOperation() {
         return __awaiter(this, void 0, void 0, function* () {

@@ -16,6 +16,15 @@ class Funcionario extends Pessoa_1.default {
             cargoAtual.novoFuncionario = this;
         }
     }
+    get cargos() {
+        return this._cargos;
+    }
+    get salario() {
+        return this._salario;
+    }
+    set salario(novoSalario) {
+        this._salario = novoSalario;
+    }
     autenticar() {
         return true;
     }
