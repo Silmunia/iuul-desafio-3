@@ -8,6 +8,10 @@ class Cargo {
         this._nome = nome;
     }
 
+    public get nome(): string {
+        return this._nome;
+    }
+
     public set novoFuncionario(novo: Funcionario) {
         this._funcionarios.push(novo);
     }

@@ -9,5 +9,20 @@ class Pessoa {
     get cpf() {
         return this._cpf;
     }
+    set cpf(novoCpf) {
+        this._cpf = novoCpf;
+    }
+    get nome() {
+        return this._nome;
+    }
+    set nome(novoNome) {
+        this._nome = novoNome;
+    }
+    get telefone() {
+        return this._telefone;
+    }
+    set telefone(novoTelefone) {
+        this._telefone = novoTelefone;
+    }
 }
 exports.default = Pessoa;

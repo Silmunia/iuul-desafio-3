@@ -16,18 +16,34 @@ class Cliente extends Pessoa implements IUsuario {
         this._vip = vip;
 
         this._enderecos.push(enderecoInicial);
-        this._enderecos.concat(outrosEnderecos);
+        this._enderecos = this._enderecos.concat(outrosEnderecos);
 
         this._enderecos.forEach((endereco) => {
             endereco.cliente = this;
         });
 
         this._contas.push(contaInicial);
-        this._contas.concat(outrasContas);
+        this._contas = this._contas.concat(outrasContas);
 
         this._contas.forEach((conta) => {
             conta.cliente = this;
         });
+    }
+
+    public get vip(): boolean {
+        return this._vip;
+    }
+
+    public set vip(novoVIP: boolean) {
+        this._vip = novoVIP;
+    }
+
+    public get contas(): Array<Conta> {
+        return this._contas;
+    }
+
+    public get enderecos(): Array<Endereco> {
+        return this._enderecos;
     }
 
     public adicionarEnderecos(enderecos: Array<Endereco>) {
@@ -36,6 +52,10 @@ class Cliente extends Pessoa implements IUsuario {
         enderecos.forEach((endereco) => {
             endereco.cliente = this;
         })
+    }
+
+    public removerEndereco(indice: number) {
+        this._enderecos.splice(indice, 1);
     }
 
     public encontrarConta(numero: string): Conta {

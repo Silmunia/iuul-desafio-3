@@ -20,17 +20,17 @@ const EmployeeController_1 = __importDefault(require("../Employee/EmployeeContro
 const ClientController_1 = __importDefault(require("../Client/ClientController"));
 class MainController {
     constructor() {
-        this.currentState = ControllerState_1.default.MAIN_MENU;
-        this.inputHandler = new InputHandler_1.default();
-        this.menuRenderer = new MenuRenderer_1.default();
-        this.dataManager = new DataManager_1.default();
+        this._currentState = ControllerState_1.default.MAIN_MENU;
+        this._inputHandler = new InputHandler_1.default();
+        this._menuRenderer = new MenuRenderer_1.default();
+        this._dataManager = new DataManager_1.default();
     }
     startProgram() {
         this.runControlLoop();
     }
     runControlLoop() {
         return __awaiter(this, void 0, void 0, function* () {
-            switch (this.currentState) {
+            switch (this._currentState) {
                 case ControllerState_1.default.MAIN_MENU:
                     this.displayMenu();
                     yield this.startCommandInput("Insira comando: ");
@@ -40,66 +40,66 @@ class MainController {
                     return;
                 case ControllerState_1.default.RESET:
                     console.log(">>> Voltando para o Menu principal");
-                    this.currentState = ControllerState_1.default.MAIN_MENU;
+                    this._currentState = ControllerState_1.default.MAIN_MENU;
                     this.runControlLoop();
                     break;
                 default:
                     console.log(">>> Comando desconhecido");
-                    this.currentState = ControllerState_1.default.RESET;
+                    this._currentState = ControllerState_1.default.RESET;
                     this.runControlLoop();
             }
         });
     }
     startCommandInput(prompt) {
         return __awaiter(this, void 0, void 0, function* () {
-            let receivedInput = yield this.inputHandler.getNumberInput(prompt);
+            let receivedInput = yield this._inputHandler.getNumberInput(prompt);
             yield this.parseInputForState(receivedInput);
             this.runControlLoop();
         });
     }
     parseInputForState(input) {
         return __awaiter(this, void 0, void 0, function* () {
-            switch (this.currentState) {
+            switch (this._currentState) {
                 case ControllerState_1.default.MAIN_MENU:
                     switch (input) {
                         case ControllerState_1.default.EMPLOYEE_MENU:
-                            this.currentState = yield this.delegateEmployeeControl();
+                            this._currentState = yield this.delegateEmployeeControl();
                             break;
                         case ControllerState_1.default.CLIENT_MENU:
-                            this.currentState = yield this.delegateClientControl();
+                            this._currentState = yield this.delegateClientControl();
                             break;
                         case ControllerState_1.default.SHUTDOWN:
-                            this.currentState = ControllerState_1.default.SHUTDOWN;
+                            this._currentState = ControllerState_1.default.SHUTDOWN;
                             break;
                         default:
                             console.log(">>> Comando desconhecido");
-                            this.currentState = ControllerState_1.default.RESET;
+                            this._currentState = ControllerState_1.default.RESET;
                     }
                     break;
                 default:
                     console.log(">>> Comando desconhecido");
-                    this.currentState = ControllerState_1.default.RESET;
+                    this._currentState = ControllerState_1.default.RESET;
             }
         });
     }
     delegateEmployeeControl() {
         return __awaiter(this, void 0, void 0, function* () {
-            this.employeeController = new EmployeeController_1.default(this.dataManager);
-            return yield this.employeeController.runEmployeeCommands();
+            this._employeeController = new EmployeeController_1.default(this._dataManager);
+            return yield this._employeeController.runEmployeeCommands();
         });
     }
     delegateClientControl() {
         return __awaiter(this, void 0, void 0, function* () {
-            this.clientController = new ClientController_1.default(this.dataManager);
-            return yield this.clientController.runClientCommands();
+            this._clientController = new ClientController_1.default(this._dataManager);
+            return yield this._clientController.runClientCommands();
         });
     }
     displayMenu() {
-        let renderResult = this.menuRenderer.renderMainMenu(this.currentState);
+        let renderResult = this._menuRenderer.renderMainMenu(this._currentState);
         if (!renderResult) {
             console.log(">>> Menu desconhecido");
             console.log(">>> Voltando para o Menu Principal");
-            this.currentState = ControllerState_1.default.MAIN_MENU;
+            this._currentState = ControllerState_1.default.MAIN_MENU;
             this.runControlLoop();
         }
     }

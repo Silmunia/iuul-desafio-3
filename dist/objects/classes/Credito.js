@@ -5,5 +5,8 @@ class Credito {
         this._valor = valor;
         this._data = data;
     }
+    get valor() {
+        return this._valor;
+    }
 }
 exports.default = Credito;
