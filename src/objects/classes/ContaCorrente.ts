@@ -9,7 +9,7 @@ class ContaCorrente extends Conta {
         this._limite = limite;
     }
 
-    calcularSaldo(): number {
+    public calcularSaldo(): number {
         let creditoTotal = this.calcularTotal(this._creditos);
 
         let debitoTotal = this.calcularTotal(this._debitos);
@@ -17,13 +17,13 @@ class ContaCorrente extends Conta {
         return (creditoTotal - debitoTotal) + this._limite;
     }
 
-    transferir(contaDestino: Conta, valor: number) {
+    public transferir(contaDestino: Conta, valor: number) {
         this.fazerSaque(valor);
 
         contaDestino.depositar(valor);
     }
 
-    fazerSaque(valor: number) {
+    public fazerSaque(valor: number) {
         if (this.calcularSaldo() - valor >= 0) {
             this.sacar(valor);
         } else {
