@@ -27,7 +27,7 @@ class ContaCorrente extends Conta {
         if (this.calcularSaldo() - valor >= 0) {
             this.sacar(valor);
         } else {
-            throw new Error(`Sacar ${valor} excede o limite de ${this.limite} da conta ${this.numero}`);
+            throw new Error(`Sacar ${valor} excede o limite de ${this.limite} da conta ${this._numero}`);
         }
     }
 }
