@@ -169,7 +169,7 @@ class DataManager {
     public removeEditedClientAddress(index: number): boolean {
         if (this.editedClient instanceof Cliente) {
             if (this.editedClient.enderecos.length > 1 && index >= 0 && index < this.editedClient.enderecos.length) {
-                this.editedClient.enderecos.splice(index, 1);
+                this.editedClient.removerEndereco(index);
                 return true;
             } else {
                 return false;

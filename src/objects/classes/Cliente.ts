@@ -54,6 +54,10 @@ class Cliente extends Pessoa implements IUsuario {
         })
     }
 
+    public removerEndereco(indice: number) {
+        this._enderecos.splice(indice, 1);
+    }
+
     public encontrarConta(numero: string): Conta {
         for (let i = 0; i< this._contas.length; i++) {
             if (this._contas[i].numero === numero) {
