@@ -12,6 +12,10 @@ abstract class Pessoa {
     public get cpf(): string {
         return this._cpf;
     }
+
+    public get nome(): string {
+        return this._nome;
+    }
 }
 
 export default Pessoa;
