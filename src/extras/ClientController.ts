@@ -9,6 +9,7 @@ import ContaCorrente from "../objects/classes/ContaCorrente";
 import ContaPoupanca from "../objects/classes/ContaPoupanca";
 import Conta from "../objects/abstract classes/Conta";
 import ClientControllerState from "./ClientControllerState";
+import ClientControlParser from "./ClientControlParser";
 
 class ClientController {
     private clientInEditing: Cliente;
@@ -16,6 +17,7 @@ class ClientController {
     private currentState: ClientControllerState = ClientControllerState.CLIENT_MENU;
     private inputHandler: InputHandler = new InputHandler();
     private menuRenderer: MenuRenderer = new MenuRenderer();
+    private controlParser: ClientControlParser = new ClientControlParser();
 
     constructor(dataManager: DataManager) {
         this.dataManager = dataManager;
@@ -191,7 +193,6 @@ class ClientController {
                 if (originAccount instanceof ContaCorrente) {
                     let targetAccountNumber = await this.inputHandler.getStringInput("Insira o número da Conta de destino da transferência: ");
                     let targetAccount = this.dataManager.getTargetAccountForTransfer(targetAccountNumber);
-
                     if (targetAccount instanceof Conta) {
 
                         let transferValue = await this.inputHandler.getNumberInput("Insira o valor a ser transferido: ");
@@ -229,120 +230,7 @@ class ClientController {
 
     private async startCommandInput(prompt: string) {
         let receivedInput = await this.inputHandler.getNumberInput(prompt);
-        await this.parseInputForState(receivedInput);
-    }
-
-    private async parseInputForState(input: number) {
-        switch(this.currentState) {
-            case ClientControllerState.CLIENT_MENU:
-                switch(input) {
-                    case ClientControllerState.CLIENT_CREATION:
-                        this.currentState = ClientControllerState.CLIENT_CREATION;
-                        break;
-                    case ClientControllerState.CLIENT_LISTING:
-                        this.currentState = ClientControllerState.CLIENT_LISTING;
-                        break;
-                    case ClientControllerState.RETURN_TO_MAIN:
-                        this.currentState = ClientControllerState.RETURN_TO_MAIN;
-                        break;
-                    case ClientControllerState.SHUTDOWN:
-                        this.currentState = ClientControllerState.SHUTDOWN;
-                        break;
-                    default:
-                        console.log(">>> Comando desconhecido");
-                }
-                break;
-            case ClientControllerState.CLIENT_EDITING:
-                switch (input) {
-                    case ClientControllerState.CLIENT_EDIT_LIST:
-                        this.currentState = ClientControllerState.CLIENT_EDIT_LIST;
-                        break;
-                    case ClientControllerState.CLIENT_EDIT_NAME:
-                        this.currentState = ClientControllerState.CLIENT_EDIT_NAME;
-                        break;
-                    case ClientControllerState.CLIENT_EDIT_PHONE:
-                        this.currentState = ClientControllerState.CLIENT_EDIT_PHONE;
-                        break;
-                    case ClientControllerState.CLIENT_EDIT_CPF:
-                        this.currentState = ClientControllerState.CLIENT_EDIT_CPF;
-                        break;
-                    case ClientControllerState.CLIENT_EDIT_VIP:
-                        this.currentState = ClientControllerState.CLIENT_EDIT_VIP;
-                        break;
-                    case ClientControllerState.CLIENT_ADDRESS_MENU:
-                        this.currentState = ClientControllerState.CLIENT_ADDRESS_MENU;
-                        break;
-                    case ClientControllerState.CLIENT_ACCOUNT_MENU:
-                        this.currentState = ClientControllerState.CLIENT_ACCOUNT_MENU;
-                        break;
-                    case ClientControllerState.RETURN_TO_MAIN:
-                        this.currentState = ClientControllerState.RETURN_TO_MAIN;
-                        break;
-                    case ClientControllerState.SHUTDOWN:
-                        this.currentState = ClientControllerState.SHUTDOWN;
-                        break;
-                    default:
-                        console.log(">>> Comando desconhecido");
-                }
-                break;
-            case ClientControllerState.CLIENT_ADDRESS_MENU:
-                switch (input) {
-                    case ClientControllerState.CLIENT_ADDRESS_CREATION:
-                        this.currentState = ClientControllerState.CLIENT_ADDRESS_CREATION;
-                        break;
-                    case ClientControllerState.CLIENT_ADDRESS_REMOVAL:
-                        this.currentState = ClientControllerState.CLIENT_ADDRESS_REMOVAL;
-                        break;
-                    case ClientControllerState.CLIENT_ADDRESS_LIST:
-                        this.currentState = ClientControllerState.CLIENT_ADDRESS_LIST;
-                        break;
-                    case ClientControllerState.CLIENT_EDITING:
-                        this.currentState = ClientControllerState.CLIENT_EDITING;
-                        break;
-                    case ClientControllerState.RETURN_TO_MAIN:
-                        this.currentState = ClientControllerState.RETURN_TO_MAIN;
-                        break;
-                    case ClientControllerState.SHUTDOWN:
-                        this.currentState = ClientControllerState.SHUTDOWN;
-                        break;
-                    default:
-                        console.log(">>> Comando desconhecido");
-                }
-                break;
-            case ClientControllerState.CLIENT_ACCOUNT_MENU:
-                switch(input) {
-                    case ClientControllerState.CLIENT_ACCOUNT_LIST:
-                        this.currentState = ClientControllerState.CLIENT_ACCOUNT_LIST;
-                        break;
-                    case ClientControllerState.CLIENT_ACCOUNT_WITHDRAW:
-                        this.currentState = ClientControllerState.CLIENT_ACCOUNT_WITHDRAW;
-                        break;
-                    case ClientControllerState.CLIENT_ACCOUNT_TRANSFER:
-                        this.currentState = ClientControllerState.CLIENT_ACCOUNT_TRANSFER;
-                        break;
-                    case ClientControllerState.CLIENT_ACCOUNT_DEPOSIT:
-                        this.currentState = ClientControllerState.CLIENT_ACCOUNT_DEPOSIT;
-                        break;
-                    case ClientControllerState.CLIENT_ACCOUNT_BALANCE:
-                        this.currentState = ClientControllerState.CLIENT_ACCOUNT_BALANCE;
-                        break;
-                    case ClientControllerState.CLIENT_EDITING:
-                        this.currentState = ClientControllerState.CLIENT_EDITING;
-                        break;
-                    case ClientControllerState.RETURN_TO_MAIN:
-                        this.currentState = ClientControllerState.RETURN_TO_MAIN;
-                        break;
-                    case ClientControllerState.SHUTDOWN:
-                        this.currentState = ClientControllerState.SHUTDOWN;
-                        break;
-                    default:
-                        console.log(">>> Comando desconhecido");
-                }
-                break;
-            default:
-                console.log(">>> Comando desconhecido");
-                this.currentState = ClientControllerState.RESET;
-        }
+        this.currentState = await this.controlParser.parseInputForState(this.currentState, receivedInput);
     }
 }
 
