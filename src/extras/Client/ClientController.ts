@@ -1,13 +1,13 @@
 
-import Cliente from "../objects/classes/Cliente";
-import MenuRenderer from "./MenuRenderer";
-import ControllerState from "./ControllerState";
-import InputHandler from "./InputHandler";
-import DataManager from "./DataManager";
-import Endereco from "../objects/classes/Endereco";
-import ContaCorrente from "../objects/classes/ContaCorrente";
-import ContaPoupanca from "../objects/classes/ContaPoupanca";
-import Conta from "../objects/abstract classes/Conta";
+import Cliente from "../../objects/classes/Cliente";
+import MenuRenderer from "../Commons/MenuRenderer";
+import ControllerState from "../Main/ControllerState";
+import InputHandler from "../Commons/InputHandler";
+import DataManager from "../Commons/DataManager";
+import Endereco from "../../objects/classes/Endereco";
+import ContaCorrente from "../../objects/classes/ContaCorrente";
+import ContaPoupanca from "../../objects/classes/ContaPoupanca";
+import Conta from "../../objects/abstract classes/Conta";
 import ClientControllerState from "./ClientControllerState";
 import ClientControlParser from "./ClientControlParser";
 

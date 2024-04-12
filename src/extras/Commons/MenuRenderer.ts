@@ -1,6 +1,6 @@
-import ControllerState from "./ControllerState";
-import EmployeeControllerState from "./EmployeeControllerState";
-import ClientControllerState from "./ClientControllerState";
+import ControllerState from "../Main/ControllerState";
+import EmployeeControllerState from "../Employee/EmployeeControllerState";
+import ClientControllerState from "../Client/ClientControllerState";
 
 class MenuRenderer {
     public renderMainMenu(state: ControllerState): boolean {

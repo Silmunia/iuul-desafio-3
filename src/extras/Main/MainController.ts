@@ -1,9 +1,9 @@
 import ControllerState from "./ControllerState";
-import DataManager from "./DataManager";
-import InputHandler from "./InputHandler";
-import MenuRenderer from "./MenuRenderer";
-import EmployeeController from "./EmployeeController";
-import ClientController from "./ClientController";
+import DataManager from "../Commons/DataManager";
+import InputHandler from "../Commons/InputHandler";
+import MenuRenderer from "../Commons/MenuRenderer";
+import EmployeeController from "../Employee/EmployeeController";
+import ClientController from "../Client/ClientController";
 
 class MainController {
     private currentState: ControllerState = ControllerState.MAIN_MENU;

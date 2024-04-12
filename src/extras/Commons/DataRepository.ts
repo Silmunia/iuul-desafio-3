@@ -1,5 +1,5 @@
-import Funcionario from "../objects/classes/Funcionario";
-import Cliente from "../objects/classes/Cliente";
+import Funcionario from "../../objects/classes/Funcionario";
+import Cliente from "../../objects/classes/Cliente";
 
 class DataRepository {
     private employees: Array<Funcionario> = [];

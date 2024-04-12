@@ -1,10 +1,10 @@
 
-import Funcionario from "../objects/classes/Funcionario";
-import Cargo from "../objects/classes/Cargo";
-import MenuRenderer from "./MenuRenderer";
-import ControllerState from "./ControllerState";
-import InputHandler from "./InputHandler";
-import DataManager from "./DataManager";
+import Funcionario from "../../objects/classes/Funcionario";
+import Cargo from "../../objects/classes/Cargo";
+import MenuRenderer from "../Commons/MenuRenderer";
+import ControllerState from "../Main/ControllerState";
+import InputHandler from "../Commons/InputHandler";
+import DataManager from "../Commons/DataManager";
 import EmployeeControllerState from "./EmployeeControllerState";
 import EmployeeControlParser from "./EmployeeControlParser";
 
