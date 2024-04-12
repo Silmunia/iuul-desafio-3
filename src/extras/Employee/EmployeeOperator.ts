@@ -14,7 +14,7 @@ class EmployeeOperator {
 
     constructor(dataManager: DataManager) {
         this.dataManager = dataManager;
-        this.employeeInEditing = new Funcionario("", "", "", "", NaN);
+        this.employeeInEditing = new Funcionario(new Cargo(""), "", "", "", NaN);
     }
 
     public async createEmployeeOperation(): Promise<EmployeeControllerState> {
