@@ -30,6 +30,14 @@ class Cliente extends Pessoa implements IUsuario {
         });
     }
 
+    public get vip(): boolean {
+        return this._vip;
+    }
+
+    public set vip(novoVIP: boolean) {
+        this._vip = novoVIP;
+    }
+
     public adicionarEnderecos(enderecos: Array<Endereco>) {
         this._enderecos = this._enderecos.concat(enderecos);
 

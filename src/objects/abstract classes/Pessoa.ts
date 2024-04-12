@@ -13,8 +13,24 @@ abstract class Pessoa {
         return this._cpf;
     }
 
+    public set cpf(novoCpf: string) {
+        this._cpf = novoCpf;
+    }
+
     public get nome(): string {
         return this._nome;
+    }
+
+    public set nome(novoNome: string) {
+        this._nome = novoNome;
+    }
+
+    public get telefone(): string {
+        return this._telefone;
+    }
+
+    public set telefone(novoTelefone: string) {
+        this._telefone = novoTelefone;
     }
 }
 

@@ -12,6 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const Cargo_1 = __importDefault(require("../../objects/classes/Cargo"));
 const Cliente_1 = __importDefault(require("../../objects/classes/Cliente"));
 const Endereco_1 = __importDefault(require("../../objects/classes/Endereco"));
 const ContaCorrente_1 = __importDefault(require("../../objects/classes/ContaCorrente"));
@@ -26,11 +27,12 @@ class FactoryRepository {
         return __awaiter(this, void 0, void 0, function* () {
             return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
                 let employeeName = yield this.inputHandler.getStringInput("Insira o nome do Funcionário: ");
-                let roleName = yield this.inputHandler.getStringInput("Insira o cargo do Funcionário: ");
                 let cpf = yield this.inputHandler.getStringInput("Insira o CPF do Funcionário: ");
                 let phone = yield this.inputHandler.getStringInput("Insira o telefone do Funcionário: ");
                 let salary = yield this.inputHandler.getNumberInput("Insira o salário do Funcionário: ");
-                let newEmployee = new Funcionario_1.default(roleName, cpf, employeeName, phone, salary);
+                let roleName = yield this.inputHandler.getStringInput("Insira o cargo do Funcionário: ");
+                let newRole = new Cargo_1.default(roleName);
+                let newEmployee = new Funcionario_1.default(newRole, cpf, employeeName, phone, salary);
                 console.log(">>> Funcionário criado com sucesso");
                 resolve(newEmployee);
             }));
