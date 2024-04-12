@@ -6,6 +6,10 @@ class Credito {
         this._valor = valor;
         this._data = data;
     }
+
+    public get valor(): number {
+        return this._valor;
+    }
 }
 
 export default Credito;
