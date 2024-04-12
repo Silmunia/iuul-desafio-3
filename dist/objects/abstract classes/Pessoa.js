@@ -9,5 +9,8 @@ class Pessoa {
     get cpf() {
         return this._cpf;
     }
+    get nome() {
+        return this._nome;
+    }
 }
 exports.default = Pessoa;

@@ -1,4 +1,5 @@
 
+import Cargo from "../../objects/classes/Cargo";
 import Cliente from "../../objects/classes/Cliente";
 import Endereco from "../../objects/classes/Endereco";
 import Conta from "../../objects/abstract classes/Conta";
@@ -14,12 +15,13 @@ class FactoryRepository {
     public async startEmployeeCreation(): Promise<Funcionario> {
         return new Promise<Funcionario>(async (resolve) => {
             let employeeName: string = await this.inputHandler.getStringInput("Insira o nome do Funcionário: ");
-            let roleName: string = await this.inputHandler.getStringInput("Insira o cargo do Funcionário: ");
             let cpf: string = await this.inputHandler.getStringInput("Insira o CPF do Funcionário: ");
             let phone: string = await this.inputHandler.getStringInput("Insira o telefone do Funcionário: ");
             let salary: number = await this.inputHandler.getNumberInput("Insira o salário do Funcionário: ");
+            let roleName: string = await this.inputHandler.getStringInput("Insira o cargo do Funcionário: ");
 
-            let newEmployee = new Funcionario(roleName, cpf, employeeName, phone, salary);
+            let newRole: Cargo = new Cargo(roleName);
+            let newEmployee = new Funcionario(newRole, cpf, employeeName, phone, salary);
 
             console.log(">>> Funcionário criado com sucesso");
             
