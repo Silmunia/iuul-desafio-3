@@ -6,21 +6,47 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Pessoa_1 = __importDefault(require("../abstract classes/Pessoa"));
 const ContaCorrente_1 = __importDefault(require("./ContaCorrente"));
 class Cliente extends Pessoa_1.default {
-    constructor(cpf, nome, telefone, vip, endereco, conta) {
+    constructor(cpf, nome, telefone, vip, enderecoInicial, contaInicial, outrasContas = [], outrosEnderecos = []) {
         super(cpf, nome, telefone);
-        this.enderecos = [];
-        this.contas = [];
-        this.vip = vip;
-        this.enderecos.push(endereco);
-        this.contas.push(conta);
+        this._enderecos = [];
+        this._contas = [];
+        this._vip = vip;
+        this._enderecos.push(enderecoInicial);
+        this._enderecos = this._enderecos.concat(outrosEnderecos);
+        this._enderecos.forEach((endereco) => {
+            endereco.cliente = this;
+        });
+        this._contas.push(contaInicial);
+        this._contas = this._contas.concat(outrasContas);
+        this._contas.forEach((conta) => {
+            conta.cliente = this;
+        });
+    }
+    get vip() {
+        return this._vip;
+    }
+    set vip(novoVIP) {
+        this._vip = novoVIP;
+    }
+    get contas() {
+        return this._contas;
+    }
+    get enderecos() {
+        return this._enderecos;
     }
     adicionarEnderecos(enderecos) {
-        this.enderecos = this.enderecos.concat(enderecos);
+        this._enderecos = this._enderecos.concat(enderecos);
+        enderecos.forEach((endereco) => {
+            endereco.cliente = this;
+        });
+    }
+    removerEndereco(indice) {
+        this._enderecos.splice(indice, 1);
     }
     encontrarConta(numero) {
-        for (let i = 0; i < this.contas.length; i++) {
-            if (this.contas[i].numero === numero) {
-                return this.contas[i];
+        for (let i = 0; i < this._contas.length; i++) {
+            if (this._contas[i].numero === numero) {
+                return this._contas[i];
             }
         }
         throw new Error(`Conta de numero ${numero} não foi encontrada no cliente de CPF ${this.cpf}`);
@@ -49,9 +75,8 @@ class Cliente extends Pessoa_1.default {
     }
     listarEnderecos() {
         console.log(`Listando enderecos de cliente com CPF ${this.cpf}`);
-        for (let i = 0; i < this.enderecos.length; i++) {
-            console.log(`Endereco ${i + 1}`);
-            console.log(this.enderecos[i]);
+        for (let i = 0; i < this._enderecos.length; i++) {
+            console.log(`${i + 1}. ${this._enderecos[i].listarInformaçoes()}`);
         }
     }
     autenticar() {

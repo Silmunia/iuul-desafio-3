@@ -127,10 +127,10 @@ class DataManager {
     }
 
     public async addAddressToEditedClient(): Promise<boolean> {
-        let newAddress = await this.factoryRepository.startAddressCreation();
+        let newAddress = await this.factoryRepository.startAddressCreation(">>> Criando novo Endereço");
 
         if (this.editedClient instanceof Cliente) {
-            this.editedClient.enderecos.push(newAddress);
+            this.editedClient.adicionarEnderecos([newAddress]);
             return true;
         } else {
             return false;
@@ -155,7 +155,7 @@ class DataManager {
         if (this.editedEmployee instanceof Funcionario) {
             for (let i = 0; i < this.editedEmployee.cargos.length; i++) {
                 if (this.editedEmployee.cargos[i].nome === roleName) {
-                    this.editedEmployee.cargos.splice(i, 1);
+                    this.editedEmployee.removerCargo(i);
                     return true;
                 }
             }
@@ -169,7 +169,7 @@ class DataManager {
     public removeEditedClientAddress(index: number): boolean {
         if (this.editedClient instanceof Cliente) {
             if (this.editedClient.enderecos.length > 1 && index >= 0 && index < this.editedClient.enderecos.length) {
-                this.editedClient.enderecos.splice(index, 1);
+                this.editedClient.removerEndereco(index);
                 return true;
             } else {
                 return false;

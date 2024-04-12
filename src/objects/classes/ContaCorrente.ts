@@ -2,32 +2,32 @@
 import Conta from "../abstract classes/Conta";
 
 class ContaCorrente extends Conta {
-    public readonly limite: number
+    private _limite: number
 
     constructor(numero: string, limite: number) {
         super(numero);
-        this.limite = limite;
+        this._limite = limite;
     }
 
-    calcularSaldo(): number {
-        let creditoTotal = this.calcularTotal(this.creditos);
+    public calcularSaldo(): number {
+        let creditoTotal = this.calcularTotal(this._creditos);
 
-        let debitoTotal = this.calcularTotal(this.debitos);
+        let debitoTotal = this.calcularTotal(this._debitos);
         
-        return (creditoTotal - debitoTotal) + this.limite;
+        return (creditoTotal - debitoTotal) + this._limite;
     }
 
-    transferir(contaDestino: Conta, valor: number) {
+    public transferir(contaDestino: Conta, valor: number) {
         this.fazerSaque(valor);
 
         contaDestino.depositar(valor);
     }
 
-    fazerSaque(valor: number) {
+    public fazerSaque(valor: number) {
         if (this.calcularSaldo() - valor >= 0) {
             this.sacar(valor);
         } else {
-            throw new Error(`Sacar ${valor} excede o limite de ${this.limite} da conta ${this.numero}`);
+            throw new Error(`Sacar ${valor} excede o limite de ${this._limite} da conta ${this._numero}`);
         }
     }
 }

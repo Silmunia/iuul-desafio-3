@@ -20,7 +20,7 @@ class EmployeeOperator {
     constructor(dataManager) {
         this.inputHandler = new InputHandler_1.default();
         this.dataManager = dataManager;
-        this.employeeInEditing = new Funcionario_1.default("", "", "", "", NaN);
+        this.employeeInEditing = new Funcionario_1.default(new Cargo_1.default(""), "", "", "", NaN);
     }
     createEmployeeOperation() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -101,8 +101,7 @@ class EmployeeOperator {
             let employeeRoles = this.dataManager.listEditedEmployeeRoles(this.employeeInEditing);
             console.log(`O Funcionário possui os seguintes Cargos: ${employeeRoles}`);
             let newRoleName = yield this.inputHandler.getStringInput("Insira o nome do Cargo a adicionar: ");
-            let newRole = new Cargo_1.default(newRoleName);
-            this.employeeInEditing.cargos.push(newRole);
+            this.employeeInEditing.adicionarCargo(new Cargo_1.default(newRoleName));
             console.log(">>> Cargo adicionado com sucesso");
             return EmployeeControllerState_1.default.EMPLOYEE_ROLES_MENU;
         });

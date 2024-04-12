@@ -7,12 +7,12 @@ const Conta_1 = __importDefault(require("../abstract classes/Conta"));
 class ContaCorrente extends Conta_1.default {
     constructor(numero, limite) {
         super(numero);
-        this.limite = limite;
+        this._limite = limite;
     }
     calcularSaldo() {
-        let creditoTotal = this.calcularTotal(this.creditos);
-        let debitoTotal = this.calcularTotal(this.debitos);
-        return (creditoTotal - debitoTotal) + this.limite;
+        let creditoTotal = this.calcularTotal(this._creditos);
+        let debitoTotal = this.calcularTotal(this._debitos);
+        return (creditoTotal - debitoTotal) + this._limite;
     }
     transferir(contaDestino, valor) {
         this.fazerSaque(valor);
@@ -23,7 +23,7 @@ class ContaCorrente extends Conta_1.default {
             this.sacar(valor);
         }
         else {
-            throw new Error(`Sacar ${valor} excede o limite de ${this.limite} da conta ${this.numero}`);
+            throw new Error(`Sacar ${valor} excede o limite de ${this._limite} da conta ${this._numero}`);
         }
     }
 }

@@ -7,38 +7,74 @@ import ContaCorrente from "./ContaCorrente";
 
 class Cliente extends Pessoa implements IUsuario {
 
-    public vip: boolean
-    public enderecos: Array<Endereco> = []
-    public contas: Array<Conta> = []
+    private _vip: boolean
+    private _enderecos: Array<Endereco> = []
+    private _contas: Array<Conta> = []
 
-    constructor(cpf: string, nome: string, telefone: string, vip: boolean, endereco: Endereco, conta: Conta) {
+    constructor(cpf: string, nome: string, telefone: string, vip: boolean, enderecoInicial: Endereco, contaInicial: Conta, outrasContas: Array<Conta> = [], outrosEnderecos: Array<Endereco> = []) {
         super(cpf, nome, telefone);
-        this.vip = vip;
-        this.enderecos.push(endereco);
-        this.contas.push(conta);
+        this._vip = vip;
+
+        this._enderecos.push(enderecoInicial);
+        this._enderecos = this._enderecos.concat(outrosEnderecos);
+
+        this._enderecos.forEach((endereco) => {
+            endereco.cliente = this;
+        });
+
+        this._contas.push(contaInicial);
+        this._contas = this._contas.concat(outrasContas);
+
+        this._contas.forEach((conta) => {
+            conta.cliente = this;
+        });
     }
 
-    adicionarEnderecos(enderecos: Array<Endereco>) {
-        this.enderecos = this.enderecos.concat(enderecos);
+    public get vip(): boolean {
+        return this._vip;
     }
 
-    encontrarConta(numero: string): Conta {
-        for (let i = 0; i< this.contas.length; i++) {
-            if (this.contas[i].numero === numero) {
-                return this.contas[i];
+    public set vip(novoVIP: boolean) {
+        this._vip = novoVIP;
+    }
+
+    public get contas(): Array<Conta> {
+        return this._contas;
+    }
+
+    public get enderecos(): Array<Endereco> {
+        return this._enderecos;
+    }
+
+    public adicionarEnderecos(enderecos: Array<Endereco>) {
+        this._enderecos = this._enderecos.concat(enderecos);
+
+        enderecos.forEach((endereco) => {
+            endereco.cliente = this;
+        })
+    }
+
+    public removerEndereco(indice: number) {
+        this._enderecos.splice(indice, 1);
+    }
+
+    public encontrarConta(numero: string): Conta {
+        for (let i = 0; i< this._contas.length; i++) {
+            if (this._contas[i].numero === numero) {
+                return this._contas[i];
             }
         }
 
         throw new Error(`Conta de numero ${numero} não foi encontrada no cliente de CPF ${this.cpf}`);
     }
 
-    calcularSaldoDeConta(numeroDaConta: string): number {
+    public calcularSaldoDeConta(numeroDaConta: string): number {
         let conta = this.encontrarConta(numeroDaConta);
 
         return conta.calcularSaldo();
     }
 
-    fazerTransferencia(numeroContaOrigem: string, clienteDestino: Cliente, numeroContaDestino: string, valor: number) {
+    public fazerTransferencia(numeroContaOrigem: string, clienteDestino: Cliente, numeroContaDestino: string, valor: number) {
         let contaOrigem = this.encontrarConta(numeroContaOrigem);
 
         if (contaOrigem instanceof ContaCorrente) {
@@ -51,27 +87,26 @@ class Cliente extends Pessoa implements IUsuario {
 
     }
 
-    fazerDeposito(numeroDaConta: string, valor: number) {
+    public fazerDeposito(numeroDaConta: string, valor: number) {
         let conta = this.encontrarConta(numeroDaConta);
 
         conta.depositar(valor);
     }
 
-    fazerSaque(numeroDaConta: string, valor: number) {
+    public fazerSaque(numeroDaConta: string, valor: number) {
         let conta = this.encontrarConta(numeroDaConta);
 
         conta.sacar(valor);
     }
 
-    listarEnderecos() {
+    public listarEnderecos() {
         console.log(`Listando enderecos de cliente com CPF ${this.cpf}`);
-        for (let i = 0; i < this.enderecos.length; i++) {
-            console.log(`Endereco ${i+1}`)
-            console.log(this.enderecos[i]);
+        for (let i = 0; i < this._enderecos.length; i++) {
+            console.log(`${i+1}. ${this._enderecos[i].listarInformaçoes()}`); 
         }
     }
 
-    autenticar(): boolean {
+    public autenticar(): boolean {
         return true;
     }
 }

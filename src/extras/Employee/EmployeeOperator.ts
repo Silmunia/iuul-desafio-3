@@ -14,7 +14,7 @@ class EmployeeOperator {
 
     constructor(dataManager: DataManager) {
         this.dataManager = dataManager;
-        this.employeeInEditing = new Funcionario("", "", "", "", NaN);
+        this.employeeInEditing = new Funcionario(new Cargo(""), "", "", "", NaN);
     }
 
     public async createEmployeeOperation(): Promise<EmployeeControllerState> {
@@ -91,8 +91,7 @@ class EmployeeOperator {
         let employeeRoles = this.dataManager.listEditedEmployeeRoles(this.employeeInEditing);
         console.log(`O Funcionário possui os seguintes Cargos: ${employeeRoles}`);
         let newRoleName = await this.inputHandler.getStringInput("Insira o nome do Cargo a adicionar: ");
-        let newRole = new Cargo(newRoleName);
-        this.employeeInEditing.cargos.push(newRole);
+        this.employeeInEditing.adicionarCargo(new Cargo(newRoleName));
         console.log(">>> Cargo adicionado com sucesso")
         return EmployeeControllerState.EMPLOYEE_ROLES_MENU;
     }
