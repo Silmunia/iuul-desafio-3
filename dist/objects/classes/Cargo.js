@@ -5,6 +5,9 @@ class Cargo {
         this._funcionarios = [];
         this._nome = nome;
     }
+    get nome() {
+        return this._nome;
+    }
     set novoFuncionario(novo) {
         this._funcionarios.push(novo);
     }

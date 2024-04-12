@@ -28,6 +28,12 @@ class Cliente extends Pessoa_1.default {
     set vip(novoVIP) {
         this._vip = novoVIP;
     }
+    get contas() {
+        return this._contas;
+    }
+    get enderecos() {
+        return this._enderecos;
+    }
     adicionarEnderecos(enderecos) {
         this._enderecos = this._enderecos.concat(enderecos);
         enderecos.forEach((endereco) => {

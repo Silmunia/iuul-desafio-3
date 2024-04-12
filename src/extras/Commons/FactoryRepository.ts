@@ -18,10 +18,19 @@ class FactoryRepository {
             let cpf: string = await this.inputHandler.getStringInput("Insira o CPF do Funcionário: ");
             let phone: string = await this.inputHandler.getStringInput("Insira o telefone do Funcionário: ");
             let salary: number = await this.inputHandler.getNumberInput("Insira o salário do Funcionário: ");
-            let roleName: string = await this.inputHandler.getStringInput("Insira o cargo do Funcionário: ");
+            let roleName: string = await this.inputHandler.getStringInput("Insira o cargo inicial do Funcionário: ");
+            let initialRole: Cargo = new Cargo(roleName);
 
-            let newRole: Cargo = new Cargo(roleName);
-            let newEmployee = new Funcionario(newRole, cpf, employeeName, phone, salary);
+            let numberOfRoles: number = await this.inputHandler.getNumberInput("Insira o número de Cargos adicionais do Funcionário: ");
+
+            let additionalRoles: Array<Cargo> = [];
+            for (let i = 0; i < numberOfRoles; i++) {
+                let newRoleName = await this.inputHandler.getStringInput(`Insira o nome do Cargo adicional ${i+1}/${numberOfRoles}`);
+
+                additionalRoles.push(new Cargo(newRoleName));
+            }
+
+            let newEmployee = new Funcionario(initialRole, cpf, employeeName, phone, salary, additionalRoles);
 
             console.log(">>> Funcionário criado com sucesso");
             

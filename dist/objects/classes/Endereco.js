@@ -24,6 +24,24 @@ class Endereco {
             throw Error("Endereço não possui Cliente associado");
         }
     }
+    get cep() {
+        return this._cep;
+    }
+    get logradouro() {
+        return this._logradouro;
+    }
+    get numero() {
+        return this._numero;
+    }
+    get complemento() {
+        return this._complemento;
+    }
+    get cidade() {
+        return this._cidade;
+    }
+    get uf() {
+        return this._uf;
+    }
     listarInformaçoes() {
         return `${this._uf}, ${this._cidade}, ${this._logradouro}, número ${this._numero}, ${this._complemento}, CEP ${this._cep}`;
     }
