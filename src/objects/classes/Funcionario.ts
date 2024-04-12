@@ -21,7 +21,7 @@ class Funcionario extends Pessoa implements IUsuario {
         }
     }
 
-    autenticar(): boolean {
+    public autenticar(): boolean {
         return true;
     }
 }
