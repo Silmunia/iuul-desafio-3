@@ -101,8 +101,7 @@ class EmployeeOperator {
             let employeeRoles = this.dataManager.listEditedEmployeeRoles(this.employeeInEditing);
             console.log(`O Funcionário possui os seguintes Cargos: ${employeeRoles}`);
             let newRoleName = yield this.inputHandler.getStringInput("Insira o nome do Cargo a adicionar: ");
-            let newRole = new Cargo_1.default(newRoleName);
-            this.employeeInEditing.cargos.push(newRole);
+            this.employeeInEditing.adicionarCargo(new Cargo_1.default(newRoleName));
             console.log(">>> Cargo adicionado com sucesso");
             return EmployeeControllerState_1.default.EMPLOYEE_ROLES_MENU;
         });

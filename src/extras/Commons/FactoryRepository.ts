@@ -25,7 +25,7 @@ class FactoryRepository {
 
             let additionalRoles: Array<Cargo> = [];
             for (let i = 0; i < numberOfRoles; i++) {
-                let newRoleName = await this.inputHandler.getStringInput(`Insira o nome do Cargo adicional ${i+1}/${numberOfRoles}`);
+                let newRoleName = await this.inputHandler.getStringInput(`Insira o nome do Cargo adicional ${i+1}/${numberOfRoles}: `);
 
                 additionalRoles.push(new Cargo(newRoleName));
             }
@@ -44,11 +44,33 @@ class FactoryRepository {
             let clientName: string = await this.inputHandler.getStringInput("Insira o nome do Cliente: ");
             let cpf: string = await this.inputHandler.getStringInput("Insira o CPF do Cliente: ");
             let phone: string = await this.inputHandler.getStringInput("Insira o telefone do Cliente: ");
-            let address: Endereco = await this.startAddressCreation();
-            let account: Conta = await this.startAccountCreation();
             let isVIP: boolean = await this.inputHandler.getBooleanInput("O Cliente é VIP? (s/n) ");
 
-            let newClient = new Cliente(cpf, clientName, phone, isVIP, address, account);
+            let initialAddress: Endereco = await this.startAddressCreation(">>> Criando Endereço inicial do Cliente");
+
+            let numberOfAddresses: number = await this.inputHandler.getNumberInput("Insira o número de Endereços adicionais do Cliente: ");
+
+            let additionalAddresses: Array<Endereco> = [];
+
+            for (let i = 0; i < numberOfAddresses; i++) {
+                let newAddress: Endereco = await this.startAddressCreation(`>>> Criando Endereço adicional ${i+1}/${numberOfAddresses}`);
+
+                additionalAddresses.push(newAddress);
+            }
+
+            let initialAccount: Conta = await this.startAccountCreation(">>> Criando Conta inicial do Cliente");
+
+            let numberOfAccounts: number = await this.inputHandler.getNumberInput("Insira o número de Contas adicionais do Cliente: ");
+
+            let additionalAccounts: Array<Conta> = [];
+
+            for (let j = 0; j < numberOfAccounts; j++) {
+                let newAccount: Conta = await this.startAccountCreation(`>>> Criando Conta adicional ${j+1}/${numberOfAccounts}`);
+
+                additionalAccounts.push(newAccount);
+            }
+
+            let newClient = new Cliente(cpf, clientName, phone, isVIP, initialAddress, initialAccount, additionalAccounts, additionalAddresses);
 
             console.log(">>> Cliente criado com sucesso");
 
@@ -56,10 +78,10 @@ class FactoryRepository {
         });
     }
 
-    public async startAddressCreation(): Promise<Endereco> {
+    public async startAddressCreation(startingMessage: string): Promise<Endereco> {
         return new Promise<Endereco>(async (resolve) => {
 
-            console.log(">>> Criando Endereço");
+            console.log(startingMessage);
 
             let state: string = await this.inputHandler.getStringInput("Insira a Unidade Federativa do Endereço: ");
             let city: string = await this.inputHandler.getStringInput("Insira a cidade do Endereço: ");
@@ -75,7 +97,8 @@ class FactoryRepository {
         });
     }
 
-    public async startAccountCreation(): Promise<Conta> {
+    public async startAccountCreation(startingMessage: string): Promise<Conta> {
+        console.log(startingMessage);
         return this.inputHandler.getNumberInput("Escolha um tipo de conta para criar:\n1. Conta Corrente\n2. Conta Poupança\nInsira um comando: ").then(async (input) => {
             if (input == 1) {
                 return this.startCheckingAccountCreation();
@@ -83,14 +106,12 @@ class FactoryRepository {
                 return this.startSavingsAccountCreation();
             } else {
                 console.log(">>> Comando inválido");
-                return this.startAccountCreation();
+                return this.startAccountCreation(startingMessage);
             }
         });
     }
 
     private async startCheckingAccountCreation(): Promise<Conta> {
-        console.log(">>> Criando Conta Corrente");
-
         let number: string = await this.inputHandler.getStringInput("Insira o número da Conta Corrente: ");
         let limit: number = await this.inputHandler.getNumberInput("Insira o limite da Conta Corrente: ");
 
@@ -99,8 +120,6 @@ class FactoryRepository {
     }
 
     private async startSavingsAccountCreation(): Promise<Conta> {
-        console.log(">>> Criando Conta Poupança");
-
         let number = await this.inputHandler.getStringInput("Insira o número da Conta Poupança: ");
 
         let newAccount = new ContaPoupanca(number);

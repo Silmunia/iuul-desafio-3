@@ -30,9 +30,15 @@ class FactoryRepository {
                 let cpf = yield this.inputHandler.getStringInput("Insira o CPF do Funcionário: ");
                 let phone = yield this.inputHandler.getStringInput("Insira o telefone do Funcionário: ");
                 let salary = yield this.inputHandler.getNumberInput("Insira o salário do Funcionário: ");
-                let roleName = yield this.inputHandler.getStringInput("Insira o cargo do Funcionário: ");
-                let newRole = new Cargo_1.default(roleName);
-                let newEmployee = new Funcionario_1.default(newRole, cpf, employeeName, phone, salary);
+                let roleName = yield this.inputHandler.getStringInput("Insira o cargo inicial do Funcionário: ");
+                let initialRole = new Cargo_1.default(roleName);
+                let numberOfRoles = yield this.inputHandler.getNumberInput("Insira o número de Cargos adicionais do Funcionário: ");
+                let additionalRoles = [];
+                for (let i = 0; i < numberOfRoles; i++) {
+                    let newRoleName = yield this.inputHandler.getStringInput(`Insira o nome do Cargo adicional ${i + 1}/${numberOfRoles}: `);
+                    additionalRoles.push(new Cargo_1.default(newRoleName));
+                }
+                let newEmployee = new Funcionario_1.default(initialRole, cpf, employeeName, phone, salary, additionalRoles);
                 console.log(">>> Funcionário criado com sucesso");
                 resolve(newEmployee);
             }));
@@ -44,19 +50,31 @@ class FactoryRepository {
                 let clientName = yield this.inputHandler.getStringInput("Insira o nome do Cliente: ");
                 let cpf = yield this.inputHandler.getStringInput("Insira o CPF do Cliente: ");
                 let phone = yield this.inputHandler.getStringInput("Insira o telefone do Cliente: ");
-                let address = yield this.startAddressCreation();
-                let account = yield this.startAccountCreation();
                 let isVIP = yield this.inputHandler.getBooleanInput("O Cliente é VIP? (s/n) ");
-                let newClient = new Cliente_1.default(cpf, clientName, phone, isVIP, address, account);
+                let initialAddress = yield this.startAddressCreation(">>> Criando Endereço inicial do Cliente");
+                let numberOfAddresses = yield this.inputHandler.getNumberInput("Insira o número de Endereços adicionais do Cliente: ");
+                let additionalAddresses = [];
+                for (let i = 0; i < numberOfAddresses; i++) {
+                    let newAddress = yield this.startAddressCreation(`>>> Criando Endereço adicional ${i + 1}/${numberOfAddresses}`);
+                    additionalAddresses.push(newAddress);
+                }
+                let initialAccount = yield this.startAccountCreation(">>> Criando Conta inicial do Cliente");
+                let numberOfAccounts = yield this.inputHandler.getNumberInput("Insira o número de Contas adicionais do Cliente: ");
+                let additionalAccounts = [];
+                for (let j = 0; j < numberOfAccounts; j++) {
+                    let newAccount = yield this.startAccountCreation(`>>> Criando Conta adicional ${j + 1}/${numberOfAccounts}`);
+                    additionalAccounts.push(newAccount);
+                }
+                let newClient = new Cliente_1.default(cpf, clientName, phone, isVIP, initialAddress, initialAccount, additionalAccounts, additionalAddresses);
                 console.log(">>> Cliente criado com sucesso");
                 resolve(newClient);
             }));
         });
     }
-    startAddressCreation() {
+    startAddressCreation(startingMessage) {
         return __awaiter(this, void 0, void 0, function* () {
             return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
-                console.log(">>> Criando Endereço");
+                console.log(startingMessage);
                 let state = yield this.inputHandler.getStringInput("Insira a Unidade Federativa do Endereço: ");
                 let city = yield this.inputHandler.getStringInput("Insira a cidade do Endereço: ");
                 let street = yield this.inputHandler.getStringInput("Insira o logradouro do Endereço: ");
@@ -68,8 +86,9 @@ class FactoryRepository {
             }));
         });
     }
-    startAccountCreation() {
+    startAccountCreation(startingMessage) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log(startingMessage);
             return this.inputHandler.getNumberInput("Escolha um tipo de conta para criar:\n1. Conta Corrente\n2. Conta Poupança\nInsira um comando: ").then((input) => __awaiter(this, void 0, void 0, function* () {
                 if (input == 1) {
                     return this.startCheckingAccountCreation();
@@ -79,14 +98,13 @@ class FactoryRepository {
                 }
                 else {
                     console.log(">>> Comando inválido");
-                    return this.startAccountCreation();
+                    return this.startAccountCreation(startingMessage);
                 }
             }));
         });
     }
     startCheckingAccountCreation() {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(">>> Criando Conta Corrente");
             let number = yield this.inputHandler.getStringInput("Insira o número da Conta Corrente: ");
             let limit = yield this.inputHandler.getNumberInput("Insira o limite da Conta Corrente: ");
             let newAccount = new ContaCorrente_1.default(number, limit);
@@ -95,7 +113,6 @@ class FactoryRepository {
     }
     startSavingsAccountCreation() {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(">>> Criando Conta Poupança");
             let number = yield this.inputHandler.getStringInput("Insira o número da Conta Poupança: ");
             let newAccount = new ContaPoupanca_1.default(number);
             return Promise.resolve(newAccount);

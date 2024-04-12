@@ -9,7 +9,7 @@ class Funcionario extends Pessoa_1.default {
         super(cpf, nome, telefone);
         this._cargos = [];
         this._cargos.push(cargoInicial);
-        this._cargos.concat(outrosCargos);
+        this._cargos = this._cargos.concat(outrosCargos);
         this._salario = salario;
         for (let i = 0; i < this._cargos.length; i++) {
             let cargoAtual = this._cargos[i];
@@ -24,6 +24,13 @@ class Funcionario extends Pessoa_1.default {
     }
     set salario(novoSalario) {
         this._salario = novoSalario;
+    }
+    adicionarCargo(novoCargo) {
+        this._cargos.push(novoCargo);
+        novoCargo.novoFuncionario = this;
+    }
+    removerCargo(indice) {
+        this.cargos.splice(indice, 1);
     }
     autenticar() {
         return true;

@@ -12,7 +12,7 @@ class Funcionario extends Pessoa implements IUsuario {
         super(cpf, nome, telefone);
 
         this._cargos.push(cargoInicial);
-        this._cargos.concat(outrosCargos);
+        this._cargos = this._cargos.concat(outrosCargos);
         this._salario = salario;
 
         for (let i = 0; i < this._cargos.length; i++) {

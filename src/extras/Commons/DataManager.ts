@@ -127,7 +127,7 @@ class DataManager {
     }
 
     public async addAddressToEditedClient(): Promise<boolean> {
-        let newAddress = await this.factoryRepository.startAddressCreation();
+        let newAddress = await this.factoryRepository.startAddressCreation(">>> Criando novo Endereço");
 
         if (this.editedClient instanceof Cliente) {
             this.editedClient.adicionarEnderecos([newAddress]);

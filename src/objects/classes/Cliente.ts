@@ -16,14 +16,14 @@ class Cliente extends Pessoa implements IUsuario {
         this._vip = vip;
 
         this._enderecos.push(enderecoInicial);
-        this._enderecos.concat(outrosEnderecos);
+        this._enderecos = this._enderecos.concat(outrosEnderecos);
 
         this._enderecos.forEach((endereco) => {
             endereco.cliente = this;
         });
 
         this._contas.push(contaInicial);
-        this._contas.concat(outrasContas);
+        this._contas = this._contas.concat(outrasContas);
 
         this._contas.forEach((conta) => {
             conta.cliente = this;
