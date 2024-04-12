@@ -6,6 +6,7 @@ import ControllerState from "./ControllerState";
 import InputHandler from "./InputHandler";
 import DataManager from "./DataManager";
 import EmployeeControllerState from "./EmployeeControllerState";
+import EmployeeControlParser from "./EmployeeControlParser";
 
 class EmployeeController {
 
@@ -14,6 +15,7 @@ class EmployeeController {
     private currentState: EmployeeControllerState = EmployeeControllerState.EMPLOYEE_MENU;
     private inputHandler: InputHandler = new InputHandler();
     private menuRenderer: MenuRenderer = new MenuRenderer();
+    private controlParser: EmployeeControlParser = new EmployeeControlParser();
 
     constructor(dataManager: DataManager) {
         this.dataManager = dataManager;
@@ -168,86 +170,8 @@ class EmployeeController {
 
     private async startCommandInput(prompt: string) {
         let receivedInput = await this.inputHandler.getNumberInput(prompt);
-        await this.parseInputForState(receivedInput);
+        this.currentState = await this.controlParser.parseInputForState(this.currentState, receivedInput);
     }
-
-    private async parseInputForState(input: number) {
-        switch(this.currentState) {
-            case EmployeeControllerState.EMPLOYEE_MENU:
-                switch (input) {
-                    case EmployeeControllerState.EMPLOYEE_CREATION:
-                        this.currentState = EmployeeControllerState.EMPLOYEE_CREATION;
-                        break;
-                    case EmployeeControllerState.EMPLOYEE_LISTING:
-                        this.currentState = EmployeeControllerState.EMPLOYEE_LISTING;
-                        break;
-                    case EmployeeControllerState.RETURN_TO_MAIN:
-                        this.currentState = EmployeeControllerState.RETURN_TO_MAIN;
-                        break;
-                    case EmployeeControllerState.SHUTDOWN:
-                        this.currentState = EmployeeControllerState.SHUTDOWN;
-                        break;
-                    default:
-                        console.log(">>> Comando desconhecido");
-                }
-                break;
-            case EmployeeControllerState.EMPLOYEE_EDITING:
-                switch (input) {
-                    case EmployeeControllerState.EMPLOYEE_EDIT_LIST:
-                        this.currentState = EmployeeControllerState.EMPLOYEE_EDIT_LIST;
-                        break;
-                    case EmployeeControllerState.EMPLOYEE_EDIT_NAME:
-                        this.currentState = EmployeeControllerState.EMPLOYEE_EDIT_NAME;
-                        break;
-                    case EmployeeControllerState.EMPLOYEE_EDIT_PHONE:
-                        this.currentState = EmployeeControllerState.EMPLOYEE_EDIT_PHONE;
-                        break;
-                    case EmployeeControllerState.EMPLOYEE_EDIT_SALARY:
-                        this.currentState = EmployeeControllerState.EMPLOYEE_EDIT_SALARY;
-                        break;
-                    case EmployeeControllerState.EMPLOYEE_EDIT_CPF:
-                        this.currentState = EmployeeControllerState.EMPLOYEE_EDIT_CPF;
-                        break;
-                    case EmployeeControllerState.EMPLOYEE_ROLES_MENU:
-                        this.currentState = EmployeeControllerState.EMPLOYEE_ROLES_MENU;
-                        break;
-                    case EmployeeControllerState.RETURN_TO_MAIN:
-                        this.currentState = EmployeeControllerState.RETURN_TO_MAIN;
-                        break;
-                    case EmployeeControllerState.SHUTDOWN:
-                        this.currentState = EmployeeControllerState.SHUTDOWN;
-                        break;
-                    default:
-                        console.log(">>> Comando desconhecido");
-                }
-                break;
-            case EmployeeControllerState.EMPLOYEE_ROLES_MENU:
-                switch (input) {
-                    case EmployeeControllerState.EMPLOYEE_ROLES_CREATION:
-                        this.currentState = EmployeeControllerState.EMPLOYEE_ROLES_CREATION;
-                        break;
-                    case EmployeeControllerState.EMPLOYEE_ROLES_REMOVAL:
-                        this.currentState = EmployeeControllerState.EMPLOYEE_ROLES_REMOVAL;
-                        break;
-                    case EmployeeControllerState.EMPLOYEE_EDITING:
-                        this.currentState = EmployeeControllerState.EMPLOYEE_EDITING;
-                        break;
-                    case EmployeeControllerState.RETURN_TO_MAIN:
-                        this.currentState = EmployeeControllerState.RETURN_TO_MAIN;
-                        break;
-                    case EmployeeControllerState.SHUTDOWN:
-                        this.currentState = EmployeeControllerState.SHUTDOWN;
-                        break;
-                    default:
-                        console.log(">>> Comando desconhecido");
-                }
-                break;
-            default:
-                console.log(">>> Comando desconhecido");
-                this.currentState = EmployeeControllerState.RESET;
-        }
-    }
-
 }
 
 export default EmployeeController;

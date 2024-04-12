@@ -18,11 +18,13 @@ const MenuRenderer_1 = __importDefault(require("./MenuRenderer"));
 const ControllerState_1 = __importDefault(require("./ControllerState"));
 const InputHandler_1 = __importDefault(require("./InputHandler"));
 const EmployeeControllerState_1 = __importDefault(require("./EmployeeControllerState"));
+const EmployeeControlParser_1 = __importDefault(require("./EmployeeControlParser"));
 class EmployeeController {
     constructor(dataManager) {
         this.currentState = EmployeeControllerState_1.default.EMPLOYEE_MENU;
         this.inputHandler = new InputHandler_1.default();
         this.menuRenderer = new MenuRenderer_1.default();
+        this.controlParser = new EmployeeControlParser_1.default();
         this.dataManager = dataManager;
         this.employeeInEditing = new Funcionario_1.default("", "", "", "", NaN);
     }
@@ -179,7 +181,8 @@ class EmployeeController {
     startCommandInput(prompt) {
         return __awaiter(this, void 0, void 0, function* () {
             let receivedInput = yield this.inputHandler.getNumberInput(prompt);
-            yield this.parseInputForState(receivedInput);
+            this.currentState = yield this.controlParser.parseInputForState(this.currentState, receivedInput);
+            //await this.parseInputForState(receivedInput);
         });
     }
     parseInputForState(input) {
