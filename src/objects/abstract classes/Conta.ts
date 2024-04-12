@@ -1,4 +1,5 @@
 
+import Cliente from "../classes/Cliente";
 import Credito from "../classes/Credito";
 import Debito from "../classes/Debito";
 
@@ -6,9 +7,22 @@ abstract class Conta {
     public readonly numero: string
     protected creditos: Array<Credito> = []
     protected debitos: Array<Debito> = []
+    private _cliente: Cliente | undefined;
     
     constructor(numero: string) {
         this.numero = numero;
+    }
+
+    public get cliente(): Cliente {
+        if (this._cliente instanceof Cliente) {
+            return this._cliente;
+        } else {
+            throw Error("Conta não possui Cliente associado");
+        }
+    }
+
+    public set cliente(cliente: Cliente) {
+        this._cliente = cliente;
     }
 
     calcularTotal(montante: Array<Credito | Debito>): number {

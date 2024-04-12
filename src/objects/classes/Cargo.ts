@@ -1,8 +1,15 @@
+import Funcionario from "./Funcionario";
+
 class Cargo {
-    public readonly nome: string
+    private _nome: string
+    private _funcionarios: Array<Funcionario> = []
 
     constructor(nome: string) {
-        this.nome = nome;
+        this._nome = nome;
+    }
+
+    public set novoFuncionario(novo: Funcionario) {
+        this._funcionarios.push(novo);
     }
 }
 

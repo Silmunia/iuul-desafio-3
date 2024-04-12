@@ -2,7 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 class Cargo {
     constructor(nome) {
-        this.nome = nome;
+        this._funcionarios = [];
+        this._nome = nome;
+    }
+    set novoFuncionario(novo) {
+        this._funcionarios.push(novo);
     }
 }
 exports.default = Cargo;
