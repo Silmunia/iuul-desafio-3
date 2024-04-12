@@ -4,13 +4,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Pessoa_1 = __importDefault(require("../abstract classes/Pessoa"));
-const Cargo_1 = __importDefault(require("./Cargo"));
 class Funcionario extends Pessoa_1.default {
-    constructor(nomeDoCargo, cpf, nome, telefone, salario) {
+    constructor(cargos, cpf, nome, telefone, salario) {
         super(cpf, nome, telefone);
         this.cargos = [];
-        this.cargos.push(new Cargo_1.default(nomeDoCargo));
+        this.cargos = cargos;
         this.salario = salario;
+        for (let i = 0; i < this.cargos.length; i++) {
+            let cargoAtual = this.cargos[i];
+            cargoAtual.adicionarFuncionario(this);
+        }
     }
     autenticar() {
         return true;
