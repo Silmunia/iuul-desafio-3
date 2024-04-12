@@ -155,7 +155,7 @@ class DataManager {
         if (this.editedEmployee instanceof Funcionario) {
             for (let i = 0; i < this.editedEmployee.cargos.length; i++) {
                 if (this.editedEmployee.cargos[i].nome === roleName) {
-                    this.editedEmployee.cargos.splice(i, 1);
+                    this.editedEmployee.removerCargo(i);
                     return true;
                 }
             }

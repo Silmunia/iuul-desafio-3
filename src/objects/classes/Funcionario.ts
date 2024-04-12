@@ -38,6 +38,10 @@ class Funcionario extends Pessoa implements IUsuario {
         novoCargo.novoFuncionario = this;
     }
 
+    public removerCargo(indice: number) {
+        this.cargos.splice(indice, 1);
+    }
+
     public autenticar(): boolean {
         return true;
     }
