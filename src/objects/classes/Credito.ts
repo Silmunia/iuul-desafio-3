@@ -1,10 +1,10 @@
 class Credito {
-    public readonly valor: number
-    public readonly data: Date
+    private _valor: number
+    private _data: Date
 
     constructor(valor: number, data: Date) {
-        this.valor = valor;
-        this.data = data;
+        this._valor = valor;
+        this._data = data;
     }
 }
 
