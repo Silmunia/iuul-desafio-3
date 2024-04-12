@@ -5,19 +5,19 @@ import Cargo from "./Cargo";
 
 class Funcionario extends Pessoa implements IUsuario {
 
-    public readonly cargos: Array<Cargo> = [];
-    public salario: number;
+    private _cargos: Array<Cargo> = [];
+    private _salario: number;
 
-    constructor(cargoInicial: Cargo, outrosCargos: Array<Cargo>, cpf: string, nome: string, telefone: string, salario: number) {
+    constructor(cargoInicial: Cargo, outrosCargos: Array<Cargo> = [], cpf: string, nome: string, telefone: string, salario: number) {
         super(cpf, nome, telefone);
 
-        this.cargos.push(cargoInicial);
-        this.cargos.concat(outrosCargos);
-        this.salario = salario;
+        this._cargos.push(cargoInicial);
+        this._cargos.concat(outrosCargos);
+        this._salario = salario;
 
-        for (let i = 0; i < this.cargos.length; i++) {
-            let cargoAtual = this.cargos[i];
-            cargoAtual.adicionarFuncionario(this);
+        for (let i = 0; i < this._cargos.length; i++) {
+            let cargoAtual = this._cargos[i];
+            cargoAtual.novoFuncionario = this;
         }
     }
 

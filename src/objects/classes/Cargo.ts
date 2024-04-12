@@ -1,20 +1,15 @@
 import Funcionario from "./Funcionario";
 
 class Cargo {
-    public readonly nome: string
-
-    public funcionarios: Array<Funcionario> = []
+    private _nome: string
+    private _funcionarios: Array<Funcionario> = []
 
     constructor(nome: string) {
-        this.nome = nome;
+        this._nome = nome;
     }
 
-    public adicionarFuncionario(novo: Funcionario) {
-        this.funcionarios.push(novo);
-    }
-
-    public removerFuncionario(indice: number) {
-        this.funcionarios.splice(indice, 1);
+    public set novoFuncionario(novo: Funcionario) {
+        this._funcionarios.push(novo);
     }
 }
 

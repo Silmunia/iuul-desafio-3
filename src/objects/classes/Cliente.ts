@@ -7,25 +7,41 @@ import ContaCorrente from "./ContaCorrente";
 
 class Cliente extends Pessoa implements IUsuario {
 
-    public vip: boolean
-    public enderecos: Array<Endereco> = []
-    public contas: Array<Conta> = []
+    private _vip: boolean
+    private _enderecos: Array<Endereco> = []
+    private _contas: Array<Conta> = []
 
-    constructor(cpf: string, nome: string, telefone: string, vip: boolean, endereco: Endereco, conta: Conta) {
+    constructor(cpf: string, nome: string, telefone: string, vip: boolean, enderecoInicial: Endereco, outrosEnderecos: Array<Endereco> = [], contaInicial: Conta, outrasContas: Array<Conta> = []) {
         super(cpf, nome, telefone);
-        this.vip = vip;
-        this.enderecos.push(endereco);
-        this.contas.push(conta);
+        this._vip = vip;
+
+        this._enderecos.push(enderecoInicial);
+        this._enderecos.concat(outrosEnderecos);
+
+        this._enderecos.forEach((endereco) => {
+            endereco.cliente = this;
+        });
+
+        this._contas.push(contaInicial);
+        this._contas.concat(outrasContas);
+
+        this._contas.forEach((conta) => {
+            conta.cliente = this;
+        });
     }
 
-    adicionarEnderecos(enderecos: Array<Endereco>) {
-        this.enderecos = this.enderecos.concat(enderecos);
+    public adicionarEnderecos(enderecos: Array<Endereco>) {
+        this._enderecos = this._enderecos.concat(enderecos);
+
+        enderecos.forEach((endereco) => {
+            endereco.cliente = this;
+        })
     }
 
-    encontrarConta(numero: string): Conta {
-        for (let i = 0; i< this.contas.length; i++) {
-            if (this.contas[i].numero === numero) {
-                return this.contas[i];
+    public encontrarConta(numero: string): Conta {
+        for (let i = 0; i< this._contas.length; i++) {
+            if (this._contas[i].numero === numero) {
+                return this._contas[i];
             }
         }
 
@@ -65,9 +81,8 @@ class Cliente extends Pessoa implements IUsuario {
 
     listarEnderecos() {
         console.log(`Listando enderecos de cliente com CPF ${this.cpf}`);
-        for (let i = 0; i < this.enderecos.length; i++) {
-            console.log(`Endereco ${i+1}`)
-            console.log(this.enderecos[i]);
+        for (let i = 0; i < this._enderecos.length; i++) {
+            console.log(`${i+1}. ${this._enderecos[i].listarInformaçoes()}`); 
         }
     }
 
