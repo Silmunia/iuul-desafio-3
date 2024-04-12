@@ -1,9 +1,9 @@
 import ControllerState from "./ControllerState";
-import DataManager from "./DataManager";
-import InputHandler from "./InputHandler";
-import MenuRenderer from "./MenuRenderer";
-import EmployeeController from "./EmployeeController";
-import ClientController from "./ClientController";
+import DataManager from "../Commons/DataManager";
+import InputHandler from "../Commons/InputHandler";
+import MenuRenderer from "../Commons/MenuRenderer";
+import EmployeeController from "../Employee/EmployeeController";
+import ClientController from "../Client/ClientController";
 
 class MainController {
     private currentState: ControllerState = ControllerState.MAIN_MENU;
@@ -49,10 +49,10 @@ class MainController {
             case ControllerState.MAIN_MENU:
                 switch (input) {
                     case ControllerState.EMPLOYEE_MENU:
-                        this.currentState = await this.delegateEmployeeControl(input);
+                        this.currentState = await this.delegateEmployeeControl();
                         break;
                     case ControllerState.CLIENT_MENU:
-                        this.currentState = await this.delegateClientControl(input);
+                        this.currentState = await this.delegateClientControl();
                         break;
                     case ControllerState.SHUTDOWN:
                         this.currentState = ControllerState.SHUTDOWN;
@@ -68,17 +68,13 @@ class MainController {
         }
     }
 
-    private async delegateEmployeeControl(initialState: ControllerState) {
-        let editedEmployee = this.dataManager.getEditedEmployee();
-
-        this.employeeController = new EmployeeController(initialState, editedEmployee, this.dataManager);
+    private async delegateEmployeeControl() {
+        this.employeeController = new EmployeeController(this.dataManager);
         return await this.employeeController.runEmployeeCommands();
     }
 
-    private async delegateClientControl(initialState: ControllerState) {
-        let editedClient = this.dataManager.getEditedClient();
-
-        this.clientController = new ClientController(initialState, editedClient, this.dataManager);
+    private async delegateClientControl() {
+        this.clientController = new ClientController(this.dataManager);
         return await this.clientController.runClientCommands();
     }
 

@@ -3,9 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const ControllerState_1 = __importDefault(require("./ControllerState"));
-const EmployeeControllerState_1 = __importDefault(require("./EmployeeControllerState"));
-const ClientControllerState_1 = __importDefault(require("./ClientControllerState"));
+const ControllerState_1 = __importDefault(require("../Main/ControllerState"));
+const EmployeeControllerState_1 = __importDefault(require("../Employee/EmployeeControllerState"));
+const ClientControllerState_1 = __importDefault(require("../Client/ClientControllerState"));
 class MenuRenderer {
     renderMainMenu(state) {
         switch (state) {

@@ -1,11 +1,11 @@
 
-import Cliente from "../objects/classes/Cliente";
-import Endereco from "../objects/classes/Endereco";
-import Conta from "../objects/abstract classes/Conta";
-import ContaCorrente from "../objects/classes/ContaCorrente";
-import Funcionario from "../objects/classes/Funcionario";
+import Cliente from "../../objects/classes/Cliente";
+import Endereco from "../../objects/classes/Endereco";
+import Conta from "../../objects/abstract classes/Conta";
+import ContaCorrente from "../../objects/classes/ContaCorrente";
+import Funcionario from "../../objects/classes/Funcionario";
 import InputHandler from "./InputHandler";
-import ContaPoupanca from "../objects/classes/ContaPoupanca";
+import ContaPoupanca from "../../objects/classes/ContaPoupanca";
 
 class FactoryRepository {
 
