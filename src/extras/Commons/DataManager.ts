@@ -130,7 +130,7 @@ class DataManager {
         let newAddress = await this.factoryRepository.startAddressCreation();
 
         if (this.editedClient instanceof Cliente) {
-            this.editedClient.enderecos.push(newAddress);
+            this.editedClient.adicionarEnderecos([newAddress]);
             return true;
         } else {
             return false;
