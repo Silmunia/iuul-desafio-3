@@ -33,6 +33,11 @@ class Funcionario extends Pessoa implements IUsuario {
         this._salario = novoSalario;
     }
 
+    public adicionarCargo(novoCargo: Cargo) {
+        this._cargos.push(novoCargo);
+        novoCargo.novoFuncionario = this;
+    }
+
     public autenticar(): boolean {
         return true;
     }
