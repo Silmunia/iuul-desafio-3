@@ -31,6 +31,30 @@ class Endereco {
         }
     }
 
+    public get cep(): string {
+        return this._cep;
+    }
+
+    public get logradouro(): string {
+        return this._logradouro;
+    }
+
+    public get numero(): string {
+        return this._numero;
+    }
+
+    public get complemento(): string {
+        return this._complemento;
+    }
+
+    public get cidade(): string {
+        return this._cidade;
+    }
+
+    public get uf(): string {
+        return this._uf;
+    }
+
     public listarInformaçoes(): string {
         return `${this._uf}, ${this._cidade}, ${this._logradouro}, número ${this._numero}, ${this._complemento}, CEP ${this._cep}`;
     }
