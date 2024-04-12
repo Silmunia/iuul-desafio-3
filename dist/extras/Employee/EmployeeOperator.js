@@ -22,6 +22,12 @@ class EmployeeOperator {
         this.dataManager = dataManager;
         this.employeeInEditing = new Funcionario_1.default("", "", "", "", NaN);
     }
+    createEmployeeOperation() {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.dataManager.addEmployee();
+            return EmployeeControllerState_1.default.EMPLOYEE_MENU;
+        });
+    }
     listEmployeesOperation() {
         this.dataManager.listEmployees();
         if (this.dataManager.getEmployees().length === 0) {
@@ -31,6 +37,10 @@ class EmployeeOperator {
         else {
             return EmployeeControllerState_1.default.EMPLOYEE_SELECTION;
         }
+    }
+    listEmployeeInfoOperation() {
+        console.log(this.dataManager.listEditedEmployeeInfo());
+        return EmployeeControllerState_1.default.EMPLOYEE_EDITING;
     }
     selectEmployeeOperation() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -43,11 +53,12 @@ class EmployeeOperator {
                 let selectedEmployee = this.dataManager.getEditedEmployee();
                 if (selectedEmployee instanceof Funcionario_1.default) {
                     this.employeeInEditing = selectedEmployee;
+                    return EmployeeControllerState_1.default.EMPLOYEE_EDITING;
                 }
                 else {
                     console.log(">>> Não foi possível encontrar o Funcionário selecionado");
+                    return EmployeeControllerState_1.default.EMPLOYEE_MENU;
                 }
-                return EmployeeControllerState_1.default.EMPLOYEE_EDITING;
             }
             else {
                 console.log(">>> Funcionário inválido");

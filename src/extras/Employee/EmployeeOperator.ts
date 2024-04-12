@@ -47,10 +47,11 @@ class EmployeeOperator {
             let selectedEmployee = this.dataManager.getEditedEmployee();
             if (selectedEmployee instanceof Funcionario) {
                 this.employeeInEditing = selectedEmployee;
+                return EmployeeControllerState.EMPLOYEE_EDITING;
             } else {
                 console.log(">>> Não foi possível encontrar o Funcionário selecionado");
+                return EmployeeControllerState.EMPLOYEE_MENU;
             }
-            return EmployeeControllerState.EMPLOYEE_EDITING;
         } else {
             console.log(">>> Funcionário inválido");
             return EmployeeControllerState.EMPLOYEE_MENU;

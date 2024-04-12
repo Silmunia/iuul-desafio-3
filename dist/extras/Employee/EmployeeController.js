@@ -24,7 +24,6 @@ class EmployeeController {
         this.inputHandler = new InputHandler_1.default();
         this.menuRenderer = new MenuRenderer_1.default();
         this.controlParser = new EmployeeControlParser_1.default();
-        this.dataManager = dataManager;
         this.operator = new EmployeeOperator_1.default(dataManager);
     }
     runEmployeeCommands() {
@@ -51,9 +50,8 @@ class EmployeeController {
                     this.currentState = yield this.operator.selectEmployeeOperation();
                     break;
                 case EmployeeControllerState_1.default.EMPLOYEE_CREATION:
-                    yield this.dataManager.addEmployee();
-                    this.currentState = EmployeeControllerState_1.default.EMPLOYEE_MENU;
-                    return this.runEmployeeCommands();
+                    this.currentState = yield this.operator.createEmployeeOperation();
+                    break;
                 case EmployeeControllerState_1.default.EMPLOYEE_EDIT_NAME:
                     this.currentState = yield this.operator.editEmployeeNameOperation();
                     break;
@@ -67,9 +65,8 @@ class EmployeeController {
                     this.currentState = yield this.operator.editEmployeeCpfOperation();
                     break;
                 case EmployeeControllerState_1.default.EMPLOYEE_EDIT_LIST:
-                    console.log(this.dataManager.listEditedEmployeeInfo());
-                    this.currentState = EmployeeControllerState_1.default.EMPLOYEE_EDITING;
-                    return this.runEmployeeCommands();
+                    this.currentState = this.operator.listEmployeeInfoOperation();
+                    break;
                 case EmployeeControllerState_1.default.EMPLOYEE_ROLES_CREATION:
                     this.currentState = yield this.operator.createEmployeeRoleOperation();
                     break;
