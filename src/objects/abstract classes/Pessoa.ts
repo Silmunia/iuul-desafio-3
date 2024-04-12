@@ -1,12 +1,12 @@
 abstract class Pessoa {
-    public cpf: string
-    public nome: string
-    public telefone: string
+    private _cpf: string
+    private _nome: string
+    private _telefone: string
 
     constructor(cpf: string, nome: string, telefone: string) {
-        this.cpf = cpf;
-        this.nome = nome;
-        this.telefone = telefone;
+        this._cpf = cpf;
+        this._nome = nome;
+        this._telefone = telefone;
     }
 }
 
