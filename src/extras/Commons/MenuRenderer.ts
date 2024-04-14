@@ -10,6 +10,22 @@ class MenuRenderer {
         console.log(`${expectedInputs[2]}. Encerrar`);
     }
 
+    public renderMainEmployeeMenu(expectedInputs: Array<number>) {
+        console.log("\n***Menu: Gerenciar Funcionários***");
+        console.log(`${expectedInputs[0]}. Criar Funcionário`);
+        console.log(`${expectedInputs[1]}. Editar Funcionários`);
+        console.log(`${expectedInputs[2]}. Voltar para Menu Principal`);
+        console.log(`${expectedInputs[3]}. Encerrar`);
+    }
+
+    public renderMainClientMenu(expectedInputs: Array<number>) {
+        console.log("\n***Menu: Gerenciar Clientes***");
+        console.log(`${expectedInputs[0]}. Criar Cliente`);
+        console.log(`${expectedInputs[1]}. Editar Clientes`);
+        console.log(`${expectedInputs[2]}. Voltar para Menu Principal`);
+        console.log(`${expectedInputs[3]}. Encerrar`);
+    }
+
     public renderEmployeeMenus(state: EmployeeControllerState) {
         switch (state) {
             case EmployeeControllerState.EMPLOYEE_MENU:

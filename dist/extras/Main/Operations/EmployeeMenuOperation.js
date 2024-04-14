@@ -12,25 +12,39 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const ControllerState_1 = __importDefault(require("../ControllerState"));
-const EmployeeController_1 = __importDefault(require("../../Employee/EmployeeController"));
+const InputHandler_1 = __importDefault(require("../../Commons/InputHandler"));
 const MainMenuOperation_1 = __importDefault(require("./MainMenuOperation"));
 const MainOperationTemplate_1 = __importDefault(require("./Abstract Operation/MainOperationTemplate"));
+const MenuRenderer_1 = __importDefault(require("../../Commons/MenuRenderer"));
 class EmployeeMenuOperation extends MainOperationTemplate_1.default {
+    constructor() {
+        super(...arguments);
+        this._inputHandler = new InputHandler_1.default();
+        this._menuRenderer = new MenuRenderer_1.default();
+        this._expectedInputs = [1, 2, 3, 999];
+    }
     runOperation() {
         return __awaiter(this, void 0, void 0, function* () {
-            this._employeeController = new EmployeeController_1.default(this._dataManager);
-            let result = yield this._employeeController.runEmployeeCommands();
-            if (result === ControllerState_1.default.MAIN_MENU) {
-                return new MainMenuOperation_1.default(this._dataManager);
-            }
-            else if (result === ControllerState_1.default.SHUTDOWN) {
-                let termination = new MainMenuOperation_1.default(this._dataManager);
-                termination.maintainExecution = false;
-                return termination;
-            }
-            else {
-                return this;
+            this._menuRenderer.renderMainEmployeeMenu(this._expectedInputs);
+            return yield this.startCommandInput("Insira um comando: ");
+        });
+    }
+    startCommandInput(prompt) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let receivedInput = yield this._inputHandler.getNumberInput(prompt);
+            switch (receivedInput) {
+                case this._expectedInputs[0]:
+                    return this;
+                case this._expectedInputs[1]:
+                    return this;
+                case this._expectedInputs[2]:
+                    return new MainMenuOperation_1.default(this._dataManager);
+                case this._expectedInputs[3]:
+                    let termination = new MainMenuOperation_1.default(this._dataManager);
+                    termination.maintainExecution = false;
+                    return termination;
+                default:
+                    return this;
             }
         });
     }

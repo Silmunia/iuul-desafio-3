@@ -12,21 +12,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const ClientMenuOperation_1 = __importDefault(require("./ClientMenuOperation"));
-const EmployeeMenuOperation_1 = __importDefault(require("./EmployeeMenuOperation"));
 const InputHandler_1 = __importDefault(require("../../Commons/InputHandler"));
+const MainMenuOperation_1 = __importDefault(require("./MainMenuOperation"));
 const MainOperationTemplate_1 = __importDefault(require("./Abstract Operation/MainOperationTemplate"));
 const MenuRenderer_1 = __importDefault(require("../../Commons/MenuRenderer"));
-class MainMenuOperation extends MainOperationTemplate_1.default {
-    constructor(dataManager) {
-        super(dataManager);
+class ClientMenuOperation extends MainOperationTemplate_1.default {
+    constructor() {
+        super(...arguments);
         this._inputHandler = new InputHandler_1.default();
         this._menuRenderer = new MenuRenderer_1.default();
-        this._expectedInputs = [1, 2, 999];
+        this._expectedInputs = [1, 2, 3, 999];
     }
     runOperation() {
         return __awaiter(this, void 0, void 0, function* () {
-            this._menuRenderer.renderMainMenu(this._expectedInputs);
+            this._menuRenderer.renderMainClientMenu(this._expectedInputs);
             return yield this.startCommandInput("Insira um comando: ");
         });
     }
@@ -35,16 +34,19 @@ class MainMenuOperation extends MainOperationTemplate_1.default {
             let receivedInput = yield this._inputHandler.getNumberInput(prompt);
             switch (receivedInput) {
                 case this._expectedInputs[0]:
-                    return new EmployeeMenuOperation_1.default(this._dataManager);
-                case this._expectedInputs[1]:
-                    return new ClientMenuOperation_1.default(this._dataManager);
-                case this._expectedInputs[2]:
-                    this.maintainExecution = false;
                     return this;
+                case this._expectedInputs[1]:
+                    return this;
+                case this._expectedInputs[2]:
+                    return new MainMenuOperation_1.default(this._dataManager);
+                case this._expectedInputs[3]:
+                    let termination = new MainMenuOperation_1.default(this._dataManager);
+                    termination.maintainExecution = false;
+                    return termination;
                 default:
                     return this;
             }
         });
     }
 }
-exports.default = MainMenuOperation;
+exports.default = ClientMenuOperation;
