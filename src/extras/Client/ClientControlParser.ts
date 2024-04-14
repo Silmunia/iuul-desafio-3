@@ -15,7 +15,7 @@ class ClientControlParser {
                     case ClientControllerState.SHUTDOWN:
                         return ClientControllerState.SHUTDOWN;
                     default:
-                        throw new Error(">>> Comando desconhecido");
+                        throw new Error("Comando desconhecido");
                 }
             case ClientControllerState.CLIENT_EDITING:
                 switch (input) {
@@ -38,7 +38,7 @@ class ClientControlParser {
                     case ClientControllerState.SHUTDOWN:
                         return ClientControllerState.SHUTDOWN;
                     default:
-                        throw new Error(">>> Comando desconhecido");
+                        throw new Error("Comando desconhecido");
                 }
             case ClientControllerState.CLIENT_ADDRESS_MENU:
                 switch (input) {
@@ -55,7 +55,7 @@ class ClientControlParser {
                     case ClientControllerState.SHUTDOWN:
                         return ClientControllerState.SHUTDOWN;
                     default:
-                        throw new Error(">>> Comando desconhecido");
+                        throw new Error("Comando desconhecido");
                 }
             case ClientControllerState.CLIENT_ACCOUNT_MENU:
                 switch(input) {
@@ -76,10 +76,10 @@ class ClientControlParser {
                     case ClientControllerState.SHUTDOWN:
                         return ClientControllerState.SHUTDOWN;
                     default:
-                        throw new Error(">>> Comando desconhecido");
+                        throw new Error("Comando desconhecido");
                 }
             default:
-                throw new Error(">>> Comando desconhecido");
+                throw new Error("Comando desconhecido");
         }
     }
 

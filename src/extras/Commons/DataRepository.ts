@@ -25,7 +25,7 @@ class DataRepository {
         if (index >= 0 && index < this.employees.length) {
             return this.employees[index];
         } else {
-            throw new Error(">>> Não há Funcionário com o índice selecionado");
+            throw new Error("Não há Funcionário com o índice selecionado");
         }
     }
 
@@ -33,7 +33,7 @@ class DataRepository {
         if (index >= 0 && index < this.clients.length) {
             return this.clients[index];
         } else {
-            throw new Error(">>> Não há Cliente com o índice selecionado");
+            throw new Error("Não há Cliente com o índice selecionado");
         }
     }
 

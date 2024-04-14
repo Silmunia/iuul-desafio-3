@@ -15,7 +15,7 @@ class EmployeeControlParser {
                     case EmployeeControllerState.SHUTDOWN:
                         return EmployeeControllerState.SHUTDOWN;
                     default:
-                        throw new Error(">>> Comando desconhecido");
+                        throw new Error("Comando desconhecido");
                 }
             case EmployeeControllerState.EMPLOYEE_EDITING:
                 switch (input) {
@@ -36,7 +36,7 @@ class EmployeeControlParser {
                     case EmployeeControllerState.SHUTDOWN:
                         return EmployeeControllerState.SHUTDOWN;
                     default:
-                        throw new Error(">>> Comando desconhecido");
+                        throw new Error("Comando desconhecido");
                 }
             case EmployeeControllerState.EMPLOYEE_ROLES_MENU:
                 switch (input) {
@@ -51,10 +51,10 @@ class EmployeeControlParser {
                     case EmployeeControllerState.SHUTDOWN:
                         return EmployeeControllerState.SHUTDOWN;
                     default:
-                        throw new Error(">>> Comando desconhecido");
+                        throw new Error("Comando desconhecido");
                 }
             default:
-                throw new Error(">>> Comando desconhecido");
+                throw new Error("Comando desconhecido");
         }
     }
 
