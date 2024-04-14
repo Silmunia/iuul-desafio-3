@@ -30,7 +30,7 @@ class EmployeeOperator {
         });
     }
     listEmployeesOperation() {
-        console.log("\nListando Funcionários");
+        console.log("\n>>> Listando Funcionários");
         console.log(this.dataManager.listEmployees());
         if (this.dataManager.getEmployees().length === 0) {
             console.log(">>> Voltando ao Menu de Funcionários");
@@ -41,6 +41,7 @@ class EmployeeOperator {
         }
     }
     listEmployeeInfoOperation() {
+        console.log("\n>>> Listando informações do Funcionário");
         console.log(this.dataManager.listEditedEmployeeInfo());
         return EmployeeControllerState_1.default.EMPLOYEE_EDITING;
     }

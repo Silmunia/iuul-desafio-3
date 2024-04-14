@@ -84,7 +84,7 @@ class DataManager {
     }
     listEditedEmployeeInfo() {
         if (this.editedEmployee instanceof Funcionario_1.default) {
-            return `\n>>> Listando informações do Funcionário\nNome: ${this.editedEmployee.nome}\nCPF: ${this.editedEmployee.cpf}\nCargos: ${this.listEditedEmployeeRoles(this.editedEmployee)}\nTelefone: ${this.editedEmployee.telefone}\nSalário: ${this.editedEmployee.salario}`;
+            return `Nome: ${this.editedEmployee.nome}\nCPF: ${this.editedEmployee.cpf}\nCargos: ${this.listEditedEmployeeRoles(this.editedEmployee)}\nTelefone: ${this.editedEmployee.telefone}\nSalário: ${this.editedEmployee.salario}`;
         }
         else {
             throw new Error("Não foi possível encontrar o Funcionário");
@@ -95,7 +95,7 @@ class DataManager {
             try {
                 let clientAccounts = this.listEditedClientAccounts();
                 let clientAddresses = this.listEditedClientAddresses();
-                return `\n>>> Listando informações do Cliente\nNome: ${this.editedClient.nome}\nCPF: ${this.editedClient.cpf}\nTelefone: ${this.editedClient.telefone}\nVIP: ${this.editedClient.vip ? "Sim" : "Não"}\nContas: ${clientAccounts}\nEndereços: ${clientAddresses}`;
+                return `Nome: ${this.editedClient.nome}\nCPF: ${this.editedClient.cpf}\nTelefone: ${this.editedClient.telefone}\nVIP: ${this.editedClient.vip ? "Sim" : "Não"}\nContas:\n${clientAccounts}\nEndereços:\n${clientAddresses}`;
             }
             catch (error) {
                 throw error;
@@ -109,7 +109,10 @@ class DataManager {
         if (this.editedClient instanceof Cliente_1.default) {
             let accountString = "";
             for (let i = 0; i < this.editedClient.contas.length; i++) {
-                accountString += `\n${i + 1}. Conta número ${this.editedClient.contas[i].numero}`;
+                accountString += `${i + 1}. Conta número ${this.editedClient.contas[i].numero}`;
+                if (i < this.editedClient.contas.length - 1) {
+                    accountString += "\n";
+                }
             }
             return accountString;
         }
@@ -122,7 +125,10 @@ class DataManager {
             let addressString = "";
             for (let i = 0; i < this.editedClient.enderecos.length; i++) {
                 let currentAddress = this.editedClient.enderecos[i];
-                addressString += `\n${i + 1}. UF ${currentAddress.uf}, Cidade ${currentAddress.cidade}, ${currentAddress.logradouro}, número ${currentAddress.numero}, ${currentAddress.complemento}, CEP ${currentAddress.cep}`;
+                addressString += `${i + 1}. UF ${currentAddress.uf}, Cidade ${currentAddress.cidade}, ${currentAddress.logradouro}, número ${currentAddress.numero}, ${currentAddress.complemento}, CEP ${currentAddress.cep}`;
+                if (i < this.editedClient.enderecos.length - 1) {
+                    addressString += "\n";
+                }
             }
             return addressString;
         }
@@ -132,7 +138,7 @@ class DataManager {
     }
     addAddressToEditedClient() {
         return __awaiter(this, void 0, void 0, function* () {
-            let newAddress = yield this.factoryRepository.startAddressCreation(">>> Criando novo Endereço");
+            let newAddress = yield this.factoryRepository.startAddressCreation("\n>>> Criando novo Endereço");
             if (this.editedClient instanceof Cliente_1.default) {
                 this.editedClient.adicionarEnderecos([newAddress]);
             }
