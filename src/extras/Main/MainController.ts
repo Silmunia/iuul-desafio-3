@@ -24,8 +24,8 @@ class MainController {
                     this._menuRenderer.renderMainMenu(this._currentState);
                     await this.startCommandInput("Insira comando: ");
                 } catch (error) {
-                    console.log(">>> ERRO FATAL");
-                    console.log(`>>> ${error instanceof Error ? error.message : "Erro ao exibir o Menu Principal"}`);
+                    console.log(`>>>ERRO FATAL: ${error instanceof Error ? error.message : "Erro ao exibir o Menu Principal"}`);
+                    console.log(">>> O programa será encerrado");
                     this._currentState = ControllerState.SHUTDOWN;
                     this.runControlLoop();
                 }

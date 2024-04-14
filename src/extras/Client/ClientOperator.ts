@@ -125,19 +125,26 @@ class ClientOperator {
             return ClientControllerState.CLIENT_ADDRESS_MENU;
         } else {
             console.log("\n>>> Listando Endereços do Cliente");
-            console.log(this.dataManager.listEditedClientAddresses());
-            let selectedAddress = await this.inputHandler.getNumberInput("Insira o índice do Endereço a remover: ");
-            let parsedAddressIndex = selectedAddress-1;
+            let clientAddresses = this.dataManager.listEditedClientAddresses();
 
-            try {
-                this.dataManager.removeEditedClientAddress(parsedAddressIndex);
+            if (clientAddresses === "") {
+                console.log(">>> ERRO FATAL: O Cliente não possui nenhum Endereço");
+                console.log(">>> O programa será encerrado");
+                return ClientControllerState.SHUTDOWN;
+            } else {
+                let selectedAddress = await this.inputHandler.getNumberInput("Insira o índice do Endereço a remover: ");
+                let parsedAddressIndex = selectedAddress-1;
 
-                console.log(">>> Endereço removido com sucesso");
-            } catch (error) {
-                console.log(`>>> Falha na remoção do Endereço. ${error instanceof Error ? error.message : "Erro desconhecido"}`);
+                try {
+                    this.dataManager.removeEditedClientAddress(parsedAddressIndex);
+
+                    console.log(">>> Endereço removido com sucesso");
+                } catch (error) {
+                    console.log(`>>> Falha na remoção do Endereço. ${error instanceof Error ? error.message : "Erro desconhecido"}`);
+                }
+
+                return ClientControllerState.CLIENT_ADDRESS_MENU;
             }
-
-            return ClientControllerState.CLIENT_ADDRESS_MENU;
         }
     }
 

@@ -68,6 +68,7 @@ class EmployeeOperator {
             return EmployeeControllerState.EMPLOYEE_ROLES_MENU;
         } else {
             let employeeRoles = this.dataManager.listEditedEmployeeRoles(this.employeeInEditing);
+            
             if (employeeRoles === "") {
                 console.log(">>> ERRO FATAL: O Funcionário não possui nenhum Cargo");
                 console.log(">>> O programa será encerrado");
