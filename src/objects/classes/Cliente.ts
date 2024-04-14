@@ -4,6 +4,7 @@ import Pessoa from "../abstract classes/Pessoa";
 import Endereco from "./Endereco";
 import Conta from "../abstract classes/Conta";
 import ContaCorrente from "./ContaCorrente";
+import ContaPoupanca from "./ContaPoupanca";
 
 class Cliente extends Pessoa implements IUsuario {
 
@@ -58,10 +59,10 @@ class Cliente extends Pessoa implements IUsuario {
         this._enderecos.splice(indice, 1);
     }
 
-    public encontrarConta(numero: string): Conta {
+    public encontrarConta(numero: string): ContaCorrente | ContaPoupanca {
         for (let i = 0; i< this._contas.length; i++) {
             if (this._contas[i].numero === numero) {
-                return this._contas[i];
+                return this._contas[i] as ContaCorrente | ContaPoupanca;
             }
         }
 
@@ -96,7 +97,7 @@ class Cliente extends Pessoa implements IUsuario {
     public fazerSaque(numeroDaConta: string, valor: number) {
         let conta = this.encontrarConta(numeroDaConta);
 
-        conta.sacar(valor);
+        conta.fazerSaque(valor);
     }
 
     public listarEnderecos() {

@@ -71,7 +71,7 @@ class Cliente extends Pessoa_1.default {
     }
     fazerSaque(numeroDaConta, valor) {
         let conta = this.encontrarConta(numeroDaConta);
-        conta.sacar(valor);
+        conta.fazerSaque(valor);
     }
     listarEnderecos() {
         console.log(`Listando enderecos de cliente com CPF ${this.cpf}`);
