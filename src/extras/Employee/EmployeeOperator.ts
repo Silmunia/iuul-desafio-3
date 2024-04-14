@@ -18,12 +18,14 @@ class EmployeeOperator {
     }
 
     public async createEmployeeOperation(): Promise<EmployeeControllerState> {
+        console.log("\n>>> Iniciando criação de Funcionário");
         await this.dataManager.addEmployee();
         return EmployeeControllerState.EMPLOYEE_MENU;
     }
 
     public listEmployeesOperation(): EmployeeControllerState {
-        this.dataManager.listEmployees();
+        console.log("\nListando Funcionários");
+        console.log(this.dataManager.listEmployees());
         if (this.dataManager.getEmployees().length === 0) {
             console.log(">>> Voltando ao Menu de Funcionários");
             return EmployeeControllerState.EMPLOYEE_MENU;
@@ -87,7 +89,7 @@ class EmployeeOperator {
     }
 
     public async createEmployeeRoleOperation(): Promise<EmployeeControllerState> {
-        console.log(">>> Iniciando adição de novo Cargo");
+        console.log("\n>>> Iniciando adição de novo Cargo");
         let employeeRoles = this.dataManager.listEditedEmployeeRoles(this.employeeInEditing);
         console.log(`O Funcionário possui os seguintes Cargos: ${employeeRoles}`);
         let newRoleName = await this.inputHandler.getStringInput("Insira o nome do Cargo a adicionar: ");
@@ -97,7 +99,8 @@ class EmployeeOperator {
     }
 
     public async editEmployeeCpfOperation(): Promise<EmployeeControllerState> {
-        console.log(`CPF atual do Funcionário: ${this.employeeInEditing.cpf}`);
+        console.log("\n>>> Editando CPF do Funcionário");
+        console.log(`CPF atual: ${this.employeeInEditing.cpf}`);
         let newCPF = await this.inputHandler.getStringInput("Insira o novo CPF do Funcionário: ");
         this.employeeInEditing.cpf = newCPF;
         console.log(">>> CPF atualizado com sucesso");
@@ -105,7 +108,8 @@ class EmployeeOperator {
     }
 
     public async editEmployeeSalaryOperation(): Promise<EmployeeControllerState> {
-        console.log(`Salário atual do Funcionário: ${this.employeeInEditing.salario}`);
+        console.log("\n>>> Editando Salário do Funcionário");
+        console.log(`Salário atual: ${this.employeeInEditing.salario}`);
         let newSalary = await this.inputHandler.getNumberInput("Insira o novo Salário do Funcionário: ");
         this.employeeInEditing.salario = newSalary;
         console.log(">>> Salário atualizado com sucesso");
@@ -113,7 +117,8 @@ class EmployeeOperator {
     }
 
     public async editEmployeePhoneOperation(): Promise<EmployeeControllerState> {
-        console.log(`Telefone atual do Funcionário: ${this.employeeInEditing.telefone}`);
+        console.log("\n>>> Editando Telefone do Funcionário");
+        console.log(`Telefone atual: ${this.employeeInEditing.telefone}`);
         let newPhone = await this.inputHandler.getStringInput("Insira o novo Telefone do Funcionário: ");
         this.employeeInEditing.telefone = newPhone;
         console.log(">>> Telefone atualizado com sucesso");
@@ -121,7 +126,8 @@ class EmployeeOperator {
     }
 
     public async editEmployeeNameOperation(): Promise<EmployeeControllerState> {
-        console.log(`Nome atual do Funcionário: ${this.employeeInEditing.nome}`);
+        console.log("\n>>> Editando Nome do Funcionário");
+        console.log(`Nome atual: ${this.employeeInEditing.nome}`);
         let newName = await this.inputHandler.getStringInput("Insira o novo Nome do Funcionário: ");
         this.employeeInEditing.nome = newName;
         console.log(">>> Nome atualizado com sucesso");

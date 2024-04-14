@@ -55,7 +55,11 @@ class DataRepository {
         for (let i = 0; i < dataArray.length; i++) {
             let current = dataArray[i];
 
-            resultList += `${i+1}. ${current.nome}, CPF ${current.cpf}\n`;
+            resultList += `${i+1}. ${current.nome}, CPF ${current.cpf}`;
+
+            if (i < dataArray.length-1) {
+                resultList += "\n";
+            }
         }
 
         return resultList;

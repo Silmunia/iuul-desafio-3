@@ -31,7 +31,7 @@ class DataManager {
                 }
             }
         }
-        throw new Error(">>> Não há conta com o número inserido");
+        throw new Error("Não há conta com o número inserido");
     }
     getEditedClientAccount(accountNumber) {
         if (this.editedClient instanceof Cliente_1.default) {
@@ -40,10 +40,10 @@ class DataManager {
                     return this.editedClient.contas[i];
                 }
             }
-            throw new Error(">>> Não há conta com o número inserido");
+            throw new Error("Não há conta com o número inserido");
         }
         else {
-            throw new Error(">>> Não há conta com o número inserido");
+            throw new Error("Não há conta com o número inserido");
         }
     }
     addEmployee() {
@@ -87,7 +87,7 @@ class DataManager {
             return `\n>>> Listando informações do Funcionário\nNome: ${this.editedEmployee.nome}\nCPF: ${this.editedEmployee.cpf}\nCargos: ${this.listEditedEmployeeRoles(this.editedEmployee)}\nTelefone: ${this.editedEmployee.telefone}\nSalário: ${this.editedEmployee.salario}`;
         }
         else {
-            throw new Error(">>> Não foi possível encontrar o Funcionário");
+            throw new Error("Não foi possível encontrar o Funcionário");
         }
     }
     listEditedClientInfo() {
@@ -102,7 +102,7 @@ class DataManager {
             }
         }
         else {
-            throw new Error(">>> Não foi possível encontrar o Cliente");
+            throw new Error("Não foi possível encontrar o Cliente");
         }
     }
     listEditedClientAccounts() {
@@ -114,7 +114,7 @@ class DataManager {
             return accountString;
         }
         else {
-            throw new Error(">>> Não foi possível encontrar o Cliente");
+            throw new Error("Não foi possível encontrar o Cliente");
         }
     }
     listEditedClientAddresses() {
@@ -127,7 +127,7 @@ class DataManager {
             return addressString;
         }
         else {
-            throw new Error(">>> Não foi possível encontrar o Cliente");
+            throw new Error("Não foi possível encontrar o Cliente");
         }
     }
     addAddressToEditedClient() {
@@ -137,7 +137,7 @@ class DataManager {
                 this.editedClient.adicionarEnderecos([newAddress]);
             }
             else {
-                throw new Error(">>> Não foi possível adicionar o Endereço ao Cliente selecionado");
+                throw new Error("Não foi possível adicionar o Endereço ao Cliente selecionado");
             }
         });
     }
@@ -161,7 +161,7 @@ class DataManager {
             }
         }
         else {
-            throw new Error(">>> Não foi possível encontrar o Funcionário");
+            throw new Error("Não foi possível encontrar o Funcionário");
         }
     }
     removeEditedClientAddress(index) {
@@ -174,7 +174,7 @@ class DataManager {
             }
         }
         else {
-            throw new Error(">>> Não foi possível encontrar o Cliente");
+            throw new Error("Não foi possível encontrar o Cliente");
         }
     }
     addClient() {

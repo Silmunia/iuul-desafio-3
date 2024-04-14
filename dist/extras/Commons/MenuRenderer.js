@@ -16,7 +16,7 @@ class MenuRenderer {
                 console.log(`${ControllerState_1.default.SHUTDOWN}. Encerrar`);
                 break;
             default:
-                throw new Error(">>> Não foi possível exibir o Menu Principal");
+                throw new Error("Não foi possível exibir o Menu Principal");
         }
     }
     renderEmployeeMenus(state) {
@@ -48,7 +48,7 @@ class MenuRenderer {
                 console.log(`${EmployeeControllerState_1.default.SHUTDOWN}. Encerrar`);
                 break;
             default:
-                throw new Error(">>> Não foi possível exibir o Menu de Funcionários");
+                throw new Error("Não foi possível exibir o Menu de Funcionários");
         }
     }
     renderClientMenus(state) {
@@ -93,7 +93,7 @@ class MenuRenderer {
                 console.log(`${ClientControllerState_1.default.SHUTDOWN}. Encerrar`);
                 break;
             default:
-                throw new Error(">>> Não foi possível exibir o Menu de Clientes");
+                throw new Error("Não foi possível exibir o Menu de Clientes");
         }
     }
 }

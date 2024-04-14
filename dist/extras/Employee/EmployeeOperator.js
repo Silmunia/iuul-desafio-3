@@ -24,12 +24,14 @@ class EmployeeOperator {
     }
     createEmployeeOperation() {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("\n>>> Iniciando criação de Funcionário");
             yield this.dataManager.addEmployee();
             return EmployeeControllerState_1.default.EMPLOYEE_MENU;
         });
     }
     listEmployeesOperation() {
-        this.dataManager.listEmployees();
+        console.log("\nListando Funcionários");
+        console.log(this.dataManager.listEmployees());
         if (this.dataManager.getEmployees().length === 0) {
             console.log(">>> Voltando ao Menu de Funcionários");
             return EmployeeControllerState_1.default.EMPLOYEE_MENU;
@@ -97,7 +99,7 @@ class EmployeeOperator {
     }
     createEmployeeRoleOperation() {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(">>> Iniciando adição de novo Cargo");
+            console.log("\n>>> Iniciando adição de novo Cargo");
             let employeeRoles = this.dataManager.listEditedEmployeeRoles(this.employeeInEditing);
             console.log(`O Funcionário possui os seguintes Cargos: ${employeeRoles}`);
             let newRoleName = yield this.inputHandler.getStringInput("Insira o nome do Cargo a adicionar: ");
@@ -108,7 +110,8 @@ class EmployeeOperator {
     }
     editEmployeeCpfOperation() {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(`CPF atual do Funcionário: ${this.employeeInEditing.cpf}`);
+            console.log("\n>>> Editando CPF do Funcionário");
+            console.log(`CPF atual: ${this.employeeInEditing.cpf}`);
             let newCPF = yield this.inputHandler.getStringInput("Insira o novo CPF do Funcionário: ");
             this.employeeInEditing.cpf = newCPF;
             console.log(">>> CPF atualizado com sucesso");
@@ -117,7 +120,8 @@ class EmployeeOperator {
     }
     editEmployeeSalaryOperation() {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(`Salário atual do Funcionário: ${this.employeeInEditing.salario}`);
+            console.log("\n>>> Editando Salário do Funcionário");
+            console.log(`Salário atual: ${this.employeeInEditing.salario}`);
             let newSalary = yield this.inputHandler.getNumberInput("Insira o novo Salário do Funcionário: ");
             this.employeeInEditing.salario = newSalary;
             console.log(">>> Salário atualizado com sucesso");
@@ -126,7 +130,8 @@ class EmployeeOperator {
     }
     editEmployeePhoneOperation() {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(`Telefone atual do Funcionário: ${this.employeeInEditing.telefone}`);
+            console.log("\n>>> Editando Telefone do Funcionário");
+            console.log(`Telefone atual: ${this.employeeInEditing.telefone}`);
             let newPhone = yield this.inputHandler.getStringInput("Insira o novo Telefone do Funcionário: ");
             this.employeeInEditing.telefone = newPhone;
             console.log(">>> Telefone atualizado com sucesso");
@@ -135,7 +140,8 @@ class EmployeeOperator {
     }
     editEmployeeNameOperation() {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(`Nome atual do Funcionário: ${this.employeeInEditing.nome}`);
+            console.log("\n>>> Editando Nome do Funcionário");
+            console.log(`Nome atual: ${this.employeeInEditing.nome}`);
             let newName = yield this.inputHandler.getStringInput("Insira o novo Nome do Funcionário: ");
             this.employeeInEditing.nome = newName;
             console.log(">>> Nome atualizado com sucesso");
