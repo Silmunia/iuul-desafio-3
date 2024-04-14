@@ -6,7 +6,7 @@ class InputHandler {
             if (typeof input === 'string') {
                 return Promise.resolve(input);
             } else {
-                console.log(">>> Valor inválido");
+                console.log(">>> Valor inválido. Insira caracteres alfanuméricos");
                 return this.getStringInput(prompt);
             }
         });
@@ -15,11 +15,16 @@ class InputHandler {
     public async getNumberInput(prompt: string): Promise<number> {
         return this.getInput(prompt).then((input) => {
             if (typeof input === 'string') {
-                let parsed = parseInt(input);
+                let parsedString = parseInt(input);
 
-                return Promise.resolve(parsed);
+                if (isNaN(parsedString)) {
+                    console.log(">>> Valor inválido. Insira um número");
+                    return this.getNumberInput(prompt);
+                } else {
+                    return Promise.resolve(parsedString);
+                }
             } else {
-                console.log(">>> Valor inválido");
+                console.log(">>> Valor inválido. Insira um número");
                 return this.getNumberInput(prompt);
             }
         });
@@ -35,11 +40,11 @@ class InputHandler {
                 } else if (lowerCaseInput.startsWith('n')) {
                     return Promise.resolve(false);
                 } else {
-                    console.log(">>> Valor inválido");
+                    console.log(">>> Valor inválido. Insira 'S' ou 'N'");
                     return this.getBooleanInput(prompt);
                 }
             } else {
-                console.log(">>> Valor inválido");
+                console.log(">>> Valor inválido. Insira 'S' ou 'N'");
                 return this.getBooleanInput(prompt);
             }
         });

@@ -34,7 +34,7 @@ class ClientOperator {
         });
     }
     listClientsOperation() {
-        this.dataManager.listClients();
+        console.log(this.dataManager.listClients());
         if (this.dataManager.getClients().length === 0) {
             console.log(">>> Voltando ao Menu de Clientes");
             return ClientControllerState_1.default.CLIENT_MENU;
