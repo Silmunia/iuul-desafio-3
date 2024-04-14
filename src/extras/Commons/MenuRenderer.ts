@@ -82,6 +82,8 @@ class MenuRenderer {
             case ClientControllerState.CLIENT_ACCOUNT_MENU:
                 console.log("\n***Menu: Gerenciar Contas do Cliente***");
                 console.log(`${ClientControllerState.CLIENT_ACCOUNT_LIST}. Listar Contas do Cliente`);
+                console.log(`${ClientControllerState.CLIENT_ACCOUNT_CREATION}. Adicionar Contas ao Cliente`);
+                console.log(`${ClientControllerState.CLIENT_ACCOUNT_REMOVAL}. Remover Contas do Cliente`);
                 console.log(`${ClientControllerState.CLIENT_ACCOUNT_DEPOSIT}. Fazer depósito`);
                 console.log(`${ClientControllerState.CLIENT_ACCOUNT_WITHDRAW}. Fazer saque`);
                 console.log(`${ClientControllerState.CLIENT_ACCOUNT_BALANCE}. Calcular saldo`);

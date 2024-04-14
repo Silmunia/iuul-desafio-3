@@ -77,6 +77,12 @@ class ClientController {
             case ClientControllerState.CLIENT_ACCOUNT_LIST:
                 this.currentState = this.operator.listClientAccountsOperation();
                 break;
+            case ClientControllerState.CLIENT_ACCOUNT_CREATION:
+                this.currentState = await this.operator.createClientAccountOperation();
+                break;
+            case ClientControllerState.CLIENT_ACCOUNT_REMOVAL:
+                this.currentState = await this.operator.removeClientAccountOperation();
+                break;
             case ClientControllerState.CLIENT_ACCOUNT_DEPOSIT:
                 this.currentState = await this.operator.makeAccountDepositOperation();
                 break;

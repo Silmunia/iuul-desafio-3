@@ -24,7 +24,7 @@ class DataManager {
             }
         }
 
-        throw new Error("Não há conta com o número inserido");
+        throw new Error("Não há conta com o número inserido para a conta de destino");
     }
 
     public getEditedClientAccount(accountNumber: string): Conta {
@@ -37,7 +37,7 @@ class DataManager {
 
             throw new Error("Não há conta com o número inserido");
         } else {
-            throw new Error("Não há conta com o número inserido");
+            throw new Error("Não foi possível encontrar as contas do Cliente");
         }
     }
 
@@ -157,6 +157,16 @@ class DataManager {
         }
     }
 
+    public async addAccountToEditedClient() {
+        let newAccount = await this.factoryRepository.startAccountCreation("\n>>> Criando nova Conta");
+
+        if (this.editedClient instanceof Cliente) {
+            this.editedClient.adicionarContas([newAccount]);
+        } else {
+            throw new Error("Não foi possível adicionar a Conta ao Cliente selecionado");
+        }
+    }
+
     public listEditedEmployeeRoles(employee: Funcionario): string {
         let resultString = "";
 
@@ -187,6 +197,18 @@ class DataManager {
         if (this.editedClient instanceof Cliente) {
             try {
                 this.editedClient.removerEndereco(index);
+            } catch (error) {
+                throw error;
+            }
+        } else {
+            throw new Error("Não foi possível encontrar o Cliente");
+        }
+    }
+
+    public removeEditedClientAccount(index: number) {
+        if (this.editedClient instanceof Cliente) {
+            try {
+                this.editedClient.removerConta(index);
             } catch (error) {
                 throw error;
             }

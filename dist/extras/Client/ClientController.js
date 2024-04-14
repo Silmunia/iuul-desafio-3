@@ -87,6 +87,12 @@ class ClientController {
                 case ClientControllerState_1.default.CLIENT_ACCOUNT_LIST:
                     this.currentState = this.operator.listClientAccountsOperation();
                     break;
+                case ClientControllerState_1.default.CLIENT_ACCOUNT_CREATION:
+                    this.currentState = yield this.operator.createClientAccountOperation();
+                    break;
+                case ClientControllerState_1.default.CLIENT_ACCOUNT_REMOVAL:
+                    this.currentState = yield this.operator.removeClientAccountOperation();
+                    break;
                 case ClientControllerState_1.default.CLIENT_ACCOUNT_DEPOSIT:
                     this.currentState = yield this.operator.makeAccountDepositOperation();
                     break;

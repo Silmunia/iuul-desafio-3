@@ -74,6 +74,10 @@ class ClientControlParser {
                     switch (input) {
                         case ClientControllerState_1.default.CLIENT_ACCOUNT_LIST:
                             return ClientControllerState_1.default.CLIENT_ACCOUNT_LIST;
+                        case ClientControllerState_1.default.CLIENT_ACCOUNT_CREATION:
+                            return ClientControllerState_1.default.CLIENT_ACCOUNT_CREATION;
+                        case ClientControllerState_1.default.CLIENT_ACCOUNT_REMOVAL:
+                            return ClientControllerState_1.default.CLIENT_ACCOUNT_REMOVAL;
                         case ClientControllerState_1.default.CLIENT_ACCOUNT_WITHDRAW:
                             return ClientControllerState_1.default.CLIENT_ACCOUNT_WITHDRAW;
                         case ClientControllerState_1.default.CLIENT_ACCOUNT_TRANSFER:

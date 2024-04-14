@@ -126,6 +126,49 @@ class ClientOperator {
             return ClientControllerState_1.default.CLIENT_ADDRESS_MENU;
         });
     }
+    createClientAccountOperation() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield this.dataManager.addAccountToEditedClient();
+                console.log(">>> Conta adicionada com sucesso");
+            }
+            catch (error) {
+                console.log(`Falha na criação da Conta. ${error instanceof Error ? error.message : "Erro desconhecido"}`);
+            }
+            return ClientControllerState_1.default.CLIENT_ACCOUNT_MENU;
+        });
+    }
+    removeClientAccountOperation() {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (this.clientInEditing.contas.length === 1) {
+                console.log("\n>>> O Cliente possui apenas uma Conta, portanto não é possível remover Contas");
+                console.log(">>> Voltando para o Menu de Editar Contas");
+                return ClientControllerState_1.default.CLIENT_ACCOUNT_MENU;
+            }
+            else {
+                console.log("\n>>> Listando Contas do Cliente");
+                let clientAccounts = this.dataManager.listEditedClientAccounts();
+                if (clientAccounts === "") {
+                    console.log(">>> ERRO FATAL: O Cliente não possui nenhuma Conta");
+                    console.log(">>> O programa será encerrado");
+                    return ClientControllerState_1.default.SHUTDOWN;
+                }
+                else {
+                    console.log(clientAccounts);
+                    let selectedAccount = yield this.inputHandler.getNumberInput("Insira o índice da Conta a remover: ");
+                    let parsedAccountIndex = selectedAccount - 1;
+                    try {
+                        this.dataManager.removeEditedClientAccount(parsedAccountIndex);
+                        console.log(">>> Conta removida com sucesso");
+                    }
+                    catch (error) {
+                        console.log(`>>> Falha na remoção da Conta. ${error instanceof Error ? error.message : "Erro desconhecido"}`);
+                    }
+                    return ClientControllerState_1.default.CLIENT_ACCOUNT_MENU;
+                }
+            }
+        });
+    }
     removeClientAddressOperation() {
         return __awaiter(this, void 0, void 0, function* () {
             if (this.clientInEditing.enderecos.length === 1) {
@@ -135,17 +178,25 @@ class ClientOperator {
             }
             else {
                 console.log("\n>>> Listando Endereços do Cliente");
-                console.log(this.dataManager.listEditedClientAddresses());
-                let selectedAddress = yield this.inputHandler.getNumberInput("Insira o índice do Endereço a remover: ");
-                let parsedAddressIndex = selectedAddress - 1;
-                try {
-                    this.dataManager.removeEditedClientAddress(parsedAddressIndex);
-                    console.log(">>> Endereço removido com sucesso");
+                let clientAddresses = this.dataManager.listEditedClientAddresses();
+                if (clientAddresses === "") {
+                    console.log(">>> ERRO FATAL: O Cliente não possui nenhum Endereço");
+                    console.log(">>> O programa será encerrado");
+                    return ClientControllerState_1.default.SHUTDOWN;
                 }
-                catch (error) {
-                    console.log(`>>> Falha na remoção do Endereço. ${error instanceof Error ? error.message : "Erro desconhecido"}`);
+                else {
+                    console.log(clientAddresses);
+                    let selectedAddress = yield this.inputHandler.getNumberInput("Insira o índice do Endereço a remover: ");
+                    let parsedAddressIndex = selectedAddress - 1;
+                    try {
+                        this.dataManager.removeEditedClientAddress(parsedAddressIndex);
+                        console.log(">>> Endereço removido com sucesso");
+                    }
+                    catch (error) {
+                        console.log(`>>> Falha na remoção do Endereço. ${error instanceof Error ? error.message : "Erro desconhecido"}`);
+                    }
+                    return ClientControllerState_1.default.CLIENT_ADDRESS_MENU;
                 }
-                return ClientControllerState_1.default.CLIENT_ADDRESS_MENU;
             }
         });
     }
