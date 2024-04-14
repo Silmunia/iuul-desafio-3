@@ -3,7 +3,7 @@ import EmployeeControllerState from "../Employee/EmployeeControllerState";
 import ClientControllerState from "../Client/ClientControllerState";
 
 class MenuRenderer {
-    public renderMainMenu(state: ControllerState): boolean {
+    public renderMainMenu(state: ControllerState) {
         switch (state) {
             case ControllerState.MAIN_MENU:
                 console.log("\n***Menu Principal***");
@@ -14,11 +14,9 @@ class MenuRenderer {
             default:
                 throw new Error(">>> Não foi possível exibir o Menu Principal");
         }
-
-        return true;
     }
 
-    public renderEmployeeMenus(state: EmployeeControllerState): boolean {
+    public renderEmployeeMenus(state: EmployeeControllerState) {
         switch (state) {
             case EmployeeControllerState.EMPLOYEE_MENU:
                 console.log("\n***Menu: Gerenciar Funcionários***");
@@ -49,11 +47,9 @@ class MenuRenderer {
             default:
                 throw new Error(">>> Não foi possível exibir o Menu de Funcionários");
         }
-
-        return true;
     }
 
-    public renderClientMenus(state: ClientControllerState): boolean {
+    public renderClientMenus(state: ClientControllerState) {
         switch (state) {
             case ClientControllerState.CLIENT_MENU:
                 console.log("\n***Menu: Gerenciar Clientes***");
@@ -97,8 +93,6 @@ class MenuRenderer {
             default:
                 throw new Error(">>> Não foi possível exibir o Menu de Clientes");
         }
-
-        return true;
     }
 }
 

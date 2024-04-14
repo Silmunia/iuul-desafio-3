@@ -22,7 +22,7 @@ class DataRepository {
             return this.employees[index];
         }
         else {
-            return undefined;
+            throw new Error(">>> Não há Funcionário com o índice selecionado");
         }
     }
     getClient(index) {
@@ -30,7 +30,7 @@ class DataRepository {
             return this.clients[index];
         }
         else {
-            return undefined;
+            throw new Error(">>> Não há Cliente com o índice selecionado");
         }
     }
     getAllEmployees() {

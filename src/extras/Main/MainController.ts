@@ -20,8 +20,15 @@ class MainController {
     private async runControlLoop() {
         switch (this._currentState) {
             case ControllerState.MAIN_MENU:
-                this.displayMenu();
-                await this.startCommandInput("Insira comando: ");
+                try {
+                    this._menuRenderer.renderMainMenu(this._currentState);
+                    await this.startCommandInput("Insira comando: ");
+                } catch (error) {
+                    console.log(">>> ERRO FATAL");
+                    console.log(`>>> ${error instanceof Error ? error.message : "Erro ao exibir o Menu Principal"}`);
+                    this._currentState = ControllerState.SHUTDOWN;
+                    this.runControlLoop();
+                }
                 break;
             case ControllerState.SHUTDOWN:
                 console.log(">>> Encerrando programa");
@@ -76,17 +83,6 @@ class MainController {
     private async delegateClientControl() {
         this._clientController = new ClientController(this._dataManager);
         return await this._clientController.runClientCommands();
-    }
-
-    private displayMenu() {
-        let renderResult = this._menuRenderer.renderMainMenu(this._currentState);
-
-        if (!renderResult) {
-            console.log(">>> Menu desconhecido");
-            console.log(">>> Voltando para o Menu Principal");
-            this._currentState = ControllerState.MAIN_MENU;
-            this.runControlLoop();
-        }
     }
 }
 

@@ -31,7 +31,7 @@ class DataManager {
                 }
             }
         }
-        return undefined;
+        throw new Error(">>> Não há conta com o número inserido");
     }
     getEditedClientAccount(accountNumber) {
         if (this.editedClient instanceof Cliente_1.default) {
@@ -40,10 +40,10 @@ class DataManager {
                     return this.editedClient.contas[i];
                 }
             }
-            return undefined;
+            throw new Error(">>> Não há conta com o número inserido");
         }
         else {
-            return undefined;
+            throw new Error(">>> Não há conta com o número inserido");
         }
     }
     addEmployee() {
@@ -79,7 +79,7 @@ class DataManager {
             return `\n>>> Listando informações do Funcionário\nNome: ${this.editedEmployee.nome}\nCPF: ${this.editedEmployee.cpf}\nCargos: ${this.listEditedEmployeeRoles(this.editedEmployee)}\nTelefone: ${this.editedEmployee.telefone}\nSalário: ${this.editedEmployee.salario}`;
         }
         else {
-            return ">>> Não foi possível encontrar o Funcionário";
+            throw new Error(">>> Não foi possível encontrar o Funcionário");
         }
     }
     listEditedClientInfo() {
@@ -87,7 +87,7 @@ class DataManager {
             return `\n>>> Listando informações do Cliente\nNome: ${this.editedClient.nome}\nCPF: ${this.editedClient.cpf}\nTelefone: ${this.editedClient.telefone}\nVIP: ${this.editedClient.vip ? "Sim" : "Não"}\nContas: ${this.listEditedClientAccounts()}\nEndereços: ${this.listEditedClientAddresses()}`;
         }
         else {
-            return ">>> Não foi possível encontrar o Cliente";
+            throw new Error(">>> Não foi possível encontrar o Cliente");
         }
     }
     listEditedClientAccounts() {
@@ -99,7 +99,7 @@ class DataManager {
             return accountString;
         }
         else {
-            return ">>> Não foi possível encontrar o Cliente";
+            throw new Error(">>> Não foi possível encontrar o Cliente");
         }
     }
     listEditedClientAddresses() {
@@ -112,7 +112,7 @@ class DataManager {
             return addressString;
         }
         else {
-            return ">>> Não foi possível encontrar o Cliente";
+            throw new Error(">>> Não foi possível encontrar o Cliente");
         }
     }
     addAddressToEditedClient() {
@@ -123,7 +123,7 @@ class DataManager {
                 return true;
             }
             else {
-                return false;
+                throw new Error(">>> Não foi possível adicionar o Endereço ao Cliente selecionado");
             }
         });
     }
@@ -145,10 +145,10 @@ class DataManager {
                     return true;
                 }
             }
-            return false;
+            throw new Error(">>> Não foi possível encontrar o Funcionário");
         }
         else {
-            return false;
+            throw new Error(">>> Não foi possível encontrar o Funcionário");
         }
     }
     removeEditedClientAddress(index) {
@@ -158,11 +158,11 @@ class DataManager {
                 return true;
             }
             else {
-                return false;
+                throw new Error(">>> Não foi possível encontrar o Cliente");
             }
         }
         else {
-            return false;
+            throw new Error(">>> Não foi possível encontrar o Funcionário");
         }
     }
     addClient() {

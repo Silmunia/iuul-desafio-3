@@ -14,11 +14,11 @@ class DataRepository {
     }
 
     public listEmployees(): string {
-        return this.listData(this.employees, ">>> Sem funcionários para listar");
+        return this.listData(this.employees, ">>> Sem Funcionários para listar");
     }
 
     public listClients(): string {
-        return this.listData(this.clients, ">>> Sem clientes para listar");
+        return this.listData(this.clients, ">>> Sem Clientes para listar");
     }
 
     public getEmployee(index: number) {

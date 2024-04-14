@@ -15,8 +15,13 @@ class ContaCorrente extends Conta_1.default {
         return (creditoTotal - debitoTotal) + this._limite;
     }
     transferir(contaDestino, valor) {
-        this.fazerSaque(valor);
-        contaDestino.depositar(valor);
+        try {
+            this.fazerSaque(valor);
+            contaDestino.depositar(valor);
+        }
+        catch (error) {
+            throw error;
+        }
     }
     fazerSaque(valor) {
         if (this.calcularSaldo() - valor >= 0) {
