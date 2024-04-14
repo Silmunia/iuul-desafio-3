@@ -32,8 +32,16 @@ class MainController {
         return __awaiter(this, void 0, void 0, function* () {
             switch (this._currentState) {
                 case ControllerState_1.default.MAIN_MENU:
-                    this.displayMenu();
-                    yield this.startCommandInput("Insira comando: ");
+                    try {
+                        this._menuRenderer.renderMainMenu(this._currentState);
+                        yield this.startCommandInput("Insira comando: ");
+                    }
+                    catch (error) {
+                        console.log(">>> ERRO FATAL");
+                        console.log(`>>> ${error instanceof Error ? error.message : "Erro ao exibir o Menu Principal"}`);
+                        this._currentState = ControllerState_1.default.SHUTDOWN;
+                        this.runControlLoop();
+                    }
                     break;
                 case ControllerState_1.default.SHUTDOWN:
                     console.log(">>> Encerrando programa");
@@ -93,15 +101,6 @@ class MainController {
             this._clientController = new ClientController_1.default(this._dataManager);
             return yield this._clientController.runClientCommands();
         });
-    }
-    displayMenu() {
-        let renderResult = this._menuRenderer.renderMainMenu(this._currentState);
-        if (!renderResult) {
-            console.log(">>> Menu desconhecido");
-            console.log(">>> Voltando para o Menu Principal");
-            this._currentState = ControllerState_1.default.MAIN_MENU;
-            this.runControlLoop();
-        }
     }
 }
 exports.default = MainController;

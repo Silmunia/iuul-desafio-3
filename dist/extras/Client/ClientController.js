@@ -41,8 +41,15 @@ class ClientController {
                 case ClientControllerState_1.default.CLIENT_EDITING:
                 case ClientControllerState_1.default.CLIENT_ADDRESS_MENU:
                 case ClientControllerState_1.default.CLIENT_ACCOUNT_MENU:
-                    this.displayMenu();
-                    yield this.startCommandInput("Insira comando: ");
+                    try {
+                        this.menuRenderer.renderClientMenus(this.currentState);
+                        yield this.startCommandInput("Insira comando: ");
+                    }
+                    catch (error) {
+                        console.log(`>>> ${error instanceof Error ? error.message : "Erro ao exibir o Menu"}`);
+                        console.log(">>> Voltando para o Menu Principal");
+                        this.currentState = ClientControllerState_1.default.RETURN_TO_MAIN;
+                    }
                     return this.runClientCommands();
                 case ClientControllerState_1.default.CLIENT_LISTING:
                     this.currentState = this.operator.listClientsOperation();
@@ -98,14 +105,6 @@ class ClientController {
             }
             return this.runClientCommands();
         });
-    }
-    displayMenu() {
-        let renderResult = this.menuRenderer.renderClientMenus(this.currentState);
-        if (!renderResult) {
-            console.log(">>> Menu desconhecido");
-            console.log(">>> Voltando para o Menu de Clintes");
-            this.currentState = ClientControllerState_1.default.CLIENT_MENU;
-        }
     }
     startCommandInput(prompt) {
         return __awaiter(this, void 0, void 0, function* () {

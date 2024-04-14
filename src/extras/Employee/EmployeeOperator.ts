@@ -73,12 +73,12 @@ class EmployeeOperator {
                 console.log(`O Funcionário possui os seguintes Cargos: ${employeeRoles}`);
                 let removedRoleName = await this.inputHandler.getStringInput("Insira o nome do Cargo a remover: ");
 
-                let removedRole = this.dataManager.removeEditedEmployeeRole(removedRoleName);
+                try {
+                    this.dataManager.removeEditedEmployeeRole(removedRoleName);
 
-                if (removedRole) {
                     console.log(">>> Cargo removido com sucesso");
-                } else {
-                    console.log(">>> O Funcionário não possui o Cargo escolhido");
+                } catch (error) {
+                    console.log(`>>> Falha na remoção do Cargo. ${error instanceof Error ? error.message : "Erro desconhecido"}`);
                 }
 
                 return EmployeeControllerState.EMPLOYEE_ROLES_MENU;

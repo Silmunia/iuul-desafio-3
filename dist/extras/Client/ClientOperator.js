@@ -109,12 +109,12 @@ class ClientOperator {
     }
     createClientAddressOperation() {
         return __awaiter(this, void 0, void 0, function* () {
-            let addressCreationResult = yield this.dataManager.addAddressToEditedClient();
-            if (addressCreationResult) {
+            try {
+                yield this.dataManager.addAddressToEditedClient();
                 console.log(">>> Endereço adicionado com sucesso");
             }
-            else {
-                console.log(">>> Não foi possível adicionar o novo Endereço ao Cliente selecionado");
+            catch (error) {
+                console.log(`Falha na criação do Endereço. ${error instanceof Error ? error.message : "Erro desconhecido"}`);
             }
             return ClientControllerState_1.default.CLIENT_ADDRESS_MENU;
         });
@@ -125,12 +125,12 @@ class ClientOperator {
             console.log(this.dataManager.listEditedClientAddresses());
             let selectedAddress = yield this.inputHandler.getNumberInput("Insira o índice do Endereço a remover: ");
             let parsedAddressIndex = selectedAddress - 1;
-            let addressRemovalResult = this.dataManager.removeEditedClientAddress(parsedAddressIndex);
-            if (addressRemovalResult) {
+            try {
+                this.dataManager.removeEditedClientAddress(parsedAddressIndex);
                 console.log(">>> Endereço removido com sucesso");
             }
-            else {
-                console.log(">>> Não foi possível remover o Endereço selecionado");
+            catch (error) {
+                console.log(`>>> Falha na remoção do Endereço. ${error instanceof Error ? error.message : "Erro desconhecido"}`);
             }
             return ClientControllerState_1.default.CLIENT_ADDRESS_MENU;
         });

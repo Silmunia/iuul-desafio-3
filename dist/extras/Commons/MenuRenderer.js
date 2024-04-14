@@ -18,7 +18,6 @@ class MenuRenderer {
             default:
                 throw new Error(">>> Não foi possível exibir o Menu Principal");
         }
-        return true;
     }
     renderEmployeeMenus(state) {
         switch (state) {
@@ -51,7 +50,6 @@ class MenuRenderer {
             default:
                 throw new Error(">>> Não foi possível exibir o Menu de Funcionários");
         }
-        return true;
     }
     renderClientMenus(state) {
         switch (state) {
@@ -97,7 +95,6 @@ class MenuRenderer {
             default:
                 throw new Error(">>> Não foi possível exibir o Menu de Clientes");
         }
-        return true;
     }
 }
 exports.default = MenuRenderer;

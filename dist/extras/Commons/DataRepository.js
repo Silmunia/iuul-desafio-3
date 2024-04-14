@@ -12,10 +12,10 @@ class DataRepository {
         this.clients.push(client);
     }
     listEmployees() {
-        return this.listData(this.employees, ">>> Sem funcionários para listar");
+        return this.listData(this.employees, ">>> Sem Funcionários para listar");
     }
     listClients() {
-        return this.listData(this.clients, ">>> Sem clientes para listar");
+        return this.listData(this.clients, ">>> Sem Clientes para listar");
     }
     getEmployee(index) {
         if (index >= 0 && index < this.employees.length) {

@@ -44,6 +44,9 @@ class Cliente extends Pessoa_1.default {
         if (this._enderecos.length === 1) {
             throw new Error("Não é possível remover o Endereço de um Cliente com apenas 1 Endereço");
         }
+        else if (indice < 0 || indice >= this._enderecos.length) {
+            throw new Error("O Endereço escolhido para remoção é inválido");
+        }
         else {
             this._enderecos.splice(indice, 1);
         }
@@ -84,7 +87,6 @@ class Cliente extends Pessoa_1.default {
         }
     }
     listarEnderecos() {
-        console.log(`Listando enderecos de cliente com CPF ${this.cpf}`);
         for (let i = 0; i < this._enderecos.length; i++) {
             console.log(`${i + 1}. ${this._enderecos[i].listarInformaçoes()}`);
         }
