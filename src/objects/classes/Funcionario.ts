@@ -38,11 +38,17 @@ class Funcionario extends Pessoa implements IUsuario {
         novoCargo.novoFuncionario = this;
     }
 
-    public removerCargo(indice: number) {
+    public removerCargo(nomeDoCargo: string) {
         if (this.cargos.length === 1) {
             throw new Error("Não é possível remover o Cargo de um Funcionário com apenas 1 Cargo");
         } else {
-            this.cargos.splice(indice, 1);
+            for (let i = 0; i < this._cargos.length; i++) {
+                if (this._cargos[i].nome === nomeDoCargo) {
+                    this._cargos.splice(i, 1);
+                }
+            }
+
+            throw new Error("O Funcionário não possui o Cargo escolhido para remoção");
         }
     }
 

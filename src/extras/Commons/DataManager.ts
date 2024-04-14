@@ -62,7 +62,11 @@ class DataManager {
     }
 
     public setEditedEmployee(index: number) {
-        this.editedEmployee = this.dataRepository.getEmployee(index);
+        try {
+            this.editedEmployee = this.dataRepository.getEmployee(index);
+        } catch (error) {
+            throw error;
+        }
     }
 
     public getEditedEmployee(): Funcionario | undefined {
@@ -70,7 +74,11 @@ class DataManager {
     }
 
     public setEditedClient(index: number) {
-        this.editedClient = this.dataRepository.getClient(index);
+        try {
+            this.editedClient = this.dataRepository.getClient(index);
+        } catch (error) {
+            throw error;
+        }
     }
 
     public getEditedClient(): Cliente | undefined {
@@ -87,7 +95,14 @@ class DataManager {
 
     public listEditedClientInfo(): string {
         if (this.editedClient instanceof Cliente) {
-            return `\n>>> Listando informações do Cliente\nNome: ${this.editedClient.nome}\nCPF: ${this.editedClient.cpf}\nTelefone: ${this.editedClient.telefone}\nVIP: ${this.editedClient.vip ? "Sim" : "Não"}\nContas: ${this.listEditedClientAccounts()}\nEndereços: ${this.listEditedClientAddresses()}`;
+            try {
+                let clientAccounts = this.listEditedClientAccounts();
+                let clientAddresses = this.listEditedClientAddresses();
+
+                return `\n>>> Listando informações do Cliente\nNome: ${this.editedClient.nome}\nCPF: ${this.editedClient.cpf}\nTelefone: ${this.editedClient.telefone}\nVIP: ${this.editedClient.vip ? "Sim" : "Não"}\nContas: ${clientAccounts}\nEndereços: ${clientAddresses}`;
+            } catch (error) {
+                throw error;
+            }
         } else {
             throw new Error(">>> Não foi possível encontrar o Cliente");
         }
@@ -126,12 +141,11 @@ class DataManager {
         }
     }
 
-    public async addAddressToEditedClient(): Promise<boolean> {
+    public async addAddressToEditedClient() {
         let newAddress = await this.factoryRepository.startAddressCreation(">>> Criando novo Endereço");
 
         if (this.editedClient instanceof Cliente) {
             this.editedClient.adicionarEnderecos([newAddress]);
-            return true;
         } else {
             throw new Error(">>> Não foi possível adicionar o Endereço ao Cliente selecionado");
         }
@@ -151,31 +165,27 @@ class DataManager {
         return resultString;
     }
 
-    public removeEditedEmployeeRole(roleName: string): boolean {
+    public removeEditedEmployeeRole(roleName: string) {
         if (this.editedEmployee instanceof Funcionario) {
-            for (let i = 0; i < this.editedEmployee.cargos.length; i++) {
-                if (this.editedEmployee.cargos[i].nome === roleName) {
-                    this.editedEmployee.removerCargo(i);
-                    return true;
-                }
+            try {
+                this.editedEmployee.removerCargo(roleName);
+            } catch (error) {
+                throw error;
             }
-
-            throw new Error(">>> Não foi possível encontrar o Funcionário");
         } else {
             throw new Error(">>> Não foi possível encontrar o Funcionário");
         }
     }
 
-    public removeEditedClientAddress(index: number): boolean {
+    public removeEditedClientAddress(index: number) {
         if (this.editedClient instanceof Cliente) {
-            if (this.editedClient.enderecos.length > 1 && index >= 0 && index < this.editedClient.enderecos.length) {
+            try {
                 this.editedClient.removerEndereco(index);
-                return true;
-            } else {
-                throw new Error(">>> Não foi possível encontrar o Cliente");
+            } catch (error) {
+                throw error;
             }
         } else {
-            throw new Error(">>> Não foi possível encontrar o Funcionário");
+            throw new Error(">>> Não foi possível encontrar o Cliente");
         }
     }
 
