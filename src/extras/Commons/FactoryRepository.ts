@@ -103,6 +103,8 @@ class FactoryRepository {
 
             let newAddress = new Endereco(zipCode, street, number, extraInfo, city, state);
 
+            console.log(">>> Endereço criado com sucesso");
+
             resolve(newAddress);
 
         });
@@ -127,6 +129,9 @@ class FactoryRepository {
         let limit: number = await this.inputHandler.getNumberInput("Insira o limite da Conta Corrente: ");
 
         let newAccount = new ContaCorrente(number, limit);
+
+        console.log(">>> Conta Corrente criada com sucesso");
+
         return Promise.resolve(newAccount);
     }
 
@@ -134,6 +139,9 @@ class FactoryRepository {
         let number = await this.inputHandler.getStringInput("Insira o número da Conta Poupança: ");
 
         let newAccount = new ContaPoupanca(number);
+
+        console.log(">>> Conta Poupança criada com sucesso");
+
         return Promise.resolve(newAccount);
     }
 }
