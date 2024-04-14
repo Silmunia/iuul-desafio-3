@@ -83,14 +83,14 @@ class EmployeeOperator {
     removeEmployeeRoleOperation() {
         return __awaiter(this, void 0, void 0, function* () {
             if (this.employeeInEditing.cargos.length == 1) {
-                console.log(">>> O Funcionário possui apenas um Cargo, portanto não é possível remover Cargos");
+                console.log("\n>>> O Funcionário possui apenas um Cargo, portanto não é possível remover Cargos");
                 console.log(">>> Voltando para o Menu de Editar Cargos do Funcionário");
                 return EmployeeControllerState_1.default.EMPLOYEE_ROLES_MENU;
             }
             else {
                 let employeeRoles = this.dataManager.listEditedEmployeeRoles(this.employeeInEditing);
                 if (employeeRoles === "") {
-                    console.log(">>> ERRO FATAL: O Funcionário não possui nenhum Cargo");
+                    console.log("\n>>> ERRO FATAL: O Funcionário não possui nenhum Cargo");
                     console.log(">>> O programa será encerrado");
                     return EmployeeControllerState_1.default.SHUTDOWN;
                 }
@@ -115,8 +115,13 @@ class EmployeeOperator {
             let employeeRoles = this.dataManager.listEditedEmployeeRoles(this.employeeInEditing);
             console.log(`O Funcionário possui os seguintes Cargos: ${employeeRoles}`);
             let newRoleName = yield this.inputHandler.getStringInput("Insira o nome do Cargo a adicionar: ");
-            this.employeeInEditing.adicionarCargo(new Cargo_1.default(newRoleName));
-            console.log(">>> Cargo adicionado com sucesso");
+            try {
+                this.dataManager.addRoleToEditedEmployee(newRoleName);
+                console.log(">>> Cargo adicionado com sucesso");
+            }
+            catch (error) {
+                console.log(`Falha na adição de Cargo ao Funcionário. ${error instanceof Error ? error.message : "Erro desconhecido"}`);
+            }
             return EmployeeControllerState_1.default.EMPLOYEE_ROLES_MENU;
         });
     }

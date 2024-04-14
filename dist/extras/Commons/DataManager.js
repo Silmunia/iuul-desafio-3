@@ -67,6 +67,20 @@ class DataManager {
             return newRole;
         }
     }
+    addRoleToEditedEmployee(roleName) {
+        if (this.editedEmployee instanceof Funcionario_1.default) {
+            for (let i = 0; i < this.editedEmployee.cargos.length; i++) {
+                if (roleName === this.editedEmployee.cargos[i].nome) {
+                    throw new Error("Funcionário já contém o Cargo");
+                }
+            }
+            let addingRole = this.getRole(roleName);
+            this.editedEmployee.adicionarCargo(addingRole);
+        }
+        else {
+            throw new Error("Não foi possível encontrar o Funcionário");
+        }
+    }
     getEmployees() {
         return this.dataRepository.getAllEmployees();
     }
