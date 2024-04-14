@@ -25,8 +25,75 @@ class ClientOperator {
 
     public async createClientOperation(): Promise<ClientControllerState> {
         console.log("\n>>> Iniciando criação de Cliente");
-        await this.dataManager.addClient();
+
+        let clientName: string = await this.inputHandler.getStringInput("Insira o nome do Cliente: ");
+        let cpf: string = await this.inputHandler.getStringInput("Insira o CPF do Cliente: ");
+        let phone: string = await this.inputHandler.getStringInput("Insira o telefone do Cliente: ");
+        let isVIP: boolean = await this.inputHandler.getBooleanInput("O Cliente é VIP? (s/n) ");
+
+        console.log("\n>>> Criando Endereço inicial de Cliente");
+        let initialAddress: Endereco = await this.createAddressOperation();
+        console.log(">>> Endereço inicial criado com sucesso");
+
+        let numberOfAddresses: number = await this.inputHandler.getNumberInput("Insira o número de Endereços adicionais do Cliente: ");
+
+        let additionalAddresses: Array<Endereco> = [];
+        for (let i = 0; i < numberOfAddresses; i++) {
+            console.log(`\n>>> Criando Endereço adicional ${i+1}/${numberOfAddresses}`);
+            let newAddress: Endereco = await this.createAddressOperation();
+
+            additionalAddresses.push(newAddress);
+            console.log(`>>> Endereço ${i+1}/${numberOfAddresses} criado com sucesso`);
+        }
+
+        console.log("\n>>> Criando Conta inicial do Cliente");
+        let initialAccount: Conta = await this.createAccountOperation();
+        console.log(">>> Conta inicial criada com sucesso");
+
+        let numberOfAccounts: number = await this.inputHandler.getNumberInput("Insira o número de Contas adicionais do Cliente: ");
+
+        let additionalAccounts: Array<Conta> = [];
+        for (let i = 0; i < numberOfAccounts; i++) {
+            console.log(`\n>>> Criando Conta adicional ${i+1}/${numberOfAccounts}`);
+            let newAccount: Conta = await this.createAccountOperation();
+
+            additionalAccounts.push(newAccount);
+            console.log(`>>> Conta ${i+1}/${numberOfAccounts} criada com sucesso`);
+        }
+
+        this.dataManager.createClient(cpf, clientName, phone, isVIP, initialAddress, initialAccount, additionalAccounts, additionalAddresses);
+
+        console.log(">>> Cliente criado com sucesso");
+
         return ClientControllerState.CLIENT_MENU;
+    }
+
+    private async createAddressOperation(): Promise<Endereco> {
+        let state: string = await this.inputHandler.getStringInput("Insira a Unidade Federativa do Endereço: ");
+        let city: string = await this.inputHandler.getStringInput("Insira a cidade do Endereço: ");
+        let street: string = await this.inputHandler.getStringInput("Insira o logradouro do Endereço: ");
+        let number: string = await this.inputHandler.getStringInput("Insira o número do Endereço: ");
+        let extraInfo: string = await this.inputHandler.getStringInput("Insira o complemento do Endereço: ");
+        let zipCode: string = await this.inputHandler.getStringInput("Insira o CEP do Endereço: ");
+
+        return this.dataManager.createAddress(zipCode, street, number, extraInfo, city, state);
+    }
+
+    private async createAccountOperation(): Promise<Conta> {
+        let accountInput = await this.inputHandler.getNumberInput("Escolha um tipo de conta para criar\n1. Conta Corrente\n2. Conta Poupança\nInsira um comando: ");
+
+        let number: string = await this.inputHandler.getStringInput("Insira o número da Conta: ");
+
+        if (accountInput == 1) {
+            let limit: number = await this.inputHandler.getNumberInput("Insira o limite da Conta: ");
+            
+            return this.dataManager.createCheckingAccount(number, limit);
+        } else if (accountInput == 2) {
+            return this.dataManager.createSavingsAccount(number);
+        } else {
+            console.log(">>> Comando inválido. Insira 1 ou 2");
+            return this.createAccountOperation();
+        }
     }
 
     public listClientsOperation(): ClientControllerState {
@@ -106,7 +173,10 @@ class ClientOperator {
 
     public async createClientAddressOperation(): Promise<ClientControllerState> {
         try {
-            await this.dataManager.addAddressToEditedClient();
+            console.log("\n>>> Iniciando criação de novo Endereço");
+            let newAddress = await this.createAddressOperation();
+            
+            this.dataManager.addAddressToEditedClient(newAddress);
 
             console.log(">>> Endereço adicionado com sucesso");
         } catch (error) {
@@ -118,7 +188,10 @@ class ClientOperator {
 
     public async createClientAccountOperation(): Promise<ClientControllerState> {
         try {
-            await this.dataManager.addAccountToEditedClient();
+            console.log("\n>>> Iniciando criação de nova Conta");
+            let newAccount = await this.createAccountOperation();
+
+            this.dataManager.addAccountToEditedClient(newAccount);
 
             console.log(">>> Conta adicionada com sucesso");
         } catch (error) {

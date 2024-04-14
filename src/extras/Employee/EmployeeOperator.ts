@@ -19,7 +19,23 @@ class EmployeeOperator {
 
     public async createEmployeeOperation(): Promise<EmployeeControllerState> {
         console.log("\n>>> Iniciando criação de Funcionário");
-        await this.dataManager.addEmployee();
+
+        let employeeName: string = await this.inputHandler.getStringInput("Insira o nome do Funcionário: ");
+        let cpf: string = await this.inputHandler.getStringInput("Insira o CPF do Funcionário: ");
+        let phone: string = await this.inputHandler.getStringInput("Insira o telefone do Funcionário: ");
+        let salary: number = await this.inputHandler.getNumberInput("Insira o salário do Funcionário: ");
+        let roleName: string = await this.inputHandler.getStringInput("Insira o cargo inicial do Funcionário: ");
+
+        let numberOfRoles: number = await this.inputHandler.getNumberInput("Insira o número de Cargos adicionais do Funcionário: ");
+
+        let additionalRoles: Array<string> = [];
+        for (let i = 0; i < numberOfRoles; i++) {
+            let newRoleName = await this.inputHandler.getStringInput(`Insira o nome do Cargo adicional ${i+1}/${numberOfRoles}: `);
+
+            additionalRoles.push(newRoleName);
+        }
+
+        this.dataManager.createEmployee(roleName, cpf, employeeName, phone, salary, additionalRoles);
         return EmployeeControllerState.EMPLOYEE_MENU;
     }
 
@@ -63,14 +79,14 @@ class EmployeeOperator {
 
     public async removeEmployeeRoleOperation(): Promise<EmployeeControllerState> {
         if (this.employeeInEditing.cargos.length == 1) {
-            console.log(">>> O Funcionário possui apenas um Cargo, portanto não é possível remover Cargos");
+            console.log("\n>>> O Funcionário possui apenas um Cargo, portanto não é possível remover Cargos");
             console.log(">>> Voltando para o Menu de Editar Cargos do Funcionário");
             return EmployeeControllerState.EMPLOYEE_ROLES_MENU;
         } else {
             let employeeRoles = this.dataManager.listEditedEmployeeRoles(this.employeeInEditing);
             
             if (employeeRoles === "") {
-                console.log(">>> ERRO FATAL: O Funcionário não possui nenhum Cargo");
+                console.log("\n>>> ERRO FATAL: O Funcionário não possui nenhum Cargo");
                 console.log(">>> O programa será encerrado");
                 return EmployeeControllerState.SHUTDOWN;
             } else {
@@ -94,9 +110,17 @@ class EmployeeOperator {
         console.log("\n>>> Iniciando adição de novo Cargo");
         let employeeRoles = this.dataManager.listEditedEmployeeRoles(this.employeeInEditing);
         console.log(`O Funcionário possui os seguintes Cargos: ${employeeRoles}`);
+
         let newRoleName = await this.inputHandler.getStringInput("Insira o nome do Cargo a adicionar: ");
-        this.employeeInEditing.adicionarCargo(new Cargo(newRoleName));
-        console.log(">>> Cargo adicionado com sucesso")
+
+        try {
+            this.dataManager.addRoleToEditedEmployee(newRoleName);
+
+            console.log(">>> Cargo adicionado com sucesso");
+        } catch (error) {
+            console.log(`Falha na adição de Cargo ao Funcionário. ${error instanceof Error ? error.message : "Erro desconhecido"}`);
+        }
+        
         return EmployeeControllerState.EMPLOYEE_ROLES_MENU;
     }
 

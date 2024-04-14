@@ -12,8 +12,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Funcionario_1 = __importDefault(require("../../objects/classes/Funcionario"));
 const Cliente_1 = __importDefault(require("../../objects/classes/Cliente"));
+const Funcionario_1 = __importDefault(require("../../objects/classes/Funcionario"));
 const DataRepository_1 = __importDefault(require("./DataRepository"));
 const FactoryRepository_1 = __importDefault(require("./FactoryRepository"));
 class DataManager {
@@ -31,7 +31,7 @@ class DataManager {
                 }
             }
         }
-        throw new Error("Não há conta com o número inserido");
+        throw new Error("Não há conta com o número inserido para a conta de destino");
     }
     getEditedClientAccount(accountNumber) {
         if (this.editedClient instanceof Cliente_1.default) {
@@ -43,13 +43,56 @@ class DataManager {
             throw new Error("Não há conta com o número inserido");
         }
         else {
-            throw new Error("Não há conta com o número inserido");
+            throw new Error("Não foi possível encontrar as contas do Cliente");
         }
     }
-    addEmployee() {
-        return __awaiter(this, void 0, void 0, function* () {
-            this.dataRepository.addEmployee(yield this.factoryRepository.startEmployeeCreation());
-        });
+    createEmployee(initialRoleName, cpf, employeeName, phone, salary, additionalRoleNames) {
+        let initialRole = this.getRole(initialRoleName);
+        let additionalRoles = [];
+        for (let i = 0; i < additionalRoleNames.length; i++) {
+            let extraRole = this.getRole(additionalRoleNames[i]);
+            additionalRoles.push(extraRole);
+        }
+        let newEmployee = this.factoryRepository.createEmployee(initialRole, cpf, employeeName, phone, salary, additionalRoles);
+        this.dataRepository.addEmployee(newEmployee);
+    }
+    getRole(roleName) {
+        try {
+            let foundRole = this.dataRepository.getRole(roleName);
+            return foundRole;
+        }
+        catch (_a) {
+            let newRole = this.factoryRepository.createRole(roleName);
+            this.dataRepository.addRole(newRole);
+            return newRole;
+        }
+    }
+    addRoleToEditedEmployee(roleName) {
+        if (this.editedEmployee instanceof Funcionario_1.default) {
+            for (let i = 0; i < this.editedEmployee.cargos.length; i++) {
+                if (roleName === this.editedEmployee.cargos[i].nome) {
+                    throw new Error("Funcionário já contém o Cargo");
+                }
+            }
+            let addingRole = this.getRole(roleName);
+            this.editedEmployee.adicionarCargo(addingRole);
+        }
+        else {
+            throw new Error("Não foi possível encontrar o Funcionário");
+        }
+    }
+    createClient(cpf, clientName, phone, isVIP, initialAddress, initialAccount, additionalAccounts, additionalAddresses) {
+        let newClient = this.factoryRepository.createClient(cpf, clientName, phone, isVIP, initialAddress, initialAccount, additionalAccounts, additionalAddresses);
+        this.dataRepository.addClient(newClient);
+    }
+    createAddress(zipCode, street, number, extraInfo, city, state) {
+        return this.factoryRepository.createAddress(zipCode, street, number, extraInfo, city, state);
+    }
+    createCheckingAccount(number, limit) {
+        return this.factoryRepository.createCheckingAccount(number, limit);
+    }
+    createSavingsAccount(number) {
+        return this.factoryRepository.createSavingsAccount(number);
     }
     getEmployees() {
         return this.dataRepository.getAllEmployees();
@@ -136,9 +179,8 @@ class DataManager {
             throw new Error("Não foi possível encontrar o Cliente");
         }
     }
-    addAddressToEditedClient() {
+    addAddressToEditedClient(newAddress) {
         return __awaiter(this, void 0, void 0, function* () {
-            let newAddress = yield this.factoryRepository.startAddressCreation("\n>>> Criando novo Endereço");
             if (this.editedClient instanceof Cliente_1.default) {
                 this.editedClient.adicionarEnderecos([newAddress]);
             }
@@ -147,9 +189,8 @@ class DataManager {
             }
         });
     }
-    addAccountToEditedClient() {
+    addAccountToEditedClient(newAccount) {
         return __awaiter(this, void 0, void 0, function* () {
-            let newAccount = yield this.factoryRepository.startAccountCreation("\n>>> Criando nova Conta");
             if (this.editedClient instanceof Cliente_1.default) {
                 this.editedClient.adicionarContas([newAccount]);
             }
@@ -206,11 +247,6 @@ class DataManager {
         else {
             throw new Error("Não foi possível encontrar o Cliente");
         }
-    }
-    addClient() {
-        return __awaiter(this, void 0, void 0, function* () {
-            this.dataRepository.addClient(yield this.factoryRepository.startClientCreation());
-        });
     }
     listClients() {
         return this.dataRepository.listClients();

@@ -30,8 +30,63 @@ class ClientOperator {
     createClientOperation() {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("\n>>> Iniciando criação de Cliente");
-            yield this.dataManager.addClient();
+            let clientName = yield this.inputHandler.getStringInput("Insira o nome do Cliente: ");
+            let cpf = yield this.inputHandler.getStringInput("Insira o CPF do Cliente: ");
+            let phone = yield this.inputHandler.getStringInput("Insira o telefone do Cliente: ");
+            let isVIP = yield this.inputHandler.getBooleanInput("O Cliente é VIP? (s/n) ");
+            console.log("\n>>> Criando Endereço inicial de Cliente");
+            let initialAddress = yield this.createAddressOperation();
+            console.log(">>> Endereço inicial criado com sucesso");
+            let numberOfAddresses = yield this.inputHandler.getNumberInput("Insira o número de Endereços adicionais do Cliente: ");
+            let additionalAddresses = [];
+            for (let i = 0; i < numberOfAddresses; i++) {
+                console.log(`\n>>> Criando Endereço adicional ${i + 1}/${numberOfAddresses}`);
+                let newAddress = yield this.createAddressOperation();
+                additionalAddresses.push(newAddress);
+                console.log(`>>> Endereço ${i + 1}/${numberOfAddresses} criado com sucesso`);
+            }
+            console.log("\n>>> Criando Conta inicial do Cliente");
+            let initialAccount = yield this.createAccountOperation();
+            console.log(">>> Conta inicial criada com sucesso");
+            let numberOfAccounts = yield this.inputHandler.getNumberInput("Insira o número de Contas adicionais do Cliente: ");
+            let additionalAccounts = [];
+            for (let i = 0; i < numberOfAccounts; i++) {
+                console.log(`\n>>> Criando Conta adicional ${i + 1}/${numberOfAccounts}`);
+                let newAccount = yield this.createAccountOperation();
+                additionalAccounts.push(newAccount);
+                console.log(`>>> Conta ${i + 1}/${numberOfAccounts} criada com sucesso`);
+            }
+            this.dataManager.createClient(cpf, clientName, phone, isVIP, initialAddress, initialAccount, additionalAccounts, additionalAddresses);
+            console.log(">>> Cliente criado com sucesso");
             return ClientControllerState_1.default.CLIENT_MENU;
+        });
+    }
+    createAddressOperation() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let state = yield this.inputHandler.getStringInput("Insira a Unidade Federativa do Endereço: ");
+            let city = yield this.inputHandler.getStringInput("Insira a cidade do Endereço: ");
+            let street = yield this.inputHandler.getStringInput("Insira o logradouro do Endereço: ");
+            let number = yield this.inputHandler.getStringInput("Insira o número do Endereço: ");
+            let extraInfo = yield this.inputHandler.getStringInput("Insira o complemento do Endereço: ");
+            let zipCode = yield this.inputHandler.getStringInput("Insira o CEP do Endereço: ");
+            return this.dataManager.createAddress(zipCode, street, number, extraInfo, city, state);
+        });
+    }
+    createAccountOperation() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let accountInput = yield this.inputHandler.getNumberInput("Escolha um tipo de conta para criar\n1. Conta Corrente\n2. Conta Poupança\nInsira um comando: ");
+            let number = yield this.inputHandler.getStringInput("Insira o número da Conta: ");
+            if (accountInput == 1) {
+                let limit = yield this.inputHandler.getNumberInput("Insira o limite da Conta: ");
+                return this.dataManager.createCheckingAccount(number, limit);
+            }
+            else if (accountInput == 2) {
+                return this.dataManager.createSavingsAccount(number);
+            }
+            else {
+                console.log(">>> Comando inválido. Insira 1 ou 2");
+                return this.createAccountOperation();
+            }
         });
     }
     listClientsOperation() {
@@ -117,7 +172,9 @@ class ClientOperator {
     createClientAddressOperation() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                yield this.dataManager.addAddressToEditedClient();
+                console.log("\n>>> Iniciando criação de novo Endereço");
+                let newAddress = yield this.createAddressOperation();
+                this.dataManager.addAddressToEditedClient(newAddress);
                 console.log(">>> Endereço adicionado com sucesso");
             }
             catch (error) {
@@ -129,7 +186,9 @@ class ClientOperator {
     createClientAccountOperation() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                yield this.dataManager.addAccountToEditedClient();
+                console.log("\n>>> Iniciando criação de nova Conta");
+                let newAccount = yield this.createAccountOperation();
+                this.dataManager.addAccountToEditedClient(newAccount);
                 console.log(">>> Conta adicionada com sucesso");
             }
             catch (error) {
@@ -249,7 +308,7 @@ class ClientOperator {
                         console.log(">>> Saque realizado com sucesso");
                     }
                     catch (error) {
-                        console.log(`>>> Não foi possível concluir o saque. ${error instanceof Error ? error.message : ""}`);
+                        console.log(`>>> Falha na operação de saque. ${error instanceof Error ? error.message : "Erro desconhecido"}`);
                     }
                 }
                 else {
@@ -309,7 +368,7 @@ class ClientOperator {
                 }
             }
             catch (error) {
-                console.log(`>>> Falha na operação de saldo. ${error instanceof Error ? error.message : "Erro desconhecido"}`);
+                console.log(`>>> Falha na operação de transfer. ${error instanceof Error ? error.message : "Erro desconhecido"}`);
             }
             return ClientControllerState_1.default.CLIENT_ACCOUNT_MENU;
         });

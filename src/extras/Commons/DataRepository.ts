@@ -1,9 +1,12 @@
-import Funcionario from "../../objects/classes/Funcionario";
+
+import Cargo from "../../objects/classes/Cargo";
 import Cliente from "../../objects/classes/Cliente";
+import Funcionario from "../../objects/classes/Funcionario";
 
 class DataRepository {
     private employees: Array<Funcionario> = [];
     private clients: Array<Cliente> = [];
+    private roles: Array<Cargo> = [];
 
     public addEmployee(employee: Funcionario) {
         this.employees.push(employee);
@@ -11,6 +14,10 @@ class DataRepository {
 
     public addClient(client: Cliente) {
         this.clients.push(client);
+    }
+
+    public addRole(newRole: Cargo) {
+        this.roles.push(newRole);
     }
 
     public listEmployees(): string {
@@ -35,6 +42,16 @@ class DataRepository {
         } else {
             throw new Error("Não há Cliente com o índice selecionado");
         }
+    }
+
+    public getRole(name: string) {
+        for (let i = 0; i < this.roles.length; i++) {
+            if (this.roles[i].nome === name) {
+                return this.roles[i];
+            }
+        }
+
+        throw new Error("Não há Cargo com o nome selecionado");
     }
 
     public getAllEmployees(): Array<Funcionario> {

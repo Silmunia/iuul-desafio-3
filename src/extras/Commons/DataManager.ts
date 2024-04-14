@@ -1,8 +1,11 @@
-import Funcionario from "../../objects/classes/Funcionario";
+
+import Cargo from "../../objects/classes/Cargo";
 import Cliente from "../../objects/classes/Cliente";
+import Conta from "../../objects/abstract classes/Conta";
+import Endereco from "../../objects/classes/Endereco";
+import Funcionario from "../../objects/classes/Funcionario";
 import DataRepository from "./DataRepository";
 import FactoryRepository from "./FactoryRepository";
-import Conta from "../../objects/abstract classes/Conta";
 
 class DataManager {
     private factoryRepository = new FactoryRepository();
@@ -41,10 +44,91 @@ class DataManager {
         }
     }
 
-    public async addEmployee() {
-        this.dataRepository.addEmployee(
-            await this.factoryRepository.startEmployeeCreation()
-        );
+    public createEmployee(
+        initialRoleName: string, 
+        cpf: string, 
+        employeeName: string, 
+        phone: string, 
+        salary: number, 
+        additionalRoleNames: Array<string>
+    ) {
+
+        let initialRole = this.getRole(initialRoleName);
+
+        let additionalRoles: Array<Cargo> = [];
+        for (let i = 0; i < additionalRoleNames.length; i++) {
+            let extraRole = this.getRole(additionalRoleNames[i]);
+
+            additionalRoles.push(extraRole);
+        }
+
+        let newEmployee = this.factoryRepository.createEmployee(initialRole, cpf, employeeName, phone, salary, additionalRoles);
+
+        this.dataRepository.addEmployee(newEmployee);
+    }
+
+    public getRole(roleName: string): Cargo {
+        try {
+            let foundRole = this.dataRepository.getRole(roleName);
+
+            return foundRole;
+        } catch {
+            let newRole = this.factoryRepository.createRole(roleName);
+            this.dataRepository.addRole(newRole);
+
+            return newRole;
+        }
+    }
+
+    public addRoleToEditedEmployee(roleName: string) {
+        if (this.editedEmployee instanceof Funcionario) {
+            for (let i = 0; i < this.editedEmployee.cargos.length; i++) {
+                if (roleName === this.editedEmployee.cargos[i].nome) {
+                    throw new Error("Funcionário já contém o Cargo");
+                }
+            }
+
+            let addingRole = this.getRole(roleName);
+
+            this.editedEmployee.adicionarCargo(addingRole);
+        } else {
+            throw new Error("Não foi possível encontrar o Funcionário");
+        }
+    }
+
+    public createClient(
+        cpf: string, 
+        clientName: string, 
+        phone: string, 
+        isVIP: boolean, 
+        initialAddress: Endereco, 
+        initialAccount: Conta, 
+        additionalAccounts: Array<Conta>, 
+        additionalAddresses: Array<Endereco>
+    ) {
+
+        let newClient = this.factoryRepository.createClient(cpf, clientName, phone, isVIP, initialAddress, initialAccount, additionalAccounts, additionalAddresses);
+
+        this.dataRepository.addClient(newClient);
+    }
+
+    public createAddress(
+        zipCode: string, 
+        street: string, 
+        number: string, 
+        extraInfo: string, 
+        city: string, 
+        state: string
+    ): Endereco {
+        return this.factoryRepository.createAddress(zipCode, street, number, extraInfo, city, state);
+    }
+
+    public createCheckingAccount(number: string, limit: number) {
+        return this.factoryRepository.createCheckingAccount(number, limit);
+    }
+
+    public createSavingsAccount(number: string) {
+        return this.factoryRepository.createSavingsAccount(number);
     }
 
     public getEmployees(): Array<Funcionario> {
@@ -147,9 +231,7 @@ class DataManager {
         }
     }
 
-    public async addAddressToEditedClient() {
-        let newAddress = await this.factoryRepository.startAddressCreation("\n>>> Criando novo Endereço");
-
+    public async addAddressToEditedClient(newAddress: Endereco) {
         if (this.editedClient instanceof Cliente) {
             this.editedClient.adicionarEnderecos([newAddress]);
         } else {
@@ -157,9 +239,7 @@ class DataManager {
         }
     }
 
-    public async addAccountToEditedClient() {
-        let newAccount = await this.factoryRepository.startAccountCreation("\n>>> Criando nova Conta");
-
+    public async addAccountToEditedClient(newAccount: Conta) {
         if (this.editedClient instanceof Cliente) {
             this.editedClient.adicionarContas([newAccount]);
         } else {
@@ -215,12 +295,6 @@ class DataManager {
         } else {
             throw new Error("Não foi possível encontrar o Cliente");
         }
-    }
-
-    public async addClient() {
-        this.dataRepository.addClient(
-            await this.factoryRepository.startClientCreation()
-        );
     }
 
     public listClients(): string {
