@@ -42,7 +42,6 @@ class DataManager {
     }
 
     public async addEmployee() {
-        console.log(">>> Iniciando criação de Funcionário");
         this.dataRepository.addEmployee(
             await this.factoryRepository.startEmployeeCreation()
         );
@@ -56,9 +55,8 @@ class DataManager {
         return this.dataRepository.getAllClients();
     }
 
-    public listEmployees() {
-        console.log(">>> Listando Funcionários");
-        console.log(this.dataRepository.listEmployees());
+    public listEmployees(): string {
+        return this.dataRepository.listEmployees();
     }
 
     public setEditedEmployee(index: number) {
@@ -190,15 +188,13 @@ class DataManager {
     }
 
     public async addClient() {
-        console.log(">>> Iniciando criação de Cliente");
         this.dataRepository.addClient(
             await this.factoryRepository.startClientCreation()
         );
     }
 
-    public listClients() {
-        console.log(">>> Listando Clientes");
-        console.log(this.dataRepository.listClients());
+    public listClients(): string {
+        return this.dataRepository.listClients();
     }
 }
 

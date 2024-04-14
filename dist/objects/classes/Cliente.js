@@ -87,9 +87,11 @@ class Cliente extends Pessoa_1.default {
         }
     }
     listarEnderecos() {
+        let resultado = "";
         for (let i = 0; i < this._enderecos.length; i++) {
-            console.log(`${i + 1}. ${this._enderecos[i].listarInformaçoes()}`);
+            resultado += `${i + 1}. ${this._enderecos[i].listarInformaçoes()}\n`;
         }
+        return resultado;
     }
     autenticar() {
         return true;

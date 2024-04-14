@@ -48,7 +48,6 @@ class DataManager {
     }
     addEmployee() {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(">>> Iniciando criação de Funcionário");
             this.dataRepository.addEmployee(yield this.factoryRepository.startEmployeeCreation());
         });
     }
@@ -59,8 +58,7 @@ class DataManager {
         return this.dataRepository.getAllClients();
     }
     listEmployees() {
-        console.log(">>> Listando Funcionários");
-        console.log(this.dataRepository.listEmployees());
+        return this.dataRepository.listEmployees();
     }
     setEditedEmployee(index) {
         try {
@@ -181,13 +179,11 @@ class DataManager {
     }
     addClient() {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(">>> Iniciando criação de Cliente");
             this.dataRepository.addClient(yield this.factoryRepository.startClientCreation());
         });
     }
     listClients() {
-        console.log(">>> Listando Clientes");
-        console.log(this.dataRepository.listClients());
+        return this.dataRepository.listClients();
     }
 }
 exports.default = DataManager;
