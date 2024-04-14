@@ -1,9 +1,11 @@
+
 import Cargo from "../../objects/classes/Cargo";
-import Funcionario from "../../objects/classes/Funcionario";
 import Cliente from "../../objects/classes/Cliente";
+import Conta from "../../objects/abstract classes/Conta";
+import Endereco from "../../objects/classes/Endereco";
+import Funcionario from "../../objects/classes/Funcionario";
 import DataRepository from "./DataRepository";
 import FactoryRepository from "./FactoryRepository";
-import Conta from "../../objects/abstract classes/Conta";
 
 class DataManager {
     private factoryRepository = new FactoryRepository();
@@ -92,6 +94,41 @@ class DataManager {
         } else {
             throw new Error("Não foi possível encontrar o Funcionário");
         }
+    }
+
+    public createClient(
+        cpf: string, 
+        clientName: string, 
+        phone: string, 
+        isVIP: boolean, 
+        initialAddress: Endereco, 
+        initialAccount: Conta, 
+        additionalAccounts: Array<Conta>, 
+        additionalAddresses: Array<Endereco>
+    ) {
+
+        let newClient = this.factoryRepository.createClient(cpf, clientName, phone, isVIP, initialAddress, initialAccount, additionalAccounts, additionalAddresses);
+
+        this.dataRepository.addClient(newClient);
+    }
+
+    public createAddress(
+        zipCode: string, 
+        street: string, 
+        number: string, 
+        extraInfo: string, 
+        city: string, 
+        state: string
+    ): Endereco {
+        return this.factoryRepository.createAddress(zipCode, street, number, extraInfo, city, state);
+    }
+
+    public createCheckingAccount(number: string, limit: number) {
+        return this.factoryRepository.createCheckingAccount(number, limit);
+    }
+
+    public createSavingsAccount(number: string) {
+        return this.factoryRepository.createSavingsAccount(number);
     }
 
     public getEmployees(): Array<Funcionario> {
@@ -194,9 +231,7 @@ class DataManager {
         }
     }
 
-    public async addAddressToEditedClient() {
-        let newAddress = await this.factoryRepository.startAddressCreation("\n>>> Criando novo Endereço");
-
+    public async addAddressToEditedClient(newAddress: Endereco) {
         if (this.editedClient instanceof Cliente) {
             this.editedClient.adicionarEnderecos([newAddress]);
         } else {
@@ -204,9 +239,7 @@ class DataManager {
         }
     }
 
-    public async addAccountToEditedClient() {
-        let newAccount = await this.factoryRepository.startAccountCreation("\n>>> Criando nova Conta");
-
+    public async addAccountToEditedClient(newAccount: Conta) {
         if (this.editedClient instanceof Cliente) {
             this.editedClient.adicionarContas([newAccount]);
         } else {
@@ -262,12 +295,6 @@ class DataManager {
         } else {
             throw new Error("Não foi possível encontrar o Cliente");
         }
-    }
-
-    public async addClient() {
-        this.dataRepository.addClient(
-            await this.factoryRepository.startClientCreation()
-        );
     }
 
     public listClients(): string {
