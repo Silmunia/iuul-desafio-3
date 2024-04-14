@@ -116,6 +116,51 @@ class ClientOperator {
         return ClientControllerState.CLIENT_ADDRESS_MENU;
     }
 
+    public async createClientAccountOperation(): Promise<ClientControllerState> {
+        try {
+            await this.dataManager.addAccountToEditedClient();
+
+            console.log(">>> Conta adicionada com sucesso");
+        } catch (error) {
+            console.log(`Falha na criação da Conta. ${error instanceof Error ? error.message : "Erro desconhecido"}`);
+        }
+
+        return ClientControllerState.CLIENT_ACCOUNT_MENU;
+    }
+
+    public async removeClientAccountOperation(): Promise<ClientControllerState> {
+        
+        if (this.clientInEditing.contas.length === 1) {
+            console.log("\n>>> O Cliente possui apenas uma Conta, portanto não é possível remover Contas");
+            console.log(">>> Voltando para o Menu de Editar Contas");
+
+            return ClientControllerState.CLIENT_ACCOUNT_MENU;
+        } else {
+            console.log("\n>>> Listando Contas do Cliente");
+            let clientAccounts = this.dataManager.listEditedClientAccounts();
+
+            if (clientAccounts === "") {
+                console.log(">>> ERRO FATAL: O Cliente não possui nenhuma Conta");
+                console.log(">>> O programa será encerrado");
+                return ClientControllerState.SHUTDOWN;
+            } else {
+                console.log(clientAccounts);
+                let selectedAccount = await this.inputHandler.getNumberInput("Insira o índice da Conta a remover: ");
+                let parsedAccountIndex = selectedAccount-1;
+
+                try {
+                    this.dataManager.removeEditedClientAccount(parsedAccountIndex);
+
+                    console.log(">>> Conta removida com sucesso");
+                } catch (error) {
+                    console.log(`>>> Falha na remoção da Conta. ${error instanceof Error ? error.message : "Erro desconhecido"}`);
+                }
+
+                return ClientControllerState.CLIENT_ACCOUNT_MENU;
+            }
+        }
+    }
+
     public async removeClientAddressOperation(): Promise<ClientControllerState> {
         
         if (this.clientInEditing.enderecos.length === 1) {
@@ -132,6 +177,7 @@ class ClientOperator {
                 console.log(">>> O programa será encerrado");
                 return ClientControllerState.SHUTDOWN;
             } else {
+                console.log(clientAddresses);
                 let selectedAddress = await this.inputHandler.getNumberInput("Insira o índice do Endereço a remover: ");
                 let parsedAddressIndex = selectedAddress-1;
 
@@ -200,7 +246,7 @@ class ClientOperator {
                     }
                     console.log(">>> Saque realizado com sucesso");
                 } catch (error) {
-                    console.log(`>>> Não foi possível concluir o saque. ${error instanceof Error ? error.message : ""}`);
+                    console.log(`>>> Falha na operação de saque. ${error instanceof Error ? error.message : "Erro desconhecido"}`);
                 }
             } else {
                 console.log(">>> Não foi possível encontrar uma Conta com o número inserido");
@@ -258,7 +304,7 @@ class ClientOperator {
                 console.log(">>> Não é possível fazer transferências a partir de uma Conta Poupança");
             }
         } catch (error) {
-            console.log(`>>> Falha na operação de saldo. ${error instanceof Error ? error.message : "Erro desconhecido"}`);
+            console.log(`>>> Falha na operação de transfer. ${error instanceof Error ? error.message : "Erro desconhecido"}`);
         }
         
         return ClientControllerState.CLIENT_ACCOUNT_MENU;

@@ -147,6 +147,17 @@ class DataManager {
             }
         });
     }
+    addAccountToEditedClient() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let newAccount = yield this.factoryRepository.startAccountCreation("\n>>> Criando nova Conta");
+            if (this.editedClient instanceof Cliente_1.default) {
+                this.editedClient.adicionarContas([newAccount]);
+            }
+            else {
+                throw new Error("Não foi possível adicionar a Conta ao Cliente selecionado");
+            }
+        });
+    }
     listEditedEmployeeRoles(employee) {
         let resultString = "";
         for (let i = 0; i < employee.cargos.length; i++) {
@@ -174,6 +185,19 @@ class DataManager {
         if (this.editedClient instanceof Cliente_1.default) {
             try {
                 this.editedClient.removerEndereco(index);
+            }
+            catch (error) {
+                throw error;
+            }
+        }
+        else {
+            throw new Error("Não foi possível encontrar o Cliente");
+        }
+    }
+    removeEditedClientAccount(index) {
+        if (this.editedClient instanceof Cliente_1.default) {
+            try {
+                this.editedClient.removerConta(index);
             }
             catch (error) {
                 throw error;

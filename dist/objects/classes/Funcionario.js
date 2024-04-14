@@ -31,7 +31,7 @@ class Funcionario extends Pessoa_1.default {
     }
     removerCargo(nomeDoCargo) {
         if (this.cargos.length === 1) {
-            throw new Error("Não é possível remover o Cargo de um Funcionário com apenas 1 Cargo");
+            throw new Error("Não é possível remover o Cargo de um Funcionário com apenas um Cargo");
         }
         else {
             for (let i = 0; i < this._cargos.length; i++) {

@@ -42,13 +42,30 @@ class Cliente extends Pessoa_1.default {
     }
     removerEndereco(indice) {
         if (this._enderecos.length === 1) {
-            throw new Error("Não é possível remover o Endereço de um Cliente com apenas 1 Endereço");
+            throw new Error("Não é possível remover o Endereço de um Cliente com apenas um Endereço");
         }
         else if (indice < 0 || indice >= this._enderecos.length) {
             throw new Error("O Endereço escolhido para remoção é inválido");
         }
         else {
             this._enderecos.splice(indice, 1);
+        }
+    }
+    adicionarContas(contas) {
+        this._contas = this._contas.concat(contas);
+        contas.forEach((conta) => {
+            conta.cliente = this;
+        });
+    }
+    removerConta(indice) {
+        if (this._contas.length === 1) {
+            throw new Error("Não é possível remover a Conta de um Cliente com apenas uma Conta");
+        }
+        else if (indice < 0 || indice >= this._contas.length) {
+            throw new Error("A Conta escolhida para remoção é inválida");
+        }
+        else {
+            this._contas.splice(indice, 1);
         }
     }
     encontrarConta(numero) {
