@@ -18,8 +18,7 @@ class FactoryRepository {
             let cpf: string = await this.inputHandler.getStringInput("Insira o CPF do Funcionário: ");
             let phone: string = await this.inputHandler.getStringInput("Insira o telefone do Funcionário: ");
             let salary: number = await this.inputHandler.getNumberInput("Insira o salário do Funcionário: ");
-            let roleName: string = await this.inputHandler.getStringInput("Insira o cargo inicial do Funcionário: ");
-            let initialRole: Cargo = new Cargo(roleName);
+            let initialRole: Cargo = await this.startRoleCreation();
 
             let numberOfRoles: number = await this.inputHandler.getNumberInput("Insira o número de Cargos adicionais do Funcionário: ");
 
@@ -35,6 +34,18 @@ class FactoryRepository {
             console.log(">>> Funcionário criado com sucesso");
             
             resolve(newEmployee);
+        });
+    }
+
+    public async startRoleCreation(): Promise<Cargo> {
+        return new Promise<Cargo>(async (resolve) => {
+            let roleName: string = await this.inputHandler.getStringInput("Insira o cargo inicial do Funcionário: ");
+
+            let newRole: Cargo = new Cargo(roleName);
+
+            console.log(">>> Cargo criado com sucesso");
+            
+            resolve(newRole);
         });
     }
 
