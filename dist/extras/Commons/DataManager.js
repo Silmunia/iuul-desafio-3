@@ -46,7 +46,7 @@ class DataManager {
             throw new Error("Não foi possível encontrar as contas do Cliente");
         }
     }
-    addEmployee(initialRoleName, cpf, employeeName, phone, salary, additionalRoleNames) {
+    createEmployee(initialRoleName, cpf, employeeName, phone, salary, additionalRoleNames) {
         let initialRole = this.getRole(initialRoleName);
         let additionalRoles = [];
         for (let i = 0; i < additionalRoleNames.length; i++) {

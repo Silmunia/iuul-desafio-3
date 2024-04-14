@@ -36,7 +36,7 @@ class EmployeeOperator {
                 let newRoleName = yield this.inputHandler.getStringInput(`Insira o nome do Cargo adicional ${i + 1}/${numberOfRoles}: `);
                 additionalRoles.push(newRoleName);
             }
-            this.dataManager.addEmployee(roleName, cpf, employeeName, phone, salary, additionalRoles);
+            this.dataManager.createEmployee(roleName, cpf, employeeName, phone, salary, additionalRoles);
             return EmployeeControllerState_1.default.EMPLOYEE_MENU;
         });
     }

@@ -68,7 +68,7 @@ class ClientOperator {
         return ClientControllerState.CLIENT_MENU;
     }
 
-    public async createAddressOperation(): Promise<Endereco> {
+    private async createAddressOperation(): Promise<Endereco> {
         let state: string = await this.inputHandler.getStringInput("Insira a Unidade Federativa do Endereço: ");
         let city: string = await this.inputHandler.getStringInput("Insira a cidade do Endereço: ");
         let street: string = await this.inputHandler.getStringInput("Insira o logradouro do Endereço: ");
@@ -79,7 +79,7 @@ class ClientOperator {
         return this.dataManager.createAddress(zipCode, street, number, extraInfo, city, state);
     }
 
-    public async createAccountOperation(): Promise<Conta> {
+    private async createAccountOperation(): Promise<Conta> {
         let accountInput = await this.inputHandler.getNumberInput("Escolha um tipo de conta para criar\n1. Conta Corrente\n2. Conta Poupança\nInsira um comando: ");
 
         let number: string = await this.inputHandler.getStringInput("Insira o número da Conta: ");

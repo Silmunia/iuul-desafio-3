@@ -44,7 +44,7 @@ class DataManager {
         }
     }
 
-    public addEmployee(
+    public createEmployee(
         initialRoleName: string, 
         cpf: string, 
         employeeName: string, 

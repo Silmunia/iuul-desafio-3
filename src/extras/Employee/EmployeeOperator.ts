@@ -35,7 +35,7 @@ class EmployeeOperator {
             additionalRoles.push(newRoleName);
         }
 
-        this.dataManager.addEmployee(roleName, cpf, employeeName, phone, salary, additionalRoles);
+        this.dataManager.createEmployee(roleName, cpf, employeeName, phone, salary, additionalRoles);
         return EmployeeControllerState.EMPLOYEE_MENU;
     }
 
