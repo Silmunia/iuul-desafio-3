@@ -4,12 +4,16 @@ class DataRepository {
     constructor() {
         this.employees = [];
         this.clients = [];
+        this.roles = [];
     }
     addEmployee(employee) {
         this.employees.push(employee);
     }
     addClient(client) {
         this.clients.push(client);
+    }
+    addRole(newRole) {
+        this.roles.push(newRole);
     }
     listEmployees() {
         return this.listData(this.employees, ">>> Sem Funcionários para listar");
@@ -32,6 +36,14 @@ class DataRepository {
         else {
             throw new Error("Não há Cliente com o índice selecionado");
         }
+    }
+    getRole(name) {
+        for (let i = 0; i < this.roles.length; i++) {
+            if (this.roles[i].nome === name) {
+                return this.roles[i];
+            }
+        }
+        throw new Error("Não há Cargo com o nome selecionado");
     }
     getAllEmployees() {
         return this.employees;

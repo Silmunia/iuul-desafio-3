@@ -25,7 +25,18 @@ class EmployeeOperator {
     createEmployeeOperation() {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("\n>>> Iniciando criação de Funcionário");
-            yield this.dataManager.addEmployee();
+            let employeeName = yield this.inputHandler.getStringInput("Insira o nome do Funcionário: ");
+            let cpf = yield this.inputHandler.getStringInput("Insira o CPF do Funcionário: ");
+            let phone = yield this.inputHandler.getStringInput("Insira o telefone do Funcionário: ");
+            let salary = yield this.inputHandler.getNumberInput("Insira o salário do Funcionário: ");
+            let roleName = yield this.inputHandler.getStringInput("Insira o cargo inicial do Funcionário: ");
+            let numberOfRoles = yield this.inputHandler.getNumberInput("Insira o número de Cargos adicionais do Funcionário: ");
+            let additionalRoles = [];
+            for (let i = 0; i < numberOfRoles; i++) {
+                let newRoleName = yield this.inputHandler.getStringInput(`Insira o nome do Cargo adicional ${i + 1}/${numberOfRoles}: `);
+                additionalRoles.push(newRoleName);
+            }
+            this.dataManager.addEmployee(roleName, cpf, employeeName, phone, salary, additionalRoles);
             return EmployeeControllerState_1.default.EMPLOYEE_MENU;
         });
     }

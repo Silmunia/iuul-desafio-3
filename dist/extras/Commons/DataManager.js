@@ -31,7 +31,7 @@ class DataManager {
                 }
             }
         }
-        throw new Error("Não há conta com o número inserido");
+        throw new Error("Não há conta com o número inserido para a conta de destino");
     }
     getEditedClientAccount(accountNumber) {
         if (this.editedClient instanceof Cliente_1.default) {
@@ -43,13 +43,29 @@ class DataManager {
             throw new Error("Não há conta com o número inserido");
         }
         else {
-            throw new Error("Não há conta com o número inserido");
+            throw new Error("Não foi possível encontrar as contas do Cliente");
         }
     }
-    addEmployee() {
-        return __awaiter(this, void 0, void 0, function* () {
-            this.dataRepository.addEmployee(yield this.factoryRepository.startEmployeeCreation());
-        });
+    addEmployee(initialRoleName, cpf, employeeName, phone, salary, additionalRoleNames) {
+        let initialRole = this.getRole(initialRoleName);
+        let additionalRoles = [];
+        for (let i = 0; i < additionalRoleNames.length; i++) {
+            let extraRole = this.getRole(additionalRoleNames[i]);
+            additionalRoles.push(extraRole);
+        }
+        let newEmployee = this.factoryRepository.createEmployee(initialRole, cpf, employeeName, phone, salary, additionalRoles);
+        this.dataRepository.addEmployee(newEmployee);
+    }
+    getRole(roleName) {
+        try {
+            let foundRole = this.dataRepository.getRole(roleName);
+            return foundRole;
+        }
+        catch (_a) {
+            let newRole = this.factoryRepository.createRole(roleName);
+            this.dataRepository.addRole(newRole);
+            return newRole;
+        }
     }
     getEmployees() {
         return this.dataRepository.getAllEmployees();

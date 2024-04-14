@@ -1,3 +1,4 @@
+import Cargo from "../../objects/classes/Cargo";
 import Funcionario from "../../objects/classes/Funcionario";
 import Cliente from "../../objects/classes/Cliente";
 import DataRepository from "./DataRepository";
@@ -41,10 +42,40 @@ class DataManager {
         }
     }
 
-    public async addEmployee() {
-        this.dataRepository.addEmployee(
-            await this.factoryRepository.startEmployeeCreation()
-        );
+    public addEmployee(
+        initialRoleName: string, 
+        cpf: string, 
+        employeeName: string, 
+        phone: string, 
+        salary: number, 
+        additionalRoleNames: Array<string>
+    ) {
+
+        let initialRole = this.getRole(initialRoleName);
+
+        let additionalRoles: Array<Cargo> = [];
+        for (let i = 0; i < additionalRoleNames.length; i++) {
+            let extraRole = this.getRole(additionalRoleNames[i]);
+
+            additionalRoles.push(extraRole);
+        }
+
+        let newEmployee = this.factoryRepository.createEmployee(initialRole, cpf, employeeName, phone, salary, additionalRoles);
+
+        this.dataRepository.addEmployee(newEmployee);
+    }
+
+    public getRole(roleName: string): Cargo {
+        try {
+            let foundRole = this.dataRepository.getRole(roleName);
+
+            return foundRole;
+        } catch {
+            let newRole = this.factoryRepository.createRole(roleName);
+            this.dataRepository.addRole(newRole);
+
+            return newRole;
+        }
     }
 
     public getEmployees(): Array<Funcionario> {

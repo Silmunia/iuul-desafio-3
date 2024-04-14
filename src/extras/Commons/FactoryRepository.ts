@@ -12,41 +12,23 @@ class FactoryRepository {
 
     private inputHandler: InputHandler = new InputHandler();
 
-    public async startEmployeeCreation(): Promise<Funcionario> {
-        return new Promise<Funcionario>(async (resolve) => {
-            let employeeName: string = await this.inputHandler.getStringInput("Insira o nome do Funcionário: ");
-            let cpf: string = await this.inputHandler.getStringInput("Insira o CPF do Funcionário: ");
-            let phone: string = await this.inputHandler.getStringInput("Insira o telefone do Funcionário: ");
-            let salary: number = await this.inputHandler.getNumberInput("Insira o salário do Funcionário: ");
-            let initialRole: Cargo = await this.startRoleCreation();
+    public createEmployee(
+        initialRole: Cargo, 
+        cpf: string, 
+        employeeName: string, 
+        phone: string, 
+        salary: number, 
+        additionalRoles: Array<Cargo>
+    ): Funcionario {
+        let newEmployee = new Funcionario(initialRole, cpf, employeeName, phone, salary, additionalRoles);
 
-            let numberOfRoles: number = await this.inputHandler.getNumberInput("Insira o número de Cargos adicionais do Funcionário: ");
-
-            let additionalRoles: Array<Cargo> = [];
-            for (let i = 0; i < numberOfRoles; i++) {
-                let newRoleName = await this.inputHandler.getStringInput(`Insira o nome do Cargo adicional ${i+1}/${numberOfRoles}: `);
-
-                additionalRoles.push(new Cargo(newRoleName));
-            }
-
-            let newEmployee = new Funcionario(initialRole, cpf, employeeName, phone, salary, additionalRoles);
-
-            console.log(">>> Funcionário criado com sucesso");
-            
-            resolve(newEmployee);
-        });
+        return newEmployee;
     }
 
-    public async startRoleCreation(): Promise<Cargo> {
-        return new Promise<Cargo>(async (resolve) => {
-            let roleName: string = await this.inputHandler.getStringInput("Insira o cargo inicial do Funcionário: ");
+    public createRole(roleName: string): Cargo {
+        let newRole: Cargo = new Cargo(roleName);
 
-            let newRole: Cargo = new Cargo(roleName);
-
-            console.log(">>> Cargo criado com sucesso");
-            
-            resolve(newRole);
-        });
+        return newRole;
     }
 
     public async startClientCreation(): Promise<Cliente> {

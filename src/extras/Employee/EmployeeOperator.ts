@@ -19,7 +19,23 @@ class EmployeeOperator {
 
     public async createEmployeeOperation(): Promise<EmployeeControllerState> {
         console.log("\n>>> Iniciando criação de Funcionário");
-        await this.dataManager.addEmployee();
+
+        let employeeName: string = await this.inputHandler.getStringInput("Insira o nome do Funcionário: ");
+        let cpf: string = await this.inputHandler.getStringInput("Insira o CPF do Funcionário: ");
+        let phone: string = await this.inputHandler.getStringInput("Insira o telefone do Funcionário: ");
+        let salary: number = await this.inputHandler.getNumberInput("Insira o salário do Funcionário: ");
+        let roleName: string = await this.inputHandler.getStringInput("Insira o cargo inicial do Funcionário: ");
+
+        let numberOfRoles: number = await this.inputHandler.getNumberInput("Insira o número de Cargos adicionais do Funcionário: ");
+
+        let additionalRoles: Array<string> = [];
+        for (let i = 0; i < numberOfRoles; i++) {
+            let newRoleName = await this.inputHandler.getStringInput(`Insira o nome do Cargo adicional ${i+1}/${numberOfRoles}: `);
+
+            additionalRoles.push(newRoleName);
+        }
+
+        this.dataManager.addEmployee(roleName, cpf, employeeName, phone, salary, additionalRoles);
         return EmployeeControllerState.EMPLOYEE_MENU;
     }
 

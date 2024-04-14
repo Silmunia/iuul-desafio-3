@@ -249,7 +249,7 @@ class ClientOperator {
                         console.log(">>> Saque realizado com sucesso");
                     }
                     catch (error) {
-                        console.log(`>>> Não foi possível concluir o saque. ${error instanceof Error ? error.message : ""}`);
+                        console.log(`>>> Falha na operação de saque. ${error instanceof Error ? error.message : "Erro desconhecido"}`);
                     }
                 }
                 else {
@@ -309,7 +309,7 @@ class ClientOperator {
                 }
             }
             catch (error) {
-                console.log(`>>> Falha na operação de saldo. ${error instanceof Error ? error.message : "Erro desconhecido"}`);
+                console.log(`>>> Falha na operação de transfer. ${error instanceof Error ? error.message : "Erro desconhecido"}`);
             }
             return ClientControllerState_1.default.CLIENT_ACCOUNT_MENU;
         });
