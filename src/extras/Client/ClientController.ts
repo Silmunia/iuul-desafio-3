@@ -99,7 +99,11 @@ class ClientController {
 
     private async startCommandInput(prompt: string) {
         let receivedInput = await this.inputHandler.getNumberInput(prompt);
-        this.currentState = await this.controlParser.parseInputForState(this.currentState, receivedInput);
+        try {
+            this.currentState = await this.controlParser.parseInputForState(this.currentState, receivedInput);
+        } catch (error) {
+            console.log(`>>> Erro ao executar o comando. ${error instanceof Error ? error.message : "Erro desconhecido"}`);
+        }
     }
 }
 

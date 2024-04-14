@@ -90,7 +90,12 @@ class EmployeeController {
     startCommandInput(prompt) {
         return __awaiter(this, void 0, void 0, function* () {
             let receivedInput = yield this.inputHandler.getNumberInput(prompt);
-            this.currentState = yield this.controlParser.parseInputForState(this.currentState, receivedInput);
+            try {
+                this.currentState = yield this.controlParser.parseInputForState(this.currentState, receivedInput);
+            }
+            catch (error) {
+                console.log(`>>> Erro ao executar o comando. ${error instanceof Error ? error.message : "Erro desconhecido"}`);
+            }
         });
     }
 }

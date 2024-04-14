@@ -15,8 +15,7 @@ class ClientControlParser {
                     case ClientControllerState.SHUTDOWN:
                         return ClientControllerState.SHUTDOWN;
                     default:
-                        console.log(">>> Comando desconhecido");
-                        return state;
+                        throw new Error(">>> Comando desconhecido");
                 }
             case ClientControllerState.CLIENT_EDITING:
                 switch (input) {
@@ -39,8 +38,7 @@ class ClientControlParser {
                     case ClientControllerState.SHUTDOWN:
                         return ClientControllerState.SHUTDOWN;
                     default:
-                        console.log(">>> Comando desconhecido");
-                        return state;
+                        throw new Error(">>> Comando desconhecido");
                 }
             case ClientControllerState.CLIENT_ADDRESS_MENU:
                 switch (input) {
@@ -57,8 +55,7 @@ class ClientControlParser {
                     case ClientControllerState.SHUTDOWN:
                         return ClientControllerState.SHUTDOWN;
                     default:
-                        console.log(">>> Comando desconhecido");
-                        return state;
+                        throw new Error(">>> Comando desconhecido");
                 }
             case ClientControllerState.CLIENT_ACCOUNT_MENU:
                 switch(input) {
@@ -79,12 +76,10 @@ class ClientControlParser {
                     case ClientControllerState.SHUTDOWN:
                         return ClientControllerState.SHUTDOWN;
                     default:
-                        console.log(">>> Comando desconhecido");
-                        return state;
+                        throw new Error(">>> Comando desconhecido");
                 }
             default:
-                console.log(">>> Comando desconhecido");
-                return ClientControllerState.RESET;
+                throw new Error(">>> Comando desconhecido");
         }
     }
 
