@@ -41,7 +41,7 @@ class InputHandler {
                     return Promise.resolve(input);
                 }
                 else {
-                    console.log(">>> Valor inválido");
+                    console.log(">>> Valor inválido. Insira caracteres alfanuméricos");
                     return this.getStringInput(prompt);
                 }
             });
@@ -51,11 +51,17 @@ class InputHandler {
         return __awaiter(this, void 0, void 0, function* () {
             return this.getInput(prompt).then((input) => {
                 if (typeof input === 'string') {
-                    let parsed = parseInt(input);
-                    return Promise.resolve(parsed);
+                    let parsedString = parseInt(input);
+                    if (isNaN(parsedString)) {
+                        console.log(">>> Valor inválido. Insira um número");
+                        return this.getNumberInput(prompt);
+                    }
+                    else {
+                        return Promise.resolve(parsedString);
+                    }
                 }
                 else {
-                    console.log(">>> Valor inválido");
+                    console.log(">>> Valor inválido. Insira um número");
                     return this.getNumberInput(prompt);
                 }
             });
@@ -73,12 +79,12 @@ class InputHandler {
                         return Promise.resolve(false);
                     }
                     else {
-                        console.log(">>> Valor inválido");
+                        console.log(">>> Valor inválido. Insira 'S' ou 'N'");
                         return this.getBooleanInput(prompt);
                     }
                 }
                 else {
-                    console.log(">>> Valor inválido");
+                    console.log(">>> Valor inválido. Insira 'S' ou 'N'");
                     return this.getBooleanInput(prompt);
                 }
             });

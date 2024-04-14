@@ -40,8 +40,15 @@ class EmployeeController {
                 case EmployeeControllerState_1.default.EMPLOYEE_MENU:
                 case EmployeeControllerState_1.default.EMPLOYEE_EDITING:
                 case EmployeeControllerState_1.default.EMPLOYEE_ROLES_MENU:
-                    this.displayMenu();
-                    yield this.startCommandInput("Insira comando: ");
+                    try {
+                        this.menuRenderer.renderEmployeeMenus(this.currentState);
+                        yield this.startCommandInput("Insira comando: ");
+                    }
+                    catch (error) {
+                        console.log(`>>> ${error instanceof Error ? error.message : "Erro ao exibir o Menu"}`);
+                        console.log(">>> Voltando para o Menu Principal");
+                        this.currentState = EmployeeControllerState_1.default.RETURN_TO_MAIN;
+                    }
                     return this.runEmployeeCommands();
                 case EmployeeControllerState_1.default.EMPLOYEE_LISTING:
                     this.currentState = this.operator.listEmployeesOperation();
@@ -80,18 +87,15 @@ class EmployeeController {
             return this.runEmployeeCommands();
         });
     }
-    displayMenu() {
-        let renderResult = this.menuRenderer.renderEmployeeMenus(this.currentState);
-        if (!renderResult) {
-            console.log(">>> Menu desconhecido");
-            console.log(">>> Voltando para o Menu de Editar Funcionário");
-            this.currentState = EmployeeControllerState_1.default.EMPLOYEE_EDITING;
-        }
-    }
     startCommandInput(prompt) {
         return __awaiter(this, void 0, void 0, function* () {
             let receivedInput = yield this.inputHandler.getNumberInput(prompt);
-            this.currentState = yield this.controlParser.parseInputForState(this.currentState, receivedInput);
+            try {
+                this.currentState = yield this.controlParser.parseInputForState(this.currentState, receivedInput);
+            }
+            catch (error) {
+                console.log(`>>> Erro ao executar o comando. ${error instanceof Error ? error.message : "Erro desconhecido"}`);
+            }
         });
     }
 }

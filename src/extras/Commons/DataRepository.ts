@@ -14,18 +14,18 @@ class DataRepository {
     }
 
     public listEmployees(): string {
-        return this.listData(this.employees, ">>> Sem funcionários para listar");
+        return this.listData(this.employees, ">>> Sem Funcionários para listar");
     }
 
     public listClients(): string {
-        return this.listData(this.clients, ">>> Sem clientes para listar");
+        return this.listData(this.clients, ">>> Sem Clientes para listar");
     }
 
     public getEmployee(index: number) {
         if (index >= 0 && index < this.employees.length) {
             return this.employees[index];
         } else {
-            return undefined;
+            throw new Error("Não há Funcionário com o índice selecionado");
         }
     }
 
@@ -33,7 +33,7 @@ class DataRepository {
         if (index >= 0 && index < this.clients.length) {
             return this.clients[index];
         } else {
-            return undefined;
+            throw new Error("Não há Cliente com o índice selecionado");
         }
     }
 
@@ -55,7 +55,11 @@ class DataRepository {
         for (let i = 0; i < dataArray.length; i++) {
             let current = dataArray[i];
 
-            resultList += `${i+1}. ${current.nome}, CPF ${current.cpf}\n`;
+            resultList += `${i+1}. ${current.nome}, CPF ${current.cpf}`;
+
+            if (i < dataArray.length-1) {
+                resultList += "\n";
+            }
         }
 
         return resultList;

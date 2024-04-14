@@ -46,26 +46,26 @@ class FactoryRepository {
             let phone: string = await this.inputHandler.getStringInput("Insira o telefone do Cliente: ");
             let isVIP: boolean = await this.inputHandler.getBooleanInput("O Cliente é VIP? (s/n) ");
 
-            let initialAddress: Endereco = await this.startAddressCreation(">>> Criando Endereço inicial do Cliente");
+            let initialAddress: Endereco = await this.startAddressCreation("\n>>> Criando Endereço inicial do Cliente");
 
             let numberOfAddresses: number = await this.inputHandler.getNumberInput("Insira o número de Endereços adicionais do Cliente: ");
 
             let additionalAddresses: Array<Endereco> = [];
 
             for (let i = 0; i < numberOfAddresses; i++) {
-                let newAddress: Endereco = await this.startAddressCreation(`>>> Criando Endereço adicional ${i+1}/${numberOfAddresses}`);
+                let newAddress: Endereco = await this.startAddressCreation(`\n>>> Criando Endereço adicional ${i+1}/${numberOfAddresses}`);
 
                 additionalAddresses.push(newAddress);
             }
 
-            let initialAccount: Conta = await this.startAccountCreation(">>> Criando Conta inicial do Cliente");
+            let initialAccount: Conta = await this.startAccountCreation("\n>>> Criando Conta inicial do Cliente");
 
             let numberOfAccounts: number = await this.inputHandler.getNumberInput("Insira o número de Contas adicionais do Cliente: ");
 
             let additionalAccounts: Array<Conta> = [];
 
             for (let j = 0; j < numberOfAccounts; j++) {
-                let newAccount: Conta = await this.startAccountCreation(`>>> Criando Conta adicional ${j+1}/${numberOfAccounts}`);
+                let newAccount: Conta = await this.startAccountCreation(`\n>>> Criando Conta adicional ${j+1}/${numberOfAccounts}`);
 
                 additionalAccounts.push(newAccount);
             }
@@ -99,7 +99,7 @@ class FactoryRepository {
 
     public async startAccountCreation(startingMessage: string): Promise<Conta> {
         console.log(startingMessage);
-        return this.inputHandler.getNumberInput("Escolha um tipo de conta para criar:\n1. Conta Corrente\n2. Conta Poupança\nInsira um comando: ").then(async (input) => {
+        return this.inputHandler.getNumberInput("Escolha um tipo de conta para criar\n1. Conta Corrente\n2. Conta Poupança\nInsira um comando: ").then(async (input) => {
             if (input == 1) {
                 return this.startCheckingAccountCreation();
             } else if (input == 2) {

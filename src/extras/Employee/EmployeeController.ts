@@ -32,8 +32,14 @@ class EmployeeController {
             case EmployeeControllerState.EMPLOYEE_MENU:
             case EmployeeControllerState.EMPLOYEE_EDITING:
             case EmployeeControllerState.EMPLOYEE_ROLES_MENU:
-                this.displayMenu();
-                await this.startCommandInput("Insira comando: ");
+                try {
+                    this.menuRenderer.renderEmployeeMenus(this.currentState);
+                    await this.startCommandInput("Insira comando: ");
+                } catch (error) {
+                    console.log(`>>> ${error instanceof Error ? error.message : "Erro ao exibir o Menu"}`);
+                    console.log(">>> Voltando para o Menu Principal");
+                    this.currentState = EmployeeControllerState.RETURN_TO_MAIN;
+                }
                 return this.runEmployeeCommands();
             case EmployeeControllerState.EMPLOYEE_LISTING:
                 this.currentState = this.operator.listEmployeesOperation();
@@ -73,19 +79,13 @@ class EmployeeController {
         return this.runEmployeeCommands();
     }
 
-    private displayMenu() {
-        let renderResult = this.menuRenderer.renderEmployeeMenus(this.currentState);
-
-        if (!renderResult) {
-            console.log(">>> Menu desconhecido");
-            console.log(">>> Voltando para o Menu de Editar Funcionário");
-            this.currentState = EmployeeControllerState.EMPLOYEE_EDITING;
-        }
-    }
-
     private async startCommandInput(prompt: string) {
         let receivedInput = await this.inputHandler.getNumberInput(prompt);
-        this.currentState = await this.controlParser.parseInputForState(this.currentState, receivedInput);
+        try {
+            this.currentState = await this.controlParser.parseInputForState(this.currentState, receivedInput);
+        } catch (error) {
+            console.log(`>>> Erro ao executar o comando. ${error instanceof Error ? error.message : "Erro desconhecido"}`);
+        }
     }
 }
 

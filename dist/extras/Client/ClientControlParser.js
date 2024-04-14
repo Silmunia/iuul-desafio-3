@@ -28,8 +28,7 @@ class ClientControlParser {
                         case ClientControllerState_1.default.SHUTDOWN:
                             return ClientControllerState_1.default.SHUTDOWN;
                         default:
-                            console.log(">>> Comando desconhecido");
-                            return state;
+                            throw new Error("Comando desconhecido");
                     }
                 case ClientControllerState_1.default.CLIENT_EDITING:
                     switch (input) {
@@ -52,8 +51,7 @@ class ClientControlParser {
                         case ClientControllerState_1.default.SHUTDOWN:
                             return ClientControllerState_1.default.SHUTDOWN;
                         default:
-                            console.log(">>> Comando desconhecido");
-                            return state;
+                            throw new Error("Comando desconhecido");
                     }
                 case ClientControllerState_1.default.CLIENT_ADDRESS_MENU:
                     switch (input) {
@@ -70,8 +68,7 @@ class ClientControlParser {
                         case ClientControllerState_1.default.SHUTDOWN:
                             return ClientControllerState_1.default.SHUTDOWN;
                         default:
-                            console.log(">>> Comando desconhecido");
-                            return state;
+                            throw new Error("Comando desconhecido");
                     }
                 case ClientControllerState_1.default.CLIENT_ACCOUNT_MENU:
                     switch (input) {
@@ -92,12 +89,10 @@ class ClientControlParser {
                         case ClientControllerState_1.default.SHUTDOWN:
                             return ClientControllerState_1.default.SHUTDOWN;
                         default:
-                            console.log(">>> Comando desconhecido");
-                            return state;
+                            throw new Error("Comando desconhecido");
                     }
                 default:
-                    console.log(">>> Comando desconhecido");
-                    return ClientControllerState_1.default.RESET;
+                    throw new Error("Comando desconhecido");
             }
         });
     }

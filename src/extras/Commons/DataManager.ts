@@ -11,7 +11,7 @@ class DataManager {
     private editedEmployee: Funcionario | undefined;
     private editedClient: Cliente | undefined;
 
-    public getTargetAccountForTransfer(accountNumber: string): Conta | undefined {
+    public getTargetAccountForTransfer(accountNumber: string): Conta {
         let allClients = this.dataRepository.getAllClients();
 
         for (let i = 0; i < allClients.length; i++) {
@@ -24,10 +24,10 @@ class DataManager {
             }
         }
 
-        return undefined;
+        throw new Error("Não há conta com o número inserido");
     }
 
-    public getEditedClientAccount(accountNumber: string): Conta | undefined {
+    public getEditedClientAccount(accountNumber: string): Conta {
         if (this.editedClient instanceof Cliente) {
             for (let i = 0; i < this.editedClient.contas.length; i++) {
                 if (this.editedClient.contas[i].numero === accountNumber) {
@@ -35,14 +35,13 @@ class DataManager {
                 }
             }
 
-            return undefined;
+            throw new Error("Não há conta com o número inserido");
         } else {
-            return undefined;
+            throw new Error("Não há conta com o número inserido");
         }
     }
 
     public async addEmployee() {
-        console.log(">>> Iniciando criação de Funcionário");
         this.dataRepository.addEmployee(
             await this.factoryRepository.startEmployeeCreation()
         );
@@ -56,13 +55,16 @@ class DataManager {
         return this.dataRepository.getAllClients();
     }
 
-    public listEmployees() {
-        console.log(">>> Listando Funcionários");
-        console.log(this.dataRepository.listEmployees());
+    public listEmployees(): string {
+        return this.dataRepository.listEmployees();
     }
 
     public setEditedEmployee(index: number) {
-        this.editedEmployee = this.dataRepository.getEmployee(index);
+        try {
+            this.editedEmployee = this.dataRepository.getEmployee(index);
+        } catch (error) {
+            throw error;
+        }
     }
 
     public getEditedEmployee(): Funcionario | undefined {
@@ -70,7 +72,11 @@ class DataManager {
     }
 
     public setEditedClient(index: number) {
-        this.editedClient = this.dataRepository.getClient(index);
+        try {
+            this.editedClient = this.dataRepository.getClient(index);
+        } catch (error) {
+            throw error;
+        }
     }
 
     public getEditedClient(): Cliente | undefined {
@@ -79,17 +85,24 @@ class DataManager {
 
     public listEditedEmployeeInfo(): string {
         if (this.editedEmployee instanceof Funcionario) {
-            return `\n>>> Listando informações do Funcionário\nNome: ${this.editedEmployee.nome}\nCPF: ${this.editedEmployee.cpf}\nCargos: ${this.listEditedEmployeeRoles(this.editedEmployee)}\nTelefone: ${this.editedEmployee.telefone}\nSalário: ${this.editedEmployee.salario}`;
+            return `Nome: ${this.editedEmployee.nome}\nCPF: ${this.editedEmployee.cpf}\nCargos: ${this.listEditedEmployeeRoles(this.editedEmployee)}\nTelefone: ${this.editedEmployee.telefone}\nSalário: ${this.editedEmployee.salario}`;
         } else {
-            return ">>> Não foi possível encontrar o Funcionário";
+            throw new Error("Não foi possível encontrar o Funcionário");
         }
     }
 
     public listEditedClientInfo(): string {
         if (this.editedClient instanceof Cliente) {
-            return `\n>>> Listando informações do Cliente\nNome: ${this.editedClient.nome}\nCPF: ${this.editedClient.cpf}\nTelefone: ${this.editedClient.telefone}\nVIP: ${this.editedClient.vip ? "Sim" : "Não"}\nContas: ${this.listEditedClientAccounts()}\nEndereços: ${this.listEditedClientAddresses()}`;
+            try {
+                let clientAccounts = this.listEditedClientAccounts();
+                let clientAddresses = this.listEditedClientAddresses();
+
+                return `Nome: ${this.editedClient.nome}\nCPF: ${this.editedClient.cpf}\nTelefone: ${this.editedClient.telefone}\nVIP: ${this.editedClient.vip ? "Sim" : "Não"}\nContas:\n${clientAccounts}\nEndereços:\n${clientAddresses}`;
+            } catch (error) {
+                throw error;
+            }
         } else {
-            return ">>> Não foi possível encontrar o Cliente";
+            throw new Error("Não foi possível encontrar o Cliente");
         }
     }
 
@@ -99,12 +112,16 @@ class DataManager {
             let accountString = "";
 
             for (let i = 0; i < this.editedClient.contas.length; i++) {
-                accountString += `\n${i+1}. Conta número ${this.editedClient.contas[i].numero}`; 
+                accountString += `${i+1}. Conta número ${this.editedClient.contas[i].numero}`; 
+
+                if (i < this.editedClient.contas.length-1) {
+                    accountString += "\n";
+                }
             }
 
             return accountString;
         } else {
-            return ">>> Não foi possível encontrar o Cliente";
+            throw new Error("Não foi possível encontrar o Cliente");
         }
     }
 
@@ -117,23 +134,26 @@ class DataManager {
 
                 let currentAddress = this.editedClient.enderecos[i];
 
-                addressString += `\n${i+1}. UF ${currentAddress.uf}, Cidade ${currentAddress.cidade}, ${currentAddress.logradouro}, número ${currentAddress.numero}, ${currentAddress.complemento}, CEP ${currentAddress.cep}`; 
+                addressString += `${i+1}. UF ${currentAddress.uf}, Cidade ${currentAddress.cidade}, ${currentAddress.logradouro}, número ${currentAddress.numero}, ${currentAddress.complemento}, CEP ${currentAddress.cep}`; 
+
+                if (i < this.editedClient.enderecos.length-1) {
+                    addressString += "\n";
+                }
             }
 
             return addressString;
         } else {
-            return ">>> Não foi possível encontrar o Cliente";
+            throw new Error("Não foi possível encontrar o Cliente");
         }
     }
 
-    public async addAddressToEditedClient(): Promise<boolean> {
-        let newAddress = await this.factoryRepository.startAddressCreation(">>> Criando novo Endereço");
+    public async addAddressToEditedClient() {
+        let newAddress = await this.factoryRepository.startAddressCreation("\n>>> Criando novo Endereço");
 
         if (this.editedClient instanceof Cliente) {
             this.editedClient.adicionarEnderecos([newAddress]);
-            return true;
         } else {
-            return false;
+            throw new Error("Não foi possível adicionar o Endereço ao Cliente selecionado");
         }
     }
 
@@ -151,44 +171,38 @@ class DataManager {
         return resultString;
     }
 
-    public removeEditedEmployeeRole(roleName: string): boolean {
+    public removeEditedEmployeeRole(roleName: string) {
         if (this.editedEmployee instanceof Funcionario) {
-            for (let i = 0; i < this.editedEmployee.cargos.length; i++) {
-                if (this.editedEmployee.cargos[i].nome === roleName) {
-                    this.editedEmployee.removerCargo(i);
-                    return true;
-                }
+            try {
+                this.editedEmployee.removerCargo(roleName);
+            } catch (error) {
+                throw error;
             }
-
-            return false;
         } else {
-            return false;
+            throw new Error("Não foi possível encontrar o Funcionário");
         }
     }
 
-    public removeEditedClientAddress(index: number): boolean {
+    public removeEditedClientAddress(index: number) {
         if (this.editedClient instanceof Cliente) {
-            if (this.editedClient.enderecos.length > 1 && index >= 0 && index < this.editedClient.enderecos.length) {
+            try {
                 this.editedClient.removerEndereco(index);
-                return true;
-            } else {
-                return false;
+            } catch (error) {
+                throw error;
             }
         } else {
-            return false;
+            throw new Error("Não foi possível encontrar o Cliente");
         }
     }
 
     public async addClient() {
-        console.log(">>> Iniciando criação de Cliente");
         this.dataRepository.addClient(
             await this.factoryRepository.startClientCreation()
         );
     }
 
-    public listClients() {
-        console.log(">>> Listando Clientes");
-        console.log(this.dataRepository.listClients());
+    public listClients(): string {
+        return this.dataRepository.listClients();
     }
 }
 
