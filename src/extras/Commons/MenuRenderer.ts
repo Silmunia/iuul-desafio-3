@@ -12,7 +12,7 @@ class MenuRenderer {
                 console.log(`${ControllerState.SHUTDOWN}. Encerrar`);
                 break;
             default:
-                return false;
+                throw new Error(">>> Não foi possível exibir o Menu Principal");
         }
 
         return true;
@@ -47,7 +47,7 @@ class MenuRenderer {
                 console.log(`${EmployeeControllerState.SHUTDOWN}. Encerrar`);
                 break;
             default:
-                return false;
+                throw new Error(">>> Não foi possível exibir o Menu de Funcionários");
         }
 
         return true;
@@ -95,7 +95,7 @@ class MenuRenderer {
                 console.log(`${ClientControllerState.SHUTDOWN}. Encerrar`);
                 break;
             default:
-                return false;
+                throw new Error(">>> Não foi possível exibir o Menu de Clientes");
         }
 
         return true;

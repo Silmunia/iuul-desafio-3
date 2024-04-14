@@ -11,7 +11,7 @@ class DataManager {
     private editedEmployee: Funcionario | undefined;
     private editedClient: Cliente | undefined;
 
-    public getTargetAccountForTransfer(accountNumber: string): Conta | undefined {
+    public getTargetAccountForTransfer(accountNumber: string): Conta {
         let allClients = this.dataRepository.getAllClients();
 
         for (let i = 0; i < allClients.length; i++) {
@@ -24,10 +24,10 @@ class DataManager {
             }
         }
 
-        return undefined;
+        throw new Error(">>> Não há conta com o número inserido");
     }
 
-    public getEditedClientAccount(accountNumber: string): Conta | undefined {
+    public getEditedClientAccount(accountNumber: string): Conta {
         if (this.editedClient instanceof Cliente) {
             for (let i = 0; i < this.editedClient.contas.length; i++) {
                 if (this.editedClient.contas[i].numero === accountNumber) {
@@ -35,9 +35,9 @@ class DataManager {
                 }
             }
 
-            return undefined;
+            throw new Error(">>> Não há conta com o número inserido");
         } else {
-            return undefined;
+            throw new Error(">>> Não há conta com o número inserido");
         }
     }
 
@@ -81,7 +81,7 @@ class DataManager {
         if (this.editedEmployee instanceof Funcionario) {
             return `\n>>> Listando informações do Funcionário\nNome: ${this.editedEmployee.nome}\nCPF: ${this.editedEmployee.cpf}\nCargos: ${this.listEditedEmployeeRoles(this.editedEmployee)}\nTelefone: ${this.editedEmployee.telefone}\nSalário: ${this.editedEmployee.salario}`;
         } else {
-            return ">>> Não foi possível encontrar o Funcionário";
+            throw new Error(">>> Não foi possível encontrar o Funcionário");
         }
     }
 
@@ -89,7 +89,7 @@ class DataManager {
         if (this.editedClient instanceof Cliente) {
             return `\n>>> Listando informações do Cliente\nNome: ${this.editedClient.nome}\nCPF: ${this.editedClient.cpf}\nTelefone: ${this.editedClient.telefone}\nVIP: ${this.editedClient.vip ? "Sim" : "Não"}\nContas: ${this.listEditedClientAccounts()}\nEndereços: ${this.listEditedClientAddresses()}`;
         } else {
-            return ">>> Não foi possível encontrar o Cliente";
+            throw new Error(">>> Não foi possível encontrar o Cliente");
         }
     }
 
@@ -104,7 +104,7 @@ class DataManager {
 
             return accountString;
         } else {
-            return ">>> Não foi possível encontrar o Cliente";
+            throw new Error(">>> Não foi possível encontrar o Cliente");
         }
     }
 
@@ -122,7 +122,7 @@ class DataManager {
 
             return addressString;
         } else {
-            return ">>> Não foi possível encontrar o Cliente";
+            throw new Error(">>> Não foi possível encontrar o Cliente");
         }
     }
 
@@ -133,7 +133,7 @@ class DataManager {
             this.editedClient.adicionarEnderecos([newAddress]);
             return true;
         } else {
-            return false;
+            throw new Error(">>> Não foi possível adicionar o Endereço ao Cliente selecionado");
         }
     }
 
@@ -160,9 +160,9 @@ class DataManager {
                 }
             }
 
-            return false;
+            throw new Error(">>> Não foi possível encontrar o Funcionário");
         } else {
-            return false;
+            throw new Error(">>> Não foi possível encontrar o Funcionário");
         }
     }
 
@@ -172,10 +172,10 @@ class DataManager {
                 this.editedClient.removerEndereco(index);
                 return true;
             } else {
-                return false;
+                throw new Error(">>> Não foi possível encontrar o Cliente");
             }
         } else {
-            return false;
+            throw new Error(">>> Não foi possível encontrar o Funcionário");
         }
     }
 
