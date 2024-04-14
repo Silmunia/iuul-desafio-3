@@ -56,7 +56,11 @@ class Cliente extends Pessoa implements IUsuario {
     }
 
     public removerEndereco(indice: number) {
-        this._enderecos.splice(indice, 1);
+        if (this._enderecos.length === 1) {
+            throw new Error("Não é possível remover o Endereço de um Cliente com apenas 1 Endereço");
+        } else {
+            this._enderecos.splice(indice, 1);
+        }
     }
 
     public encontrarConta(numero: string): ContaCorrente | ContaPoupanca {
@@ -95,9 +99,13 @@ class Cliente extends Pessoa implements IUsuario {
     }
 
     public fazerSaque(numeroDaConta: string, valor: number) {
-        let conta = this.encontrarConta(numeroDaConta);
-
-        conta.fazerSaque(valor);
+        try {
+            let conta = this.encontrarConta(numeroDaConta);
+            
+            conta.fazerSaque(valor);
+        } catch (error) {
+            throw error;
+        }
     }
 
     public listarEnderecos() {
