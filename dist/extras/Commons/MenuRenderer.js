@@ -3,21 +3,28 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const ControllerState_1 = __importDefault(require("../Main/ControllerState"));
-const EmployeeControllerState_1 = __importDefault(require("../Employee/EmployeeControllerState"));
 const ClientControllerState_1 = __importDefault(require("../Client/ClientControllerState"));
+const EmployeeControllerState_1 = __importDefault(require("../Employee/EmployeeControllerState"));
 class MenuRenderer {
-    renderMainMenu(state) {
-        switch (state) {
-            case ControllerState_1.default.MAIN_MENU:
-                console.log("\n***Menu Principal***");
-                console.log(`${ControllerState_1.default.EMPLOYEE_MENU}. Gerenciar Funcionários`);
-                console.log(`${ControllerState_1.default.CLIENT_MENU}. Gerenciar Clientes`);
-                console.log(`${ControllerState_1.default.SHUTDOWN}. Encerrar`);
-                break;
-            default:
-                throw new Error("Não foi possível exibir o Menu Principal");
-        }
+    renderMainMenu(expectedInputs) {
+        console.log("\n***Menu Principal***");
+        console.log(`${expectedInputs[0]}. Gerenciar Funcionários`);
+        console.log(`${expectedInputs[1]}. Gerenciar Clientes`);
+        console.log(`${expectedInputs[2]}. Encerrar`);
+    }
+    renderMainEmployeeMenu(expectedInputs) {
+        console.log("\n***Menu: Gerenciar Funcionários***");
+        console.log(`${expectedInputs[0]}. Criar Funcionário`);
+        console.log(`${expectedInputs[1]}. Editar Funcionários`);
+        console.log(`${expectedInputs[2]}. Voltar para Menu Principal`);
+        console.log(`${expectedInputs[3]}. Encerrar`);
+    }
+    renderMainClientMenu(expectedInputs) {
+        console.log("\n***Menu: Gerenciar Clientes***");
+        console.log(`${expectedInputs[0]}. Criar Cliente`);
+        console.log(`${expectedInputs[1]}. Editar Clientes`);
+        console.log(`${expectedInputs[2]}. Voltar para Menu Principal`);
+        console.log(`${expectedInputs[3]}. Encerrar`);
     }
     renderEmployeeMenus(state) {
         switch (state) {

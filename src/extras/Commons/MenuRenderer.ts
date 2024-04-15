@@ -1,19 +1,29 @@
-import ControllerState from "../Main/ControllerState";
-import EmployeeControllerState from "../Employee/EmployeeControllerState";
+
 import ClientControllerState from "../Client/ClientControllerState";
+import EmployeeControllerState from "../Employee/EmployeeControllerState";
 
 class MenuRenderer {
-    public renderMainMenu(state: ControllerState) {
-        switch (state) {
-            case ControllerState.MAIN_MENU:
-                console.log("\n***Menu Principal***");
-                console.log(`${ControllerState.EMPLOYEE_MENU}. Gerenciar Funcionários`);
-                console.log(`${ControllerState.CLIENT_MENU}. Gerenciar Clientes`);
-                console.log(`${ControllerState.SHUTDOWN}. Encerrar`);
-                break;
-            default:
-                throw new Error("Não foi possível exibir o Menu Principal");
-        }
+    public renderMainMenu(expectedInputs: Array<number>) {
+        console.log("\n***Menu Principal***");
+        console.log(`${expectedInputs[0]}. Gerenciar Funcionários`);
+        console.log(`${expectedInputs[1]}. Gerenciar Clientes`);
+        console.log(`${expectedInputs[2]}. Encerrar`);
+    }
+
+    public renderMainEmployeeMenu(expectedInputs: Array<number>) {
+        console.log("\n***Menu: Gerenciar Funcionários***");
+        console.log(`${expectedInputs[0]}. Criar Funcionário`);
+        console.log(`${expectedInputs[1]}. Editar Funcionários`);
+        console.log(`${expectedInputs[2]}. Voltar para Menu Principal`);
+        console.log(`${expectedInputs[3]}. Encerrar`);
+    }
+
+    public renderMainClientMenu(expectedInputs: Array<number>) {
+        console.log("\n***Menu: Gerenciar Clientes***");
+        console.log(`${expectedInputs[0]}. Criar Cliente`);
+        console.log(`${expectedInputs[1]}. Editar Clientes`);
+        console.log(`${expectedInputs[2]}. Voltar para Menu Principal`);
+        console.log(`${expectedInputs[3]}. Encerrar`);
     }
 
     public renderEmployeeMenus(state: EmployeeControllerState) {
