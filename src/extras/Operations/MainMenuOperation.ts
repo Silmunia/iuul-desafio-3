@@ -3,7 +3,7 @@ import ClientMenuOperation from "./ClientMenuOperation";
 import DataManager from "../Commons/DataManager";
 import EmployeeMenuOperation from "./EmployeeMenuOperation";
 import InputHandler from "../Commons/InputHandler";
-import Operation from "./Abstract Operation/MainOperationTemplate";
+import Operation from "./Abstract Operation/Operation";
 import MenuRenderer from "../Commons/MenuRenderer";
 
 class MainMenuOperation extends Operation {

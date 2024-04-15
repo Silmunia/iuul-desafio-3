@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const DataManager_1 = __importDefault(require("../Commons/DataManager"));
-const MainMenuOperation_1 = __importDefault(require("./Operations/MainMenuOperation"));
+const MainMenuOperation_1 = __importDefault(require("../Operations/MainMenuOperation"));
 class MainController {
     constructor() {
         this._dataManager = new DataManager_1.default();

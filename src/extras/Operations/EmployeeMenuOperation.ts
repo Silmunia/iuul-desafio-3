@@ -2,7 +2,8 @@
 import InputHandler from "../Commons/InputHandler";
 import MainMenuOperation from "./MainMenuOperation";
 import MenuRenderer from "../Commons/MenuRenderer";
-import Operation from "./Abstract Operation/MainOperationTemplate";
+import Operation from "./Abstract Operation/Operation";
+import CreateEmployeeOperation from "./CreateEmployeeOperation";
 
 class EmployeeMenuOperation extends Operation {
 
@@ -21,7 +22,7 @@ class EmployeeMenuOperation extends Operation {
 
         switch(receivedInput) {
             case this._expectedInputs[0]:
-                return this;
+                return new CreateEmployeeOperation(this._dataManager);
             case this._expectedInputs[1]:
                 return this;
             case this._expectedInputs[2]:

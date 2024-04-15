@@ -2,7 +2,7 @@
 import InputHandler from "../Commons/InputHandler";
 import MainMenuOperation from "./MainMenuOperation";
 import MenuRenderer from "../Commons/MenuRenderer";
-import Operation from "./Abstract Operation/MainOperationTemplate";
+import Operation from "./Abstract Operation/Operation";
 
 class ClientMenuOperation extends Operation {
 
