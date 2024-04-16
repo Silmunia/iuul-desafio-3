@@ -16,10 +16,20 @@ class DataRepository {
         this.roles.push(newRole);
     }
     listEmployees() {
-        return this.listData(this.employees, ">>> Sem Funcionários para listar");
+        try {
+            return this.listData(this.employees, "Sem Funcionários para listar");
+        }
+        catch (error) {
+            throw error;
+        }
     }
     listClients() {
-        return this.listData(this.clients, ">>> Sem Clientes para listar");
+        try {
+            return this.listData(this.clients, "Sem Clientes para listar");
+        }
+        catch (error) {
+            throw error;
+        }
     }
     getEmployee(index) {
         if (index >= 0 && index < this.employees.length) {
@@ -51,9 +61,9 @@ class DataRepository {
     getAllClients() {
         return this.clients;
     }
-    listData(dataArray, nullMessage) {
+    listData(dataArray, errorMessage) {
         if (dataArray.length === 0) {
-            return nullMessage;
+            throw new Error(errorMessage);
         }
         let resultList = "";
         for (let i = 0; i < dataArray.length; i++) {

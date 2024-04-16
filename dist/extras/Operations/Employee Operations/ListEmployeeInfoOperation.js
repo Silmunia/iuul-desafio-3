@@ -12,24 +12,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const DataManager_1 = __importDefault(require("../Commons/DataManager"));
-const MainMenuOperation_1 = __importDefault(require("../Operations/MainMenuOperation"));
-class MainController {
-    constructor() {
-        this._dataManager = new DataManager_1.default();
-        this._currentOperation = new MainMenuOperation_1.default(this._dataManager);
-        this.maintainLoop = true;
+const EmployeeEditMenuOperation_1 = __importDefault(require("./EmployeeEditMenuOperation"));
+const Operation_1 = __importDefault(require("../Abstract Operation/Operation"));
+class ListEmployeeInfoOperation extends Operation_1.default {
+    constructor(dataManager, editedEmployee) {
+        super(dataManager);
+        this._editedEmployee = editedEmployee;
     }
-    startProgram() {
-        this.runControlLoop();
-    }
-    runControlLoop() {
+    runOperation() {
         return __awaiter(this, void 0, void 0, function* () {
-            while (this._currentOperation.maintainExecution) {
-                this._currentOperation = yield this._currentOperation.runOperation();
-            }
-            console.log(">>> Encerrando programa");
+            console.log("\n>>> Listando informações do Funcionário");
+            console.log(this._dataManager.listEmployeeInfo(this._editedEmployee));
+            return new EmployeeEditMenuOperation_1.default(this._dataManager, this._editedEmployee);
         });
     }
 }
-exports.default = MainController;
+exports.default = ListEmployeeInfoOperation;

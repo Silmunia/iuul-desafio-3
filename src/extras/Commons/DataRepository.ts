@@ -21,11 +21,19 @@ class DataRepository {
     }
 
     public listEmployees(): string {
-        return this.listData(this.employees, ">>> Sem Funcionários para listar");
+        try {
+            return this.listData(this.employees, "Sem Funcionários para listar");
+        } catch (error) {
+            throw error;
+        }
     }
 
     public listClients(): string {
-        return this.listData(this.clients, ">>> Sem Clientes para listar");
+        try {
+            return this.listData(this.clients, "Sem Clientes para listar");
+        } catch (error) {
+            throw error;
+        }
     }
 
     public getEmployee(index: number) {
@@ -62,9 +70,9 @@ class DataRepository {
         return this.clients;
     }
 
-    private listData(dataArray: Array<Funcionario | Cliente>, nullMessage: string): string {
+    private listData(dataArray: Array<Funcionario | Cliente>, errorMessage: string): string {
         if (dataArray.length === 0) {
-            return nullMessage;
+            throw new Error(errorMessage);
         }
 
         let resultList: string = "";

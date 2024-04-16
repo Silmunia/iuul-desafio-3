@@ -1,11 +1,11 @@
 
 import DataManager from "../Commons/DataManager";
-import MainOperationTemplate from "./Operations/Abstract Operation/MainOperationTemplate";
-import MainMenuOperation from "./Operations/MainMenuOperation";
+import MainMenuOperation from "../Operations/MainMenuOperation";
+import Operation from "../Operations/Abstract Operation/Operation";
 
 class MainController {
     private _dataManager: DataManager = new DataManager();
-    private _currentOperation: MainOperationTemplate = new MainMenuOperation(this._dataManager);
+    private _currentOperation: Operation = new MainMenuOperation(this._dataManager);
 
     public maintainLoop: boolean = true;
     

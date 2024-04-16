@@ -80,17 +80,21 @@ class DataManager {
         }
     }
 
+    public addRoleToEmployee(employee: Funcionario, roleName: string) {
+        for (let i = 0; i < employee.cargos.length; i++) {
+            if (roleName === employee.cargos[i].nome) {
+                throw new Error("Funcionário já contém o Cargo");
+            }
+        }
+
+        let addingRole = this.getRole(roleName);
+
+        employee.adicionarCargo(addingRole);
+    }
+
     public addRoleToEditedEmployee(roleName: string) {
         if (this.editedEmployee instanceof Funcionario) {
-            for (let i = 0; i < this.editedEmployee.cargos.length; i++) {
-                if (roleName === this.editedEmployee.cargos[i].nome) {
-                    throw new Error("Funcionário já contém o Cargo");
-                }
-            }
-
-            let addingRole = this.getRole(roleName);
-
-            this.editedEmployee.adicionarCargo(addingRole);
+            
         } else {
             throw new Error("Não foi possível encontrar o Funcionário");
         }
@@ -140,12 +144,24 @@ class DataManager {
     }
 
     public listEmployees(): string {
-        return this.dataRepository.listEmployees();
+        try {
+            return this.dataRepository.listEmployees();
+        } catch (error) {
+            throw error;
+        }
     }
 
     public setEditedEmployee(index: number) {
         try {
             this.editedEmployee = this.dataRepository.getEmployee(index);
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    public getEmployeeFromRepository(index: number): Funcionario {
+        try {
+            return this.dataRepository.getEmployee(index);
         } catch (error) {
             throw error;
         }
@@ -165,6 +181,10 @@ class DataManager {
 
     public getEditedClient(): Cliente | undefined {
         return this.editedClient;
+    }
+
+    public listEmployeeInfo(employee: Funcionario): string {
+        return `Nome: ${employee.nome}\nCPF: ${employee.cpf}\nCargos: ${this.listEditedEmployeeRoles(employee)}\nTelefone: ${employee.telefone}\nSalário: ${employee.salario}`;
     }
 
     public listEditedEmployeeInfo(): string {
@@ -261,6 +281,14 @@ class DataManager {
         return resultString;
     }
 
+    public removeEmployeeRole(employee: Funcionario, roleName: string) {
+        try {
+            employee.removerCargo(roleName);
+        } catch (error) {
+            throw error;
+        }
+    }
+
     public removeEditedEmployeeRole(roleName: string) {
         if (this.editedEmployee instanceof Funcionario) {
             try {
@@ -298,7 +326,11 @@ class DataManager {
     }
 
     public listClients(): string {
-        return this.dataRepository.listClients();
+        try {
+            return this.dataRepository.listClients();
+        } catch (error) {
+            throw error;
+        }
     }
 }
 

@@ -1,12 +1,12 @@
 
 import ClientMenuOperation from "./ClientMenuOperation";
-import DataManager from "../../Commons/DataManager";
-import EmployeeMenuOperation from "./EmployeeMenuOperation";
-import InputHandler from "../../Commons/InputHandler";
-import MainOperationTemplate from "./Abstract Operation/MainOperationTemplate";
-import MenuRenderer from "../../Commons/MenuRenderer";
+import DataManager from "../Commons/DataManager";
+import EmployeeMenuOperation from "./Employee Operations/EmployeeMenuOperation";
+import InputHandler from "../Commons/InputHandler";
+import Operation from "./Abstract Operation/Operation";
+import MenuRenderer from "../Commons/MenuRenderer";
 
-class MainMenuOperation extends MainOperationTemplate {
+class MainMenuOperation extends Operation {
 
     private _inputHandler: InputHandler = new InputHandler();
     private _menuRenderer: MenuRenderer = new MenuRenderer();
@@ -16,13 +16,13 @@ class MainMenuOperation extends MainOperationTemplate {
         super(dataManager);
     }
 
-    public async runOperation(): Promise<MainOperationTemplate> {
+    public async runOperation(): Promise<Operation> {
         this._menuRenderer.renderMainMenu(this._expectedInputs);
 
         return await this.startCommandInput("Insira um comando: ");
     }
 
-    private async startCommandInput(prompt: string): Promise<MainOperationTemplate> {
+    private async startCommandInput(prompt: string): Promise<Operation> {
         let receivedInput = await this._inputHandler.getNumberInput(prompt);
 
         switch(receivedInput) {
