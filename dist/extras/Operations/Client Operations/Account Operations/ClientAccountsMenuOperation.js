@@ -14,7 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const InputHandler_1 = __importDefault(require("../../../Commons/InputHandler"));
 const MainMenuOperation_1 = __importDefault(require("../../MainMenuOperation"));
-const MenuRenderer_1 = __importDefault(require("../../../Commons/MenuRenderer"));
 const Operation_1 = __importDefault(require("../../Abstract Operation/Operation"));
 const ClientEditMenuOperation_1 = __importDefault(require("../ClientEditMenuOperation"));
 const AddClientAccountOperation_1 = __importDefault(require("./AddClientAccountOperation"));
@@ -24,17 +23,18 @@ const AccountDepositOperation_1 = __importDefault(require("./AccountDepositOpera
 const AccountWithdrawOperation_1 = __importDefault(require("./AccountWithdrawOperation"));
 const AccountBalanceOperation_1 = __importDefault(require("./AccountBalanceOperation"));
 const AccountTransferOperation_1 = __importDefault(require("./AccountTransferOperation"));
+const ClientAccountsMenuRenderer_1 = __importDefault(require("../../../Menu Renderer/ClientAccountsMenuRenderer"));
 class ClientAccountsMenuOperation extends Operation_1.default {
     constructor(dataManager, editedClient) {
         super(dataManager);
         this._inputHandler = new InputHandler_1.default();
-        this._menuRenderer = new MenuRenderer_1.default();
+        this._menuRenderer = new ClientAccountsMenuRenderer_1.default();
         this._expectedInputs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 999];
         this._editedClient = editedClient;
     }
     runOperation() {
         return __awaiter(this, void 0, void 0, function* () {
-            this._menuRenderer.manageClientAccountsMenu(this._expectedInputs);
+            this._menuRenderer.renderMenu(this._expectedInputs);
             return yield this.startCommandInput("Insira um comando: ");
         });
     }

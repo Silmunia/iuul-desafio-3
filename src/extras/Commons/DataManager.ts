@@ -4,15 +4,17 @@ import Cliente from "../../objects/classes/Cliente";
 import Conta from "../../objects/abstract classes/Conta";
 import Endereco from "../../objects/classes/Endereco";
 import Funcionario from "../../objects/classes/Funcionario";
-import DataRepository from "./DataRepository";
 import FactoryRepository from "./FactoryRepository";
+import ClientDataModel from "./Data Model/ClientDataModel";
+import EmployeeDataModel from "./Data Model/EmployeeDataModel";
 
 class DataManager {
     private factoryRepository = new FactoryRepository();
-    private dataRepository = new DataRepository();
+    private clientRepository = new ClientDataModel();
+    private employeeRepository = new EmployeeDataModel();
 
     public getTargetAccountForTransfer(accountNumber: string): Conta {
-        let allClients = this.dataRepository.getAllClients();
+        let allClients = this.clientRepository.getAllClients();
 
         for (let i = 0; i < allClients.length; i++) {
             let currentAccounts = allClients[i].contas;
@@ -57,17 +59,17 @@ class DataManager {
 
         let newEmployee = this.factoryRepository.createEmployee(initialRole, cpf, employeeName, phone, salary, additionalRoles);
 
-        this.dataRepository.addEmployee(newEmployee);
+        this.employeeRepository.addEmployee(newEmployee);
     }
 
     public getRole(roleName: string): Cargo {
         try {
-            let foundRole = this.dataRepository.getRole(roleName);
+            let foundRole = this.employeeRepository.getRole(roleName);
 
             return foundRole;
         } catch {
             let newRole = this.factoryRepository.createRole(roleName);
-            this.dataRepository.addRole(newRole);
+            this.employeeRepository.addRole(newRole);
 
             return newRole;
         }
@@ -98,7 +100,7 @@ class DataManager {
 
         let newClient = this.factoryRepository.createClient(cpf, clientName, phone, isVIP, initialAddress, initialAccount, additionalAccounts, additionalAddresses);
 
-        this.dataRepository.addClient(newClient);
+        this.clientRepository.addClient(newClient);
     }
 
     public createAddress(
@@ -122,7 +124,7 @@ class DataManager {
 
     public listEmployees(): string {
         try {
-            return this.dataRepository.listEmployees();
+            return this.employeeRepository.listEmployees();
         } catch (error) {
             throw error;
         }
@@ -130,7 +132,7 @@ class DataManager {
 
     public getEmployeeFromRepository(index: number): Funcionario {
         try {
-            return this.dataRepository.getEmployee(index);
+            return this.employeeRepository.getEmployee(index);
         } catch (error) {
             throw error;
         }
@@ -138,7 +140,7 @@ class DataManager {
 
     public getClientFromRepository(index: number): Cliente {
         try {
-            return this.dataRepository.getClient(index);
+            return this.clientRepository.getClient(index);
         } catch (error) {
             throw error;
         }
@@ -246,7 +248,7 @@ class DataManager {
 
     public listClients(): string {
         try {
-            return this.dataRepository.listClients();
+            return this.clientRepository.listClients();
         } catch (error) {
             throw error;
         }

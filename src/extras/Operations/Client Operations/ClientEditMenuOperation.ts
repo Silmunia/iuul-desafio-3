@@ -2,7 +2,7 @@
 import Cliente from "../../../objects/classes/Cliente";
 import InputHandler from "../../Commons/InputHandler";
 import MainMenuOperation from "../MainMenuOperation";
-import MenuRenderer from "../../Commons/MenuRenderer";
+import MenuRenderer from "../../Menu Renderer/Interface/MenuRenderer";
 import Operation from "../Abstract Operation/Operation";
 import DataManager from "../../Commons/DataManager";
 import EditClientNameOperation from "./EditClientNameOperation";
@@ -12,12 +12,13 @@ import EditClientCpfOperation from "./EditClientCpfOperation";
 import EditClientVipOperation from "./EditClientVipOperation";
 import ClientAddressesMenuOperation from "./Address Operations/ClientAddressesMenuOperation";
 import ClientAccountsMenuOperation from "./Account Operations/ClientAccountsMenuOperation";
+import ClientEditMenuRenderer from "../../Menu Renderer/ClientEditMenuRenderer";
 
 class ClientEditMenuOperation extends Operation {
 
     private _editedClient: Cliente;
     private _inputHandler: InputHandler = new InputHandler();
-    private _menuRenderer: MenuRenderer = new MenuRenderer();
+    private _menuRenderer: MenuRenderer = new ClientEditMenuRenderer();
     private _expectedInputs: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 999];
 
     constructor(dataManager: DataManager, editedClient: Cliente) {
@@ -26,7 +27,7 @@ class ClientEditMenuOperation extends Operation {
     }
 
     public async runOperation(): Promise<Operation> {
-        this._menuRenderer.renderEditClientMenu(this._expectedInputs);
+        this._menuRenderer.renderMenu(this._expectedInputs);
 
         return await this.startCommandInput("Insira um comando: ");
     }
