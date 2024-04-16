@@ -1,6 +1,6 @@
 
-import InputHandler from "../Commons/InputHandler";
-import Operation from "./Abstract Operation/Operation";
+import InputHandler from "../../Commons/InputHandler";
+import Operation from "../Abstract Operation/Operation";
 import EmployeeMenuOperation from "./EmployeeMenuOperation";
 
 class CreateEmployeeOperation extends Operation {

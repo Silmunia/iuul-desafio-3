@@ -1,7 +1,7 @@
 
 import ClientMenuOperation from "./ClientMenuOperation";
 import DataManager from "../Commons/DataManager";
-import EmployeeMenuOperation from "./EmployeeMenuOperation";
+import EmployeeMenuOperation from "./Employee Operations/EmployeeMenuOperation";
 import InputHandler from "../Commons/InputHandler";
 import Operation from "./Abstract Operation/Operation";
 import MenuRenderer from "../Commons/MenuRenderer";

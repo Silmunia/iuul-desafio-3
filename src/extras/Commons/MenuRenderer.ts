@@ -18,6 +18,27 @@ class MenuRenderer {
         console.log(`${expectedInputs[3]}. Encerrar`);
     }
 
+    public renderEditEmployeeMenu(expectedInputs: Array<number>) {
+        console.log("\n***Menu: Editar Funcionário***");
+        console.log(`${expectedInputs[0]}. Listar informações do Funcionário`);
+        console.log(`${expectedInputs[1]}. Editar Nome`);
+        console.log(`${expectedInputs[2]}. Editar Telefone`);
+        console.log(`${expectedInputs[3]}. Editar Salário`);
+        console.log(`${expectedInputs[4]}. Editar CPF`);
+        console.log(`${expectedInputs[5]}. Editar Cargos`);
+        console.log(`${expectedInputs[6]}. Voltar para Menu Principal`);
+        console.log(`${expectedInputs[7]}. Encerrar`);
+    }
+
+    public renderEditEmployeeRolesMenu(expectedInputs: Array<number>) {
+        console.log("\n***Menu: Editar Cargos do Funcionário***");
+        console.log(`${expectedInputs[0]}. Adicionar Cargo ao Funcionário`);
+        console.log(`${expectedInputs[1]}. Remover Cargo do Funcionário`);
+        console.log(`${expectedInputs[2]}. Voltar para Menu de Editar Funcionário`);
+        console.log(`${expectedInputs[3]}. Voltar para Menu Principal`);
+        console.log(`${expectedInputs[4]}. Encerrar`);
+    }
+
     public renderMainClientMenu(expectedInputs: Array<number>) {
         console.log("\n***Menu: Gerenciar Clientes***");
         console.log(`${expectedInputs[0]}. Criar Cliente`);
@@ -28,32 +49,6 @@ class MenuRenderer {
 
     public renderEmployeeMenus(state: EmployeeControllerState) {
         switch (state) {
-            case EmployeeControllerState.EMPLOYEE_MENU:
-                console.log("\n***Menu: Gerenciar Funcionários***");
-                console.log(`${EmployeeControllerState.EMPLOYEE_CREATION}. Criar Funcionário`);
-                console.log(`${EmployeeControllerState.EMPLOYEE_LISTING}. Editar Funcionários`);
-                console.log(`${EmployeeControllerState.RETURN_TO_MAIN}. Voltar para Menu Principal`);
-                console.log(`${EmployeeControllerState.SHUTDOWN}. Encerrar`);
-                break;
-            case EmployeeControllerState.EMPLOYEE_EDITING:
-                console.log("\n***Menu: Editar Funcionário***");
-                console.log(`${EmployeeControllerState.EMPLOYEE_EDIT_LIST}. Listar informações do Funcionário`);
-                console.log(`${EmployeeControllerState.EMPLOYEE_EDIT_NAME}. Editar Nome`);
-                console.log(`${EmployeeControllerState.EMPLOYEE_EDIT_PHONE}. Editar Telefone`);
-                console.log(`${EmployeeControllerState.EMPLOYEE_EDIT_SALARY}. Editar Salário`);
-                console.log(`${EmployeeControllerState.EMPLOYEE_EDIT_CPF}. Editar CPF`);
-                console.log(`${EmployeeControllerState.EMPLOYEE_ROLES_MENU}. Editar Cargos`);
-                console.log(`${EmployeeControllerState.RETURN_TO_MAIN}. Voltar para Menu Principal`);
-                console.log(`${EmployeeControllerState.SHUTDOWN}. Encerrar`);
-                break;
-            case EmployeeControllerState.EMPLOYEE_ROLES_MENU:
-                console.log("\n***Menu: Editar Cargos do Funcionário***");
-                console.log(`${EmployeeControllerState.EMPLOYEE_ROLES_CREATION}. Adicionar Cargo ao Funcionário`);
-                console.log(`${EmployeeControllerState.EMPLOYEE_ROLES_REMOVAL}. Remover Cargo do Funcionário`);
-                console.log(`${EmployeeControllerState.EMPLOYEE_EDITING}. Voltar para Menu de Editar Funcionário`);
-                console.log(`${EmployeeControllerState.RETURN_TO_MAIN}. Voltar para Menu Principal`);
-                console.log(`${EmployeeControllerState.SHUTDOWN}. Encerrar`);
-                break;
             default:
                 throw new Error("Não foi possível exibir o Menu de Funcionários");
         }

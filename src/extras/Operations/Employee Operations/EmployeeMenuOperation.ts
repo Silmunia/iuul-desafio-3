@@ -1,9 +1,10 @@
 
-import InputHandler from "../Commons/InputHandler";
-import MainMenuOperation from "./MainMenuOperation";
-import MenuRenderer from "../Commons/MenuRenderer";
-import Operation from "./Abstract Operation/Operation";
 import CreateEmployeeOperation from "./CreateEmployeeOperation";
+import InputHandler from "../../Commons/InputHandler";
+import MainMenuOperation from "../MainMenuOperation";
+import MenuRenderer from "../../Commons/MenuRenderer";
+import Operation from "../Abstract Operation/Operation";
+import SelectEmployeeOperation from "./SelectEmployeeOperation";
 
 class EmployeeMenuOperation extends Operation {
 
@@ -24,7 +25,7 @@ class EmployeeMenuOperation extends Operation {
             case this._expectedInputs[0]:
                 return new CreateEmployeeOperation(this._dataManager);
             case this._expectedInputs[1]:
-                return this;
+                return new SelectEmployeeOperation(this._dataManager);
             case this._expectedInputs[2]:
                 return new MainMenuOperation(this._dataManager);
             case this._expectedInputs[3]:

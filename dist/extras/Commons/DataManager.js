@@ -67,15 +67,17 @@ class DataManager {
             return newRole;
         }
     }
+    addRoleToEmployee(employee, roleName) {
+        for (let i = 0; i < employee.cargos.length; i++) {
+            if (roleName === employee.cargos[i].nome) {
+                throw new Error("Funcionário já contém o Cargo");
+            }
+        }
+        let addingRole = this.getRole(roleName);
+        employee.adicionarCargo(addingRole);
+    }
     addRoleToEditedEmployee(roleName) {
         if (this.editedEmployee instanceof Funcionario_1.default) {
-            for (let i = 0; i < this.editedEmployee.cargos.length; i++) {
-                if (roleName === this.editedEmployee.cargos[i].nome) {
-                    throw new Error("Funcionário já contém o Cargo");
-                }
-            }
-            let addingRole = this.getRole(roleName);
-            this.editedEmployee.adicionarCargo(addingRole);
         }
         else {
             throw new Error("Não foi possível encontrar o Funcionário");
@@ -101,11 +103,24 @@ class DataManager {
         return this.dataRepository.getAllClients();
     }
     listEmployees() {
-        return this.dataRepository.listEmployees();
+        try {
+            return this.dataRepository.listEmployees();
+        }
+        catch (error) {
+            throw error;
+        }
     }
     setEditedEmployee(index) {
         try {
             this.editedEmployee = this.dataRepository.getEmployee(index);
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+    getEmployeeFromRepository(index) {
+        try {
+            return this.dataRepository.getEmployee(index);
         }
         catch (error) {
             throw error;
@@ -124,6 +139,9 @@ class DataManager {
     }
     getEditedClient() {
         return this.editedClient;
+    }
+    listEmployeeInfo(employee) {
+        return `Nome: ${employee.nome}\nCPF: ${employee.cpf}\nCargos: ${this.listEditedEmployeeRoles(employee)}\nTelefone: ${employee.telefone}\nSalário: ${employee.salario}`;
     }
     listEditedEmployeeInfo() {
         if (this.editedEmployee instanceof Funcionario_1.default) {
@@ -209,6 +227,14 @@ class DataManager {
         }
         return resultString;
     }
+    removeEmployeeRole(employee, roleName) {
+        try {
+            employee.removerCargo(roleName);
+        }
+        catch (error) {
+            throw error;
+        }
+    }
     removeEditedEmployeeRole(roleName) {
         if (this.editedEmployee instanceof Funcionario_1.default) {
             try {
@@ -249,7 +275,12 @@ class DataManager {
         }
     }
     listClients() {
-        return this.dataRepository.listClients();
+        try {
+            return this.dataRepository.listClients();
+        }
+        catch (error) {
+            throw error;
+        }
     }
 }
 exports.default = DataManager;
