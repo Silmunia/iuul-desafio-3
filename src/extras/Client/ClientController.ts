@@ -32,8 +32,14 @@ class ClientController {
             case ClientControllerState.CLIENT_EDITING:
             case ClientControllerState.CLIENT_ADDRESS_MENU:
             case ClientControllerState.CLIENT_ACCOUNT_MENU:
-                this.displayMenu();
-                await this.startCommandInput("Insira comando: ");
+                try {
+                    this.menuRenderer.renderClientMenus(this.currentState);
+                    await this.startCommandInput("Insira comando: ");
+                } catch (error) {
+                    console.log(`>>> ${error instanceof Error ? error.message : "Erro ao exibir o Menu"}`);
+                    console.log(">>> Voltando para o Menu Principal");
+                    this.currentState = ClientControllerState.RETURN_TO_MAIN;
+                }
                 return this.runClientCommands();
             case ClientControllerState.CLIENT_LISTING:
                 this.currentState = this.operator.listClientsOperation();
@@ -71,6 +77,12 @@ class ClientController {
             case ClientControllerState.CLIENT_ACCOUNT_LIST:
                 this.currentState = this.operator.listClientAccountsOperation();
                 break;
+            case ClientControllerState.CLIENT_ACCOUNT_CREATION:
+                this.currentState = await this.operator.createClientAccountOperation();
+                break;
+            case ClientControllerState.CLIENT_ACCOUNT_REMOVAL:
+                this.currentState = await this.operator.removeClientAccountOperation();
+                break;
             case ClientControllerState.CLIENT_ACCOUNT_DEPOSIT:
                 this.currentState = await this.operator.makeAccountDepositOperation();
                 break;
@@ -91,19 +103,13 @@ class ClientController {
         return this.runClientCommands();
     }
 
-    private displayMenu() {
-        let renderResult = this.menuRenderer.renderClientMenus(this.currentState);
-
-        if (!renderResult) {
-            console.log(">>> Menu desconhecido");
-            console.log(">>> Voltando para o Menu de Clintes");
-            this.currentState = ClientControllerState.CLIENT_MENU;
-        }
-    }
-
     private async startCommandInput(prompt: string) {
         let receivedInput = await this.inputHandler.getNumberInput(prompt);
-        this.currentState = await this.controlParser.parseInputForState(this.currentState, receivedInput);
+        try {
+            this.currentState = await this.controlParser.parseInputForState(this.currentState, receivedInput);
+        } catch (error) {
+            console.log(`>>> Erro ao executar o comando. ${error instanceof Error ? error.message : "Erro desconhecido"}`);
+        }
     }
 }
 

@@ -41,7 +41,32 @@ class Cliente extends Pessoa_1.default {
         });
     }
     removerEndereco(indice) {
-        this._enderecos.splice(indice, 1);
+        if (this._enderecos.length === 1) {
+            throw new Error("Não é possível remover o Endereço de um Cliente com apenas um Endereço");
+        }
+        else if (indice < 0 || indice >= this._enderecos.length) {
+            throw new Error("O Endereço escolhido para remoção é inválido");
+        }
+        else {
+            this._enderecos.splice(indice, 1);
+        }
+    }
+    adicionarContas(contas) {
+        this._contas = this._contas.concat(contas);
+        contas.forEach((conta) => {
+            conta.cliente = this;
+        });
+    }
+    removerConta(indice) {
+        if (this._contas.length === 1) {
+            throw new Error("Não é possível remover a Conta de um Cliente com apenas uma Conta");
+        }
+        else if (indice < 0 || indice >= this._contas.length) {
+            throw new Error("A Conta escolhida para remoção é inválida");
+        }
+        else {
+            this._contas.splice(indice, 1);
+        }
     }
     encontrarConta(numero) {
         for (let i = 0; i < this._contas.length; i++) {
@@ -70,14 +95,20 @@ class Cliente extends Pessoa_1.default {
         conta.depositar(valor);
     }
     fazerSaque(numeroDaConta, valor) {
-        let conta = this.encontrarConta(numeroDaConta);
-        conta.sacar(valor);
+        try {
+            let conta = this.encontrarConta(numeroDaConta);
+            conta.fazerSaque(valor);
+        }
+        catch (error) {
+            throw error;
+        }
     }
     listarEnderecos() {
-        console.log(`Listando enderecos de cliente com CPF ${this.cpf}`);
+        let resultado = "";
         for (let i = 0; i < this._enderecos.length; i++) {
-            console.log(`${i + 1}. ${this._enderecos[i].listarInformaçoes()}`);
+            resultado += `${i + 1}. ${this._enderecos[i].listarInformaçoes()}\n`;
         }
+        return resultado;
     }
     autenticar() {
         return true;

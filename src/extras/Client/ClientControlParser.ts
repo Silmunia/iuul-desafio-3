@@ -15,8 +15,7 @@ class ClientControlParser {
                     case ClientControllerState.SHUTDOWN:
                         return ClientControllerState.SHUTDOWN;
                     default:
-                        console.log(">>> Comando desconhecido");
-                        return state;
+                        throw new Error("Comando desconhecido");
                 }
             case ClientControllerState.CLIENT_EDITING:
                 switch (input) {
@@ -39,8 +38,7 @@ class ClientControlParser {
                     case ClientControllerState.SHUTDOWN:
                         return ClientControllerState.SHUTDOWN;
                     default:
-                        console.log(">>> Comando desconhecido");
-                        return state;
+                        throw new Error("Comando desconhecido");
                 }
             case ClientControllerState.CLIENT_ADDRESS_MENU:
                 switch (input) {
@@ -57,13 +55,16 @@ class ClientControlParser {
                     case ClientControllerState.SHUTDOWN:
                         return ClientControllerState.SHUTDOWN;
                     default:
-                        console.log(">>> Comando desconhecido");
-                        return state;
+                        throw new Error("Comando desconhecido");
                 }
             case ClientControllerState.CLIENT_ACCOUNT_MENU:
                 switch(input) {
                     case ClientControllerState.CLIENT_ACCOUNT_LIST:
                         return ClientControllerState.CLIENT_ACCOUNT_LIST;
+                    case ClientControllerState.CLIENT_ACCOUNT_CREATION:
+                        return ClientControllerState.CLIENT_ACCOUNT_CREATION;
+                    case ClientControllerState.CLIENT_ACCOUNT_REMOVAL:
+                        return ClientControllerState.CLIENT_ACCOUNT_REMOVAL;
                     case ClientControllerState.CLIENT_ACCOUNT_WITHDRAW:
                         return ClientControllerState.CLIENT_ACCOUNT_WITHDRAW;
                     case ClientControllerState.CLIENT_ACCOUNT_TRANSFER:
@@ -79,12 +80,10 @@ class ClientControlParser {
                     case ClientControllerState.SHUTDOWN:
                         return ClientControllerState.SHUTDOWN;
                     default:
-                        console.log(">>> Comando desconhecido");
-                        return state;
+                        throw new Error("Comando desconhecido");
                 }
             default:
-                console.log(">>> Comando desconhecido");
-                return ClientControllerState.RESET;
+                throw new Error("Comando desconhecido");
         }
     }
 

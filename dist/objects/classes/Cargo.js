@@ -11,5 +11,14 @@ class Cargo {
     set novoFuncionario(novo) {
         this._funcionarios.push(novo);
     }
+    removerFuncionario(funcionario) {
+        for (let i = 0; i < this._funcionarios.length; i++) {
+            if (this._funcionarios[i] === funcionario) {
+                this._funcionarios.splice(i, 1);
+                return;
+            }
+        }
+        throw new Error("O Cargo não inclui o Funcionário escolhido para remoção");
+    }
 }
 exports.default = Cargo;

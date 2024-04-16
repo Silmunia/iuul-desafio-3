@@ -28,8 +28,7 @@ class EmployeeControlParser {
                         case EmployeeControllerState_1.default.SHUTDOWN:
                             return EmployeeControllerState_1.default.SHUTDOWN;
                         default:
-                            console.log(">>> Comando desconhecido");
-                            return state;
+                            throw new Error("Comando desconhecido");
                     }
                 case EmployeeControllerState_1.default.EMPLOYEE_EDITING:
                     switch (input) {
@@ -50,8 +49,7 @@ class EmployeeControlParser {
                         case EmployeeControllerState_1.default.SHUTDOWN:
                             return EmployeeControllerState_1.default.SHUTDOWN;
                         default:
-                            console.log(">>> Comando desconhecido");
-                            return state;
+                            throw new Error("Comando desconhecido");
                     }
                 case EmployeeControllerState_1.default.EMPLOYEE_ROLES_MENU:
                     switch (input) {
@@ -66,12 +64,10 @@ class EmployeeControlParser {
                         case EmployeeControllerState_1.default.SHUTDOWN:
                             return EmployeeControllerState_1.default.SHUTDOWN;
                         default:
-                            console.log(">>> Comando desconhecido");
-                            return state;
+                            throw new Error("Comando desconhecido");
                     }
                 default:
-                    console.log(">>> Comando desconhecido");
-                    return EmployeeControllerState_1.default.RESET;
+                    throw new Error("Comando desconhecido");
             }
         });
     }

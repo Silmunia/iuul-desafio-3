@@ -4,6 +4,7 @@ class DataRepository {
     constructor() {
         this.employees = [];
         this.clients = [];
+        this.roles = [];
     }
     addEmployee(employee) {
         this.employees.push(employee);
@@ -11,18 +12,31 @@ class DataRepository {
     addClient(client) {
         this.clients.push(client);
     }
+    addRole(newRole) {
+        this.roles.push(newRole);
+    }
     listEmployees() {
-        return this.listData(this.employees, ">>> Sem funcionários para listar");
+        try {
+            return this.listData(this.employees, "Sem Funcionários para listar");
+        }
+        catch (error) {
+            throw error;
+        }
     }
     listClients() {
-        return this.listData(this.clients, ">>> Sem clientes para listar");
+        try {
+            return this.listData(this.clients, "Sem Clientes para listar");
+        }
+        catch (error) {
+            throw error;
+        }
     }
     getEmployee(index) {
         if (index >= 0 && index < this.employees.length) {
             return this.employees[index];
         }
         else {
-            return undefined;
+            throw new Error("Não há Funcionário com o índice selecionado");
         }
     }
     getClient(index) {
@@ -30,8 +44,16 @@ class DataRepository {
             return this.clients[index];
         }
         else {
-            return undefined;
+            throw new Error("Não há Cliente com o índice selecionado");
         }
+    }
+    getRole(name) {
+        for (let i = 0; i < this.roles.length; i++) {
+            if (this.roles[i].nome === name) {
+                return this.roles[i];
+            }
+        }
+        throw new Error("Não há Cargo com o nome selecionado");
     }
     getAllEmployees() {
         return this.employees;
@@ -39,14 +61,17 @@ class DataRepository {
     getAllClients() {
         return this.clients;
     }
-    listData(dataArray, nullMessage) {
+    listData(dataArray, errorMessage) {
         if (dataArray.length === 0) {
-            return nullMessage;
+            throw new Error(errorMessage);
         }
         let resultList = "";
         for (let i = 0; i < dataArray.length; i++) {
             let current = dataArray[i];
-            resultList += `${i + 1}. ${current.nome}, CPF ${current.cpf}\n`;
+            resultList += `${i + 1}. ${current.nome}, CPF ${current.cpf}`;
+            if (i < dataArray.length - 1) {
+                resultList += "\n";
+            }
         }
         return resultList;
     }

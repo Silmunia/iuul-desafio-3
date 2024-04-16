@@ -18,9 +18,13 @@ class ContaCorrente extends Conta {
     }
 
     public transferir(contaDestino: Conta, valor: number) {
-        this.fazerSaque(valor);
+        try {
+            this.fazerSaque(valor);
 
-        contaDestino.depositar(valor);
+            contaDestino.depositar(valor);
+        } catch (error) {
+            throw error;
+        }
     }
 
     public fazerSaque(valor: number) {

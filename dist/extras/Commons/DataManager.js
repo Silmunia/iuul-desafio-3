@@ -12,8 +12,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Funcionario_1 = __importDefault(require("../../objects/classes/Funcionario"));
 const Cliente_1 = __importDefault(require("../../objects/classes/Cliente"));
+const Funcionario_1 = __importDefault(require("../../objects/classes/Funcionario"));
 const DataRepository_1 = __importDefault(require("./DataRepository"));
 const FactoryRepository_1 = __importDefault(require("./FactoryRepository"));
 class DataManager {
@@ -31,7 +31,7 @@ class DataManager {
                 }
             }
         }
-        return undefined;
+        throw new Error("Não há conta com o número inserido para a conta de destino");
     }
     getEditedClientAccount(accountNumber) {
         if (this.editedClient instanceof Cliente_1.default) {
@@ -40,17 +40,61 @@ class DataManager {
                     return this.editedClient.contas[i];
                 }
             }
-            return undefined;
+            throw new Error("Não há conta com o número inserido");
         }
         else {
-            return undefined;
+            throw new Error("Não foi possível encontrar as contas do Cliente");
         }
     }
-    addEmployee() {
-        return __awaiter(this, void 0, void 0, function* () {
-            console.log(">>> Iniciando criação de Funcionário");
-            this.dataRepository.addEmployee(yield this.factoryRepository.startEmployeeCreation());
-        });
+    createEmployee(initialRoleName, cpf, employeeName, phone, salary, additionalRoleNames) {
+        let initialRole = this.getRole(initialRoleName);
+        let additionalRoles = [];
+        for (let i = 0; i < additionalRoleNames.length; i++) {
+            let extraRole = this.getRole(additionalRoleNames[i]);
+            additionalRoles.push(extraRole);
+        }
+        let newEmployee = this.factoryRepository.createEmployee(initialRole, cpf, employeeName, phone, salary, additionalRoles);
+        this.dataRepository.addEmployee(newEmployee);
+    }
+    getRole(roleName) {
+        try {
+            let foundRole = this.dataRepository.getRole(roleName);
+            return foundRole;
+        }
+        catch (_a) {
+            let newRole = this.factoryRepository.createRole(roleName);
+            this.dataRepository.addRole(newRole);
+            return newRole;
+        }
+    }
+    addRoleToEmployee(employee, roleName) {
+        for (let i = 0; i < employee.cargos.length; i++) {
+            if (roleName === employee.cargos[i].nome) {
+                throw new Error("Funcionário já contém o Cargo");
+            }
+        }
+        let addingRole = this.getRole(roleName);
+        employee.adicionarCargo(addingRole);
+    }
+    addRoleToEditedEmployee(roleName) {
+        if (this.editedEmployee instanceof Funcionario_1.default) {
+        }
+        else {
+            throw new Error("Não foi possível encontrar o Funcionário");
+        }
+    }
+    createClient(cpf, clientName, phone, isVIP, initialAddress, initialAccount, additionalAccounts, additionalAddresses) {
+        let newClient = this.factoryRepository.createClient(cpf, clientName, phone, isVIP, initialAddress, initialAccount, additionalAccounts, additionalAddresses);
+        this.dataRepository.addClient(newClient);
+    }
+    createAddress(zipCode, street, number, extraInfo, city, state) {
+        return this.factoryRepository.createAddress(zipCode, street, number, extraInfo, city, state);
+    }
+    createCheckingAccount(number, limit) {
+        return this.factoryRepository.createCheckingAccount(number, limit);
+    }
+    createSavingsAccount(number) {
+        return this.factoryRepository.createSavingsAccount(number);
     }
     getEmployees() {
         return this.dataRepository.getAllEmployees();
@@ -59,47 +103,82 @@ class DataManager {
         return this.dataRepository.getAllClients();
     }
     listEmployees() {
-        console.log(">>> Listando Funcionários");
-        console.log(this.dataRepository.listEmployees());
+        try {
+            return this.dataRepository.listEmployees();
+        }
+        catch (error) {
+            throw error;
+        }
     }
     setEditedEmployee(index) {
-        this.editedEmployee = this.dataRepository.getEmployee(index);
+        try {
+            this.editedEmployee = this.dataRepository.getEmployee(index);
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+    getEmployeeFromRepository(index) {
+        try {
+            return this.dataRepository.getEmployee(index);
+        }
+        catch (error) {
+            throw error;
+        }
     }
     getEditedEmployee() {
         return this.editedEmployee;
     }
     setEditedClient(index) {
-        this.editedClient = this.dataRepository.getClient(index);
+        try {
+            this.editedClient = this.dataRepository.getClient(index);
+        }
+        catch (error) {
+            throw error;
+        }
     }
     getEditedClient() {
         return this.editedClient;
     }
+    listEmployeeInfo(employee) {
+        return `Nome: ${employee.nome}\nCPF: ${employee.cpf}\nCargos: ${this.listEditedEmployeeRoles(employee)}\nTelefone: ${employee.telefone}\nSalário: ${employee.salario}`;
+    }
     listEditedEmployeeInfo() {
         if (this.editedEmployee instanceof Funcionario_1.default) {
-            return `\n>>> Listando informações do Funcionário\nNome: ${this.editedEmployee.nome}\nCPF: ${this.editedEmployee.cpf}\nCargos: ${this.listEditedEmployeeRoles(this.editedEmployee)}\nTelefone: ${this.editedEmployee.telefone}\nSalário: ${this.editedEmployee.salario}`;
+            return `Nome: ${this.editedEmployee.nome}\nCPF: ${this.editedEmployee.cpf}\nCargos: ${this.listEditedEmployeeRoles(this.editedEmployee)}\nTelefone: ${this.editedEmployee.telefone}\nSalário: ${this.editedEmployee.salario}`;
         }
         else {
-            return ">>> Não foi possível encontrar o Funcionário";
+            throw new Error("Não foi possível encontrar o Funcionário");
         }
     }
     listEditedClientInfo() {
         if (this.editedClient instanceof Cliente_1.default) {
-            return `\n>>> Listando informações do Cliente\nNome: ${this.editedClient.nome}\nCPF: ${this.editedClient.cpf}\nTelefone: ${this.editedClient.telefone}\nVIP: ${this.editedClient.vip ? "Sim" : "Não"}\nContas: ${this.listEditedClientAccounts()}\nEndereços: ${this.listEditedClientAddresses()}`;
+            try {
+                let clientAccounts = this.listEditedClientAccounts();
+                let clientAddresses = this.listEditedClientAddresses();
+                return `Nome: ${this.editedClient.nome}\nCPF: ${this.editedClient.cpf}\nTelefone: ${this.editedClient.telefone}\nVIP: ${this.editedClient.vip ? "Sim" : "Não"}\nContas:\n${clientAccounts}\nEndereços:\n${clientAddresses}`;
+            }
+            catch (error) {
+                throw error;
+            }
         }
         else {
-            return ">>> Não foi possível encontrar o Cliente";
+            throw new Error("Não foi possível encontrar o Cliente");
         }
     }
     listEditedClientAccounts() {
         if (this.editedClient instanceof Cliente_1.default) {
             let accountString = "";
             for (let i = 0; i < this.editedClient.contas.length; i++) {
-                accountString += `\n${i + 1}. Conta número ${this.editedClient.contas[i].numero}`;
+                accountString += `${i + 1}. Conta número ${this.editedClient.contas[i].numero}`;
+                if (i < this.editedClient.contas.length - 1) {
+                    accountString += "\n";
+                }
             }
             return accountString;
         }
         else {
-            return ">>> Não foi possível encontrar o Cliente";
+            throw new Error("Não foi possível encontrar o Cliente");
         }
     }
     listEditedClientAddresses() {
@@ -107,23 +186,34 @@ class DataManager {
             let addressString = "";
             for (let i = 0; i < this.editedClient.enderecos.length; i++) {
                 let currentAddress = this.editedClient.enderecos[i];
-                addressString += `\n${i + 1}. UF ${currentAddress.uf}, Cidade ${currentAddress.cidade}, ${currentAddress.logradouro}, número ${currentAddress.numero}, ${currentAddress.complemento}, CEP ${currentAddress.cep}`;
+                addressString += `${i + 1}. UF ${currentAddress.uf}, Cidade ${currentAddress.cidade}, ${currentAddress.logradouro}, número ${currentAddress.numero}, ${currentAddress.complemento}, CEP ${currentAddress.cep}`;
+                if (i < this.editedClient.enderecos.length - 1) {
+                    addressString += "\n";
+                }
             }
             return addressString;
         }
         else {
-            return ">>> Não foi possível encontrar o Cliente";
+            throw new Error("Não foi possível encontrar o Cliente");
         }
     }
-    addAddressToEditedClient() {
+    addAddressToEditedClient(newAddress) {
         return __awaiter(this, void 0, void 0, function* () {
-            let newAddress = yield this.factoryRepository.startAddressCreation(">>> Criando novo Endereço");
             if (this.editedClient instanceof Cliente_1.default) {
                 this.editedClient.adicionarEnderecos([newAddress]);
-                return true;
             }
             else {
-                return false;
+                throw new Error("Não foi possível adicionar o Endereço ao Cliente selecionado");
+            }
+        });
+    }
+    addAccountToEditedClient(newAccount) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (this.editedClient instanceof Cliente_1.default) {
+                this.editedClient.adicionarContas([newAccount]);
+            }
+            else {
+                throw new Error("Não foi possível adicionar a Conta ao Cliente selecionado");
             }
         });
     }
@@ -137,43 +227,60 @@ class DataManager {
         }
         return resultString;
     }
+    removeEmployeeRole(employee, roleName) {
+        try {
+            employee.removerCargo(roleName);
+        }
+        catch (error) {
+            throw error;
+        }
+    }
     removeEditedEmployeeRole(roleName) {
         if (this.editedEmployee instanceof Funcionario_1.default) {
-            for (let i = 0; i < this.editedEmployee.cargos.length; i++) {
-                if (this.editedEmployee.cargos[i].nome === roleName) {
-                    this.editedEmployee.removerCargo(i);
-                    return true;
-                }
+            try {
+                this.editedEmployee.removerCargo(roleName);
             }
-            return false;
+            catch (error) {
+                throw error;
+            }
         }
         else {
-            return false;
+            throw new Error("Não foi possível encontrar o Funcionário");
         }
     }
     removeEditedClientAddress(index) {
         if (this.editedClient instanceof Cliente_1.default) {
-            if (this.editedClient.enderecos.length > 1 && index >= 0 && index < this.editedClient.enderecos.length) {
+            try {
                 this.editedClient.removerEndereco(index);
-                return true;
             }
-            else {
-                return false;
+            catch (error) {
+                throw error;
             }
         }
         else {
-            return false;
+            throw new Error("Não foi possível encontrar o Cliente");
         }
     }
-    addClient() {
-        return __awaiter(this, void 0, void 0, function* () {
-            console.log(">>> Iniciando criação de Cliente");
-            this.dataRepository.addClient(yield this.factoryRepository.startClientCreation());
-        });
+    removeEditedClientAccount(index) {
+        if (this.editedClient instanceof Cliente_1.default) {
+            try {
+                this.editedClient.removerConta(index);
+            }
+            catch (error) {
+                throw error;
+            }
+        }
+        else {
+            throw new Error("Não foi possível encontrar o Cliente");
+        }
     }
     listClients() {
-        console.log(">>> Listando Clientes");
-        console.log(this.dataRepository.listClients());
+        try {
+            return this.dataRepository.listClients();
+        }
+        catch (error) {
+            throw error;
+        }
     }
 }
 exports.default = DataManager;

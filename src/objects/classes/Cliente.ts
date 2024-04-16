@@ -4,6 +4,7 @@ import Pessoa from "../abstract classes/Pessoa";
 import Endereco from "./Endereco";
 import Conta from "../abstract classes/Conta";
 import ContaCorrente from "./ContaCorrente";
+import ContaPoupanca from "./ContaPoupanca";
 
 class Cliente extends Pessoa implements IUsuario {
 
@@ -55,13 +56,37 @@ class Cliente extends Pessoa implements IUsuario {
     }
 
     public removerEndereco(indice: number) {
-        this._enderecos.splice(indice, 1);
+        if (this._enderecos.length === 1) {
+            throw new Error("Não é possível remover o Endereço de um Cliente com apenas um Endereço");
+        } else if (indice < 0 || indice >= this._enderecos.length) {
+            throw new Error("O Endereço escolhido para remoção é inválido");
+        } else {
+            this._enderecos.splice(indice, 1);
+        }
     }
 
-    public encontrarConta(numero: string): Conta {
+    public adicionarContas(contas: Array<Conta>) {
+        this._contas = this._contas.concat(contas);
+
+        contas.forEach((conta) => {
+            conta.cliente = this;
+        })
+    }
+
+    public removerConta(indice: number) {
+        if (this._contas.length === 1) {
+            throw new Error("Não é possível remover a Conta de um Cliente com apenas uma Conta");
+        } else if (indice < 0 || indice >= this._contas.length) {
+            throw new Error("A Conta escolhida para remoção é inválida");
+        } else {
+            this._contas.splice(indice, 1);
+        }
+    }
+
+    public encontrarConta(numero: string): ContaCorrente | ContaPoupanca {
         for (let i = 0; i< this._contas.length; i++) {
             if (this._contas[i].numero === numero) {
-                return this._contas[i];
+                return this._contas[i] as ContaCorrente | ContaPoupanca;
             }
         }
 
@@ -94,16 +119,24 @@ class Cliente extends Pessoa implements IUsuario {
     }
 
     public fazerSaque(numeroDaConta: string, valor: number) {
-        let conta = this.encontrarConta(numeroDaConta);
-
-        conta.sacar(valor);
+        try {
+            let conta = this.encontrarConta(numeroDaConta);
+            
+            conta.fazerSaque(valor);
+        } catch (error) {
+            throw error;
+        }
     }
 
-    public listarEnderecos() {
-        console.log(`Listando enderecos de cliente com CPF ${this.cpf}`);
+    public listarEnderecos(): string {
+
+        let resultado = "";
+
         for (let i = 0; i < this._enderecos.length; i++) {
-            console.log(`${i+1}. ${this._enderecos[i].listarInformaçoes()}`); 
+            resultado += `${i+1}. ${this._enderecos[i].listarInformaçoes()}\n`; 
         }
+
+        return resultado;
     }
 
     public autenticar(): boolean {
