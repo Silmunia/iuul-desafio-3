@@ -21,7 +21,7 @@ const Operation_1 = __importDefault(require("../Abstract Operation/Operation"));
 const EditEmployeePhoneOperation_1 = __importDefault(require("./EditEmployeePhoneOperation"));
 const EditEmployeeSalaryOperation_1 = __importDefault(require("./EditEmployeeSalaryOperation"));
 const EditEmployeeCpfOperation_1 = __importDefault(require("./EditEmployeeCpfOperation"));
-const EmployeeRolesMenu_1 = __importDefault(require("./EmployeeRolesMenu"));
+const EmployeeRolesMenu_1 = __importDefault(require("./Role Operations/EmployeeRolesMenu"));
 class EmployeeEditMenuOperation extends Operation_1.default {
     constructor(dataManager, editedEmployee) {
         super(dataManager);
@@ -59,6 +59,7 @@ class EmployeeEditMenuOperation extends Operation_1.default {
                     termination.maintainExecution = false;
                     return termination;
                 default:
+                    console.log(">>> Comando inválido");
                     return this;
             }
         });

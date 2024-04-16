@@ -12,22 +12,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const CreateEmployeeOperation_1 = __importDefault(require("./CreateEmployeeOperation"));
-const InputHandler_1 = __importDefault(require("../../Commons/InputHandler"));
-const MainMenuOperation_1 = __importDefault(require("../MainMenuOperation"));
-const MenuRenderer_1 = __importDefault(require("../../Commons/MenuRenderer"));
-const Operation_1 = __importDefault(require("../Abstract Operation/Operation"));
-const SelectEmployeeOperation_1 = __importDefault(require("./SelectEmployeeOperation"));
-class EmployeeMenuOperation extends Operation_1.default {
-    constructor() {
-        super(...arguments);
+const InputHandler_1 = __importDefault(require("../../../Commons/InputHandler"));
+const MainMenuOperation_1 = __importDefault(require("../../MainMenuOperation"));
+const MenuRenderer_1 = __importDefault(require("../../../Commons/MenuRenderer"));
+const Operation_1 = __importDefault(require("../../Abstract Operation/Operation"));
+const ClientEditMenuOperation_1 = __importDefault(require("../ClientEditMenuOperation"));
+const AddClientAddressOperation_1 = __importDefault(require("./AddClientAddressOperation"));
+const ListClientAddressesOperation_1 = __importDefault(require("./ListClientAddressesOperation"));
+const RemoveClientAddressOperation_1 = __importDefault(require("./RemoveClientAddressOperation"));
+class ClientAddressesMenuOperation extends Operation_1.default {
+    constructor(dataManager, editedClient) {
+        super(dataManager);
         this._inputHandler = new InputHandler_1.default();
         this._menuRenderer = new MenuRenderer_1.default();
-        this._expectedInputs = [1, 2, 3, 999];
+        this._expectedInputs = [1, 2, 3, 4, 5, 999];
+        this._editedClient = editedClient;
     }
     runOperation() {
         return __awaiter(this, void 0, void 0, function* () {
-            this._menuRenderer.renderMainEmployeeMenu(this._expectedInputs);
+            this._menuRenderer.manageClientAddressesMenu(this._expectedInputs);
             return yield this.startCommandInput("Insira um comando: ");
         });
     }
@@ -36,12 +39,16 @@ class EmployeeMenuOperation extends Operation_1.default {
             let receivedInput = yield this._inputHandler.getNumberInput(prompt);
             switch (receivedInput) {
                 case this._expectedInputs[0]:
-                    return new CreateEmployeeOperation_1.default(this._dataManager);
+                    return new ListClientAddressesOperation_1.default(this._dataManager, this._editedClient);
                 case this._expectedInputs[1]:
-                    return new SelectEmployeeOperation_1.default(this._dataManager);
+                    return new AddClientAddressOperation_1.default(this._dataManager, this._editedClient);
                 case this._expectedInputs[2]:
-                    return new MainMenuOperation_1.default(this._dataManager);
+                    return new RemoveClientAddressOperation_1.default(this._dataManager, this._editedClient);
                 case this._expectedInputs[3]:
+                    return new ClientEditMenuOperation_1.default(this._dataManager, this._editedClient);
+                case this._expectedInputs[4]:
+                    return new MainMenuOperation_1.default(this._dataManager);
+                case this._expectedInputs[5]:
                     let termination = new MainMenuOperation_1.default(this._dataManager);
                     termination.maintainExecution = false;
                     return termination;
@@ -52,4 +59,4 @@ class EmployeeMenuOperation extends Operation_1.default {
         });
     }
 }
-exports.default = EmployeeMenuOperation;
+exports.default = ClientAddressesMenuOperation;

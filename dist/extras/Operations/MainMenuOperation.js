@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const ClientMenuOperation_1 = __importDefault(require("./ClientMenuOperation"));
+const ClientMenuOperation_1 = __importDefault(require("./Client Operations/ClientMenuOperation"));
 const EmployeeMenuOperation_1 = __importDefault(require("./Employee Operations/EmployeeMenuOperation"));
 const InputHandler_1 = __importDefault(require("../Commons/InputHandler"));
 const Operation_1 = __importDefault(require("./Abstract Operation/Operation"));
@@ -42,6 +42,7 @@ class MainMenuOperation extends Operation_1.default {
                     this.maintainExecution = false;
                     return this;
                 default:
+                    console.log(">>> Comando inválido");
                     return this;
             }
         });

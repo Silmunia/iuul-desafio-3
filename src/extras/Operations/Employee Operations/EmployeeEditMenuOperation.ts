@@ -10,7 +10,7 @@ import Operation from "../Abstract Operation/Operation";
 import EditEmployeePhoneOperation from "./EditEmployeePhoneOperation";
 import EditEmployeeSalaryOperation from "./EditEmployeeSalaryOperation";
 import EditEmployeeCpfOperation from "./EditEmployeeCpfOperation";
-import EmployeeRolesMenu from "./EmployeeRolesMenu";
+import EmployeeRolesMenu from "./Role Operations/EmployeeRolesMenu";
 
 class EmployeeEditMenuOperation extends Operation {
 
@@ -54,6 +54,7 @@ class EmployeeEditMenuOperation extends Operation {
                 termination.maintainExecution = false;
                 return termination;
             default:
+                console.log(">>> Comando inválido");
                 return this;
         }
     }

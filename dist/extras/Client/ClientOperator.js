@@ -228,16 +228,16 @@ class ClientOperator {
             }
         });
     }
-    removeClientAddressOperation() {
+    removeClientAddressOperation(client) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (this.clientInEditing.enderecos.length === 1) {
+            if (client.enderecos.length === 1) {
                 console.log("\n>>> O Cliente possui apenas um Endereço, portanto não é possível remover Endereços");
                 console.log(">>> Voltando para o Menu de Editar Endereços");
                 return ClientControllerState_1.default.CLIENT_ADDRESS_MENU;
             }
             else {
                 console.log("\n>>> Listando Endereços do Cliente");
-                let clientAddresses = this.dataManager.listEditedClientAddresses();
+                let clientAddresses = this.dataManager.listClientAddresses(client);
                 if (clientAddresses === "") {
                     console.log(">>> ERRO FATAL: O Cliente não possui nenhum Endereço");
                     console.log(">>> O programa será encerrado");
@@ -248,7 +248,7 @@ class ClientOperator {
                     let selectedAddress = yield this.inputHandler.getNumberInput("Insira o índice do Endereço a remover: ");
                     let parsedAddressIndex = selectedAddress - 1;
                     try {
-                        this.dataManager.removeEditedClientAddress(parsedAddressIndex);
+                        this.dataManager.removeClientAddress(client, parsedAddressIndex);
                         console.log(">>> Endereço removido com sucesso");
                     }
                     catch (error) {
