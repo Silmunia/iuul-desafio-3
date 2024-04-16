@@ -68,12 +68,13 @@ class CreateClientOperation extends Operation_1.default {
     createAccount() {
         return __awaiter(this, void 0, void 0, function* () {
             let accountInput = yield this._inputHandler.getNumberInput("Escolha um tipo de conta para criar\n1. Conta Corrente\n2. Conta Poupança\nInsira um comando: ");
-            let number = yield this._inputHandler.getStringInput("Insira o número da Conta: ");
             if (accountInput == 1) {
+                let number = yield this._inputHandler.getStringInput("Insira o número da Conta: ");
                 let limit = yield this._inputHandler.getNumberInput("Insira o limite da Conta: ");
                 return this._dataManager.createCheckingAccount(number, limit);
             }
             else if (accountInput == 2) {
+                let number = yield this._inputHandler.getStringInput("Insira o número da Conta: ");
                 return this._dataManager.createSavingsAccount(number);
             }
             else {

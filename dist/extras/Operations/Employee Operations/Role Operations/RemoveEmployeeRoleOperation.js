@@ -30,7 +30,7 @@ class RemoveEmployeeRoleOperation extends Operation_1.default {
                 return new EmployeeRolesMenu_1.default(this._dataManager, this._editedEmployee);
             }
             else {
-                let employeeRoles = this._dataManager.listEditedEmployeeRoles(this._editedEmployee);
+                let employeeRoles = this._dataManager.listEmployeeRoles(this._editedEmployee);
                 if (employeeRoles === "") {
                     console.log("\n>>> ERRO FATAL: O Funcionário não possui nenhum Cargo");
                     console.log(">>> O programa será encerrado");

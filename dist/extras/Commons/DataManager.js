@@ -12,8 +12,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Cliente_1 = __importDefault(require("../../objects/classes/Cliente"));
-const Funcionario_1 = __importDefault(require("../../objects/classes/Funcionario"));
 const DataRepository_1 = __importDefault(require("./DataRepository"));
 const FactoryRepository_1 = __importDefault(require("./FactoryRepository"));
 class DataManager {
@@ -40,19 +38,6 @@ class DataManager {
             }
         }
         throw new Error("O Cliente não possui Conta com o número inserido");
-    }
-    getEditedClientAccount(accountNumber) {
-        if (this.editedClient instanceof Cliente_1.default) {
-            for (let i = 0; i < this.editedClient.contas.length; i++) {
-                if (this.editedClient.contas[i].numero === accountNumber) {
-                    return this.editedClient.contas[i];
-                }
-            }
-            throw new Error("Não há conta com o número inserido");
-        }
-        else {
-            throw new Error("Não foi possível encontrar as contas do Cliente");
-        }
     }
     createEmployee(initialRoleName, cpf, employeeName, phone, salary, additionalRoleNames) {
         let initialRole = this.getRole(initialRoleName);
@@ -84,13 +69,6 @@ class DataManager {
         let addingRole = this.getRole(roleName);
         employee.adicionarCargo(addingRole);
     }
-    addRoleToEditedEmployee(roleName) {
-        if (this.editedEmployee instanceof Funcionario_1.default) {
-        }
-        else {
-            throw new Error("Não foi possível encontrar o Funcionário");
-        }
-    }
     createClient(cpf, clientName, phone, isVIP, initialAddress, initialAccount, additionalAccounts, additionalAddresses) {
         let newClient = this.factoryRepository.createClient(cpf, clientName, phone, isVIP, initialAddress, initialAccount, additionalAccounts, additionalAddresses);
         this.dataRepository.addClient(newClient);
@@ -104,23 +82,9 @@ class DataManager {
     createSavingsAccount(number) {
         return this.factoryRepository.createSavingsAccount(number);
     }
-    getEmployees() {
-        return this.dataRepository.getAllEmployees();
-    }
-    getClients() {
-        return this.dataRepository.getAllClients();
-    }
     listEmployees() {
         try {
             return this.dataRepository.listEmployees();
-        }
-        catch (error) {
-            throw error;
-        }
-    }
-    setEditedEmployee(index) {
-        try {
-            this.editedEmployee = this.dataRepository.getEmployee(index);
         }
         catch (error) {
             throw error;
@@ -142,30 +106,8 @@ class DataManager {
             throw error;
         }
     }
-    getEditedEmployee() {
-        return this.editedEmployee;
-    }
-    setEditedClient(index) {
-        try {
-            this.editedClient = this.dataRepository.getClient(index);
-        }
-        catch (error) {
-            throw error;
-        }
-    }
-    getEditedClient() {
-        return this.editedClient;
-    }
     listEmployeeInfo(employee) {
-        return `Nome: ${employee.nome}\nCPF: ${employee.cpf}\nCargos: ${this.listEditedEmployeeRoles(employee)}\nTelefone: ${employee.telefone}\nSalário: ${employee.salario}`;
-    }
-    listEditedEmployeeInfo() {
-        if (this.editedEmployee instanceof Funcionario_1.default) {
-            return `Nome: ${this.editedEmployee.nome}\nCPF: ${this.editedEmployee.cpf}\nCargos: ${this.listEditedEmployeeRoles(this.editedEmployee)}\nTelefone: ${this.editedEmployee.telefone}\nSalário: ${this.editedEmployee.salario}`;
-        }
-        else {
-            throw new Error("Não foi possível encontrar o Funcionário");
-        }
+        return `Nome: ${employee.nome}\nCPF: ${employee.cpf}\nCargos: ${this.listEmployeeRoles(employee)}\nTelefone: ${employee.telefone}\nSalário: ${employee.salario}`;
     }
     listClientInfo(client) {
         try {
@@ -175,21 +117,6 @@ class DataManager {
         }
         catch (error) {
             throw error;
-        }
-    }
-    listEditedClientInfo() {
-        if (this.editedClient instanceof Cliente_1.default) {
-            try {
-                let clientAccounts = this.listEditedClientAccounts();
-                let clientAddresses = this.listEditedClientAddresses();
-                return `Nome: ${this.editedClient.nome}\nCPF: ${this.editedClient.cpf}\nTelefone: ${this.editedClient.telefone}\nVIP: ${this.editedClient.vip ? "Sim" : "Não"}\nContas:\n${clientAccounts}\nEndereços:\n${clientAddresses}`;
-            }
-            catch (error) {
-                throw error;
-            }
-        }
-        else {
-            throw new Error("Não foi possível encontrar o Cliente");
         }
     }
     listClientAccounts(client) {
@@ -223,66 +150,15 @@ class DataManager {
             return addressString;
         }
     }
-    listEditedClientAccounts() {
-        if (this.editedClient instanceof Cliente_1.default) {
-            let accountString = "";
-            for (let i = 0; i < this.editedClient.contas.length; i++) {
-                accountString += `${i + 1}. Conta número ${this.editedClient.contas[i].numero}`;
-                if (i < this.editedClient.contas.length - 1) {
-                    accountString += "\n";
-                }
-            }
-            return accountString;
-        }
-        else {
-            throw new Error("Não foi possível encontrar o Cliente");
-        }
-    }
-    listEditedClientAddresses() {
-        if (this.editedClient instanceof Cliente_1.default) {
-            let addressString = "";
-            for (let i = 0; i < this.editedClient.enderecos.length; i++) {
-                let currentAddress = this.editedClient.enderecos[i];
-                addressString += `${i + 1}. UF ${currentAddress.uf}, Cidade ${currentAddress.cidade}, ${currentAddress.logradouro}, número ${currentAddress.numero}, ${currentAddress.complemento}, CEP ${currentAddress.cep}`;
-                if (i < this.editedClient.enderecos.length - 1) {
-                    addressString += "\n";
-                }
-            }
-            return addressString;
-        }
-        else {
-            throw new Error("Não foi possível encontrar o Cliente");
-        }
-    }
     addAddressToClient(client, newAddress) {
         client.adicionarEnderecos([newAddress]);
-    }
-    addAddressToEditedClient(newAddress) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (this.editedClient instanceof Cliente_1.default) {
-                this.editedClient.adicionarEnderecos([newAddress]);
-            }
-            else {
-                throw new Error("Não foi possível adicionar o Endereço ao Cliente selecionado");
-            }
-        });
     }
     addAccountToClient(client, newAccount) {
         return __awaiter(this, void 0, void 0, function* () {
             client.adicionarContas([newAccount]);
         });
     }
-    addAccountToEditedClient(newAccount) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (this.editedClient instanceof Cliente_1.default) {
-                this.editedClient.adicionarContas([newAccount]);
-            }
-            else {
-                throw new Error("Não foi possível adicionar a Conta ao Cliente selecionado");
-            }
-        });
-    }
-    listEditedEmployeeRoles(employee) {
+    listEmployeeRoles(employee) {
         let resultString = "";
         for (let i = 0; i < employee.cargos.length; i++) {
             resultString += employee.cargos[i].nome;
@@ -300,38 +176,12 @@ class DataManager {
             throw error;
         }
     }
-    removeEditedEmployeeRole(roleName) {
-        if (this.editedEmployee instanceof Funcionario_1.default) {
-            try {
-                this.editedEmployee.removerCargo(roleName);
-            }
-            catch (error) {
-                throw error;
-            }
-        }
-        else {
-            throw new Error("Não foi possível encontrar o Funcionário");
-        }
-    }
     removeClientAddress(client, index) {
         try {
             client.removerEndereco(index);
         }
         catch (error) {
             throw error;
-        }
-    }
-    removeEditedClientAddress(index) {
-        if (this.editedClient instanceof Cliente_1.default) {
-            try {
-                this.editedClient.removerEndereco(index);
-            }
-            catch (error) {
-                throw error;
-            }
-        }
-        else {
-            throw new Error("Não foi possível encontrar o Cliente");
         }
     }
     removeClientAccount(client, index) {
@@ -343,19 +193,6 @@ class DataManager {
                 throw error;
             }
         });
-    }
-    removeEditedClientAccount(index) {
-        if (this.editedClient instanceof Cliente_1.default) {
-            try {
-                this.editedClient.removerConta(index);
-            }
-            catch (error) {
-                throw error;
-            }
-        }
-        else {
-            throw new Error("Não foi possível encontrar o Cliente");
-        }
     }
     listClients() {
         try {

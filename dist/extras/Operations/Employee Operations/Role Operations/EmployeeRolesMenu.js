@@ -50,6 +50,7 @@ class EmployeeRolesMenu extends Operation_1.default {
                     termination.maintainExecution = false;
                     return termination;
                 default:
+                    console.log(">>> Comando inválido");
                     return this;
             }
         });

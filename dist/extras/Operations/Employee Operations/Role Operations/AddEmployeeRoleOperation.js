@@ -25,7 +25,7 @@ class AddEmployeeRoleOperation extends Operation_1.default {
     runOperation() {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("\n>>> Iniciando adição de novo Cargo");
-            let employeeRoles = this._dataManager.listEditedEmployeeRoles(this._editedEmployee);
+            let employeeRoles = this._dataManager.listEmployeeRoles(this._editedEmployee);
             if (employeeRoles === "") {
                 console.log("\n>>> ERRO FATAL: O Funcionário não possui nenhum Cargo");
                 console.log(">>> O programa será encerrado");

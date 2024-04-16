@@ -62,10 +62,6 @@ class DataRepository {
         throw new Error("Não há Cargo com o nome selecionado");
     }
 
-    public getAllEmployees(): Array<Funcionario> {
-        return this.employees;
-    }
-
     public getAllClients(): Array<Cliente> {
         return this.clients;
     }

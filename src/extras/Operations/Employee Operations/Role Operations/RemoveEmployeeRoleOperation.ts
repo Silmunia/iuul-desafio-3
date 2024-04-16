@@ -21,7 +21,7 @@ class RemoveEmployeeRoleOperation extends Operation {
             console.log(">>> Voltando para o Menu de Editar Cargos do Funcionário");
             return new EmployeeRolesMenu(this._dataManager, this._editedEmployee);
         } else {
-            let employeeRoles = this._dataManager.listEditedEmployeeRoles(this._editedEmployee);
+            let employeeRoles = this._dataManager.listEmployeeRoles(this._editedEmployee);
             
             if (employeeRoles === "") {
                 console.log("\n>>> ERRO FATAL: O Funcionário não possui nenhum Cargo");

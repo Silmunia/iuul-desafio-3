@@ -19,7 +19,7 @@ class AddEmployeeRoleOperation extends Operation {
     public async runOperation(): Promise<Operation> {
         console.log("\n>>> Iniciando adição de novo Cargo");
 
-        let employeeRoles = this._dataManager.listEditedEmployeeRoles(this._editedEmployee);
+        let employeeRoles = this._dataManager.listEmployeeRoles(this._editedEmployee);
 
         if (employeeRoles === "") {
             console.log("\n>>> ERRO FATAL: O Funcionário não possui nenhum Cargo");
