@@ -1,8 +1,8 @@
-import Funcionario from "../../../objects/classes/Funcionario";
-import DataManager from "../../Commons/DataManager";
-import InputHandler from "../../Commons/InputHandler";
-import Operation from "../Abstract Operation/Operation";
-import MainMenuOperation from "../MainMenuOperation";
+import Funcionario from "../../../../objects/classes/Funcionario";
+import DataManager from "../../../Commons/DataManager";
+import InputHandler from "../../../Commons/InputHandler";
+import Operation from "../../Abstract Operation/Operation";
+import MainMenuOperation from "../../MainMenuOperation";
 import EmployeeRolesMenu from "./EmployeeRolesMenu";
 
 class RemoveEmployeeRoleOperation extends Operation {

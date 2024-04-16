@@ -1,7 +1,7 @@
 
-import DataManager from "../Commons/DataManager";
-import MainMenuOperation from "../Operations/MainMenuOperation";
-import Operation from "../Operations/Abstract Operation/Operation";
+import DataManager from "./Commons/DataManager";
+import MainMenuOperation from "./Operations/MainMenuOperation";
+import Operation from "./Operations/Abstract Operation/Operation";
 
 class MainController {
     private _dataManager: DataManager = new DataManager();

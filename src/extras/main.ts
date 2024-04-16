@@ -1,4 +1,4 @@
-import MainController from "./Main/MainController";
+import MainController from "./MainController";
 
 let mainController = new MainController();
 

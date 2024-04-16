@@ -1,8 +1,10 @@
 
-import InputHandler from "../Commons/InputHandler";
-import MainMenuOperation from "./MainMenuOperation";
-import MenuRenderer from "../Commons/MenuRenderer";
-import Operation from "./Abstract Operation/Operation";
+import InputHandler from "../../Commons/InputHandler";
+import MainMenuOperation from "../MainMenuOperation";
+import MenuRenderer from "../../Commons/MenuRenderer";
+import Operation from "../Abstract Operation/Operation";
+import CreateClientOperation from "./CreateClientOperation";
+import SelectClientOperation from "./SelectClientOperation";
 
 class ClientMenuOperation extends Operation {
 
@@ -21,9 +23,9 @@ class ClientMenuOperation extends Operation {
 
         switch(receivedInput) {
             case this._expectedInputs[0]:
-                return this;
+                return new CreateClientOperation(this._dataManager);
             case this._expectedInputs[1]:
-                return this;
+                return new SelectClientOperation(this._dataManager);
             case this._expectedInputs[2]:
                 return new MainMenuOperation(this._dataManager);
             case this._expectedInputs[3]:
@@ -31,6 +33,7 @@ class ClientMenuOperation extends Operation {
                 termination.maintainExecution = false;
                 return termination;
             default:
+                console.log(">>> Comando inválido");
                 return this;
         }
     }

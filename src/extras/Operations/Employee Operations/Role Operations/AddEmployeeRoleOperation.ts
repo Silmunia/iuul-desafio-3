@@ -1,10 +1,10 @@
 
-import DataManager from "../../Commons/DataManager";
+import DataManager from "../../../Commons/DataManager";
 import EmployeeRolesMenu from "./EmployeeRolesMenu";
-import Funcionario from "../../../objects/classes/Funcionario";
-import InputHandler from "../../Commons/InputHandler";
-import MainMenuOperation from "../MainMenuOperation";
-import Operation from "../Abstract Operation/Operation";
+import Funcionario from "../../../../objects/classes/Funcionario";
+import InputHandler from "../../../Commons/InputHandler";
+import MainMenuOperation from "../../MainMenuOperation";
+import Operation from "../../Abstract Operation/Operation";
 
 class AddEmployeeRoleOperation extends Operation {
 

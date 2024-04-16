@@ -12,13 +12,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const CreateEmployeeOperation_1 = __importDefault(require("./CreateEmployeeOperation"));
 const InputHandler_1 = __importDefault(require("../../Commons/InputHandler"));
 const MainMenuOperation_1 = __importDefault(require("../MainMenuOperation"));
 const MenuRenderer_1 = __importDefault(require("../../Commons/MenuRenderer"));
 const Operation_1 = __importDefault(require("../Abstract Operation/Operation"));
-const SelectEmployeeOperation_1 = __importDefault(require("./SelectEmployeeOperation"));
-class EmployeeMenuOperation extends Operation_1.default {
+const CreateClientOperation_1 = __importDefault(require("./CreateClientOperation"));
+const SelectClientOperation_1 = __importDefault(require("./SelectClientOperation"));
+class ClientMenuOperation extends Operation_1.default {
     constructor() {
         super(...arguments);
         this._inputHandler = new InputHandler_1.default();
@@ -27,7 +27,7 @@ class EmployeeMenuOperation extends Operation_1.default {
     }
     runOperation() {
         return __awaiter(this, void 0, void 0, function* () {
-            this._menuRenderer.renderMainEmployeeMenu(this._expectedInputs);
+            this._menuRenderer.renderMainClientMenu(this._expectedInputs);
             return yield this.startCommandInput("Insira um comando: ");
         });
     }
@@ -36,9 +36,9 @@ class EmployeeMenuOperation extends Operation_1.default {
             let receivedInput = yield this._inputHandler.getNumberInput(prompt);
             switch (receivedInput) {
                 case this._expectedInputs[0]:
-                    return new CreateEmployeeOperation_1.default(this._dataManager);
+                    return new CreateClientOperation_1.default(this._dataManager);
                 case this._expectedInputs[1]:
-                    return new SelectEmployeeOperation_1.default(this._dataManager);
+                    return new SelectClientOperation_1.default(this._dataManager);
                 case this._expectedInputs[2]:
                     return new MainMenuOperation_1.default(this._dataManager);
                 case this._expectedInputs[3]:
@@ -52,4 +52,4 @@ class EmployeeMenuOperation extends Operation_1.default {
         });
     }
 }
-exports.default = EmployeeMenuOperation;
+exports.default = ClientMenuOperation;

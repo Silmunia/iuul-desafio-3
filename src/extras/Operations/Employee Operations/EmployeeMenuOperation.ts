@@ -33,6 +33,7 @@ class EmployeeMenuOperation extends Operation {
                 termination.maintainExecution = false;
                 return termination;
             default:
+                console.log(">>> Comando inválido");
                 return this;
         }
     }

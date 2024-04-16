@@ -1,11 +1,11 @@
 
-import DataManager from "../../Commons/DataManager";
-import EmployeeEditMenuOperation from "./EmployeeEditMenuOperation";
-import Funcionario from "../../../objects/classes/Funcionario";
-import InputHandler from "../../Commons/InputHandler";
-import MainMenuOperation from "../MainMenuOperation";
-import MenuRenderer from "../../Commons/MenuRenderer";
-import Operation from "../Abstract Operation/Operation";
+import DataManager from "../../../Commons/DataManager";
+import EmployeeEditMenuOperation from "../EmployeeEditMenuOperation";
+import Funcionario from "../../../../objects/classes/Funcionario";
+import InputHandler from "../../../Commons/InputHandler";
+import MainMenuOperation from "../../MainMenuOperation";
+import MenuRenderer from "../../../Commons/MenuRenderer";
+import Operation from "../../Abstract Operation/Operation";
 import AddEmployeeRoleOperation from "./AddEmployeeRoleOperation";
 import RemoveEmployeeRoleOperation from "./RemoveEmployeeRoleOperation";
 
@@ -44,6 +44,7 @@ class EmployeeRolesMenu extends Operation {
                 termination.maintainExecution = false;
                 return termination;
             default:
+                console.log(">>> Comando inválido");
                 return this;
         }
     }

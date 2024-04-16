@@ -30,6 +30,16 @@ class DataManager {
         throw new Error("Não há conta com o número inserido para a conta de destino");
     }
 
+    public getClientAccount(client: Cliente, accountNumber: string): Conta {
+        for (let i = 0; i < client.contas.length; i++) {
+            if (client.contas[i].numero === accountNumber) {
+                return client.contas[i];
+            }
+        }
+
+        throw new Error("O Cliente não possui Conta com o número inserido");
+    }
+
     public getEditedClientAccount(accountNumber: string): Conta {
         if (this.editedClient instanceof Cliente) {
             for (let i = 0; i < this.editedClient.contas.length; i++) {
@@ -167,6 +177,14 @@ class DataManager {
         }
     }
 
+    public getClientFromRepository(index: number): Cliente {
+        try {
+            return this.dataRepository.getClient(index);
+        } catch (error) {
+            throw error;
+        }
+    }
+
     public getEditedEmployee(): Funcionario | undefined {
         return this.editedEmployee;
     }
@@ -195,6 +213,17 @@ class DataManager {
         }
     }
 
+    public listClientInfo(client: Cliente): string {
+        try {
+            let clientAccounts = this.listClientAccounts(client);
+            let clientAddresses = this.listClientAddresses(client);
+
+            return `Nome: ${client.nome}\nCPF: ${client.cpf}\nTelefone: ${client.telefone}\nVIP: ${client.vip ? "Sim" : "Não"}\nContas:\n${clientAccounts}\nEndereços:\n${clientAddresses}`;
+        } catch (error) {
+            throw error;
+        }
+    }
+
     public listEditedClientInfo(): string {
         if (this.editedClient instanceof Cliente) {
             try {
@@ -207,6 +236,45 @@ class DataManager {
             }
         } else {
             throw new Error("Não foi possível encontrar o Cliente");
+        }
+    }
+
+    public listClientAccounts(client: Cliente): string {
+        let accountString = "";
+
+        for (let i = 0; i < client.contas.length; i++) {
+            accountString += `${i+1}. Conta número ${client.contas[i].numero}`; 
+
+            if (i < client.contas.length-1) {
+                accountString += "\n";
+            }
+        }
+
+        if (accountString === "") {
+            throw new Error("ERRO FATAL: o Cliente não possui nenhuma Conta associada");
+        } else {
+            return accountString;
+        }
+    }
+
+    public listClientAddresses(cliente: Cliente): string {
+        let addressString = "";
+
+        for (let i = 0; i < cliente.enderecos.length; i++) {
+
+            let currentAddress = cliente.enderecos[i];
+
+            addressString += `${i+1}. UF ${currentAddress.uf}, Cidade ${currentAddress.cidade}, ${currentAddress.logradouro}, número ${currentAddress.numero}, ${currentAddress.complemento}, CEP ${currentAddress.cep}`; 
+
+            if (i < cliente.enderecos.length-1) {
+                addressString += "\n";
+            }
+        }
+
+        if (addressString === "") {
+            throw new Error("ERRO FATAL: o Cliente não possui nenhum Endereço associado");
+        } else {
+            return addressString;
         }
     }
 
@@ -251,12 +319,20 @@ class DataManager {
         }
     }
 
+    public addAddressToClient(client: Cliente, newAddress: Endereco) {
+        client.adicionarEnderecos([newAddress]);
+    }
+
     public async addAddressToEditedClient(newAddress: Endereco) {
         if (this.editedClient instanceof Cliente) {
             this.editedClient.adicionarEnderecos([newAddress]);
         } else {
             throw new Error("Não foi possível adicionar o Endereço ao Cliente selecionado");
         }
+    }
+
+    public async addAccountToClient(client: Cliente, newAccount: Conta) {
+        client.adicionarContas([newAccount]);
     }
 
     public async addAccountToEditedClient(newAccount: Conta) {
@@ -301,6 +377,14 @@ class DataManager {
         }
     }
 
+    public removeClientAddress(client: Cliente, index: number) {
+        try {
+            client.removerEndereco(index);
+        } catch (error) {
+            throw error;
+        }
+    }
+
     public removeEditedClientAddress(index: number) {
         if (this.editedClient instanceof Cliente) {
             try {
@@ -310,6 +394,14 @@ class DataManager {
             }
         } else {
             throw new Error("Não foi possível encontrar o Cliente");
+        }
+    }
+
+    public async removeClientAccount(client: Cliente, index: number) {
+        try {
+            client.removerConta(index);
+        } catch (error) {
+            throw error;
         }
     }
 

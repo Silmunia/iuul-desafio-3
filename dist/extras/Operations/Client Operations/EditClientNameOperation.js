@@ -12,24 +12,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const DataManager_1 = __importDefault(require("./Commons/DataManager"));
-const MainMenuOperation_1 = __importDefault(require("./Operations/MainMenuOperation"));
-class MainController {
-    constructor() {
-        this._dataManager = new DataManager_1.default();
-        this._currentOperation = new MainMenuOperation_1.default(this._dataManager);
-        this.maintainLoop = true;
+const InputHandler_1 = __importDefault(require("../../Commons/InputHandler"));
+const Operation_1 = __importDefault(require("../Abstract Operation/Operation"));
+const ClientEditMenuOperation_1 = __importDefault(require("./ClientEditMenuOperation"));
+class EditClientNameOperation extends Operation_1.default {
+    constructor(dataManager, editedClient) {
+        super(dataManager);
+        this._inputHandler = new InputHandler_1.default();
+        this._editedClient = editedClient;
     }
-    startProgram() {
-        this.runControlLoop();
-    }
-    runControlLoop() {
+    runOperation() {
         return __awaiter(this, void 0, void 0, function* () {
-            while (this._currentOperation.maintainExecution) {
-                this._currentOperation = yield this._currentOperation.runOperation();
-            }
-            console.log(">>> Encerrando programa");
+            console.log("\n>>> Editando Nome do Cliente");
+            console.log(`Nome atual: ${this._editedClient.nome}`);
+            let newName = yield this._inputHandler.getStringInput("Insira o novo Nome do Cliente: ");
+            this._editedClient.nome = newName;
+            console.log(">>> Nome atualizado com sucesso");
+            return new ClientEditMenuOperation_1.default(this._dataManager, this._editedClient);
         });
     }
 }
-exports.default = MainController;
+exports.default = EditClientNameOperation;

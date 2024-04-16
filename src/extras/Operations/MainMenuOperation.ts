@@ -1,5 +1,5 @@
 
-import ClientMenuOperation from "./ClientMenuOperation";
+import ClientMenuOperation from "./Client Operations/ClientMenuOperation";
 import DataManager from "../Commons/DataManager";
 import EmployeeMenuOperation from "./Employee Operations/EmployeeMenuOperation";
 import InputHandler from "../Commons/InputHandler";
@@ -34,6 +34,7 @@ class MainMenuOperation extends Operation {
                 this.maintainExecution = false;
                 return this;
             default:
+                console.log(">>> Comando inválido");
                 return this;
         }
     }
