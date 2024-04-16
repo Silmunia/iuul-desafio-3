@@ -5,8 +5,8 @@ import Conta from "../../objects/abstract classes/Conta";
 import Endereco from "../../objects/classes/Endereco";
 import Funcionario from "../../objects/classes/Funcionario";
 import FactoryRepository from "./FactoryRepository";
-import ClientDataModel from "./Data Model/ClientDataRepository";
-import EmployeeDataModel from "./Data Model/EmployeeDataRepository";
+import ClientDataModel from "./Data Model/ClientDataModel";
+import EmployeeDataModel from "./Data Model/EmployeeDataModel";
 
 class DataManager {
     private factoryRepository = new FactoryRepository();

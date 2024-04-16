@@ -13,13 +13,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const FactoryRepository_1 = __importDefault(require("./FactoryRepository"));
-const ClientDataRepository_1 = __importDefault(require("./Data Model/ClientDataRepository"));
-const EmployeeDataRepository_1 = __importDefault(require("./Data Model/EmployeeDataRepository"));
+const ClientDataModel_1 = __importDefault(require("./Data Model/ClientDataModel"));
+const EmployeeDataModel_1 = __importDefault(require("./Data Model/EmployeeDataModel"));
 class DataManager {
     constructor() {
         this.factoryRepository = new FactoryRepository_1.default();
-        this.clientRepository = new ClientDataRepository_1.default();
-        this.employeeRepository = new EmployeeDataRepository_1.default();
+        this.clientRepository = new ClientDataModel_1.default();
+        this.employeeRepository = new EmployeeDataModel_1.default();
     }
     getTargetAccountForTransfer(accountNumber) {
         let allClients = this.clientRepository.getAllClients();
