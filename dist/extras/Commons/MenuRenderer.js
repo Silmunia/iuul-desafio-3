@@ -44,12 +44,6 @@ class MenuRenderer {
         console.log(`${expectedInputs[2]}. Voltar para Menu Principal`);
         console.log(`${expectedInputs[3]}. Encerrar`);
     }
-    renderEmployeeMenus(state) {
-        switch (state) {
-            default:
-                throw new Error("Não foi possível exibir o Menu de Funcionários");
-        }
-    }
     renderClientMenus(state) {
         switch (state) {
             case ClientControllerState_1.default.CLIENT_MENU:

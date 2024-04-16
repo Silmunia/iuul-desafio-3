@@ -1,6 +1,5 @@
 
 import ClientControllerState from "../Client/ClientControllerState";
-import EmployeeControllerState from "../Employee/EmployeeControllerState";
 
 class MenuRenderer {
     public renderMainMenu(expectedInputs: Array<number>) {
@@ -45,13 +44,6 @@ class MenuRenderer {
         console.log(`${expectedInputs[1]}. Editar Clientes`);
         console.log(`${expectedInputs[2]}. Voltar para Menu Principal`);
         console.log(`${expectedInputs[3]}. Encerrar`);
-    }
-
-    public renderEmployeeMenus(state: EmployeeControllerState) {
-        switch (state) {
-            default:
-                throw new Error("Não foi possível exibir o Menu de Funcionários");
-        }
     }
 
     public renderClientMenus(state: ClientControllerState) {
