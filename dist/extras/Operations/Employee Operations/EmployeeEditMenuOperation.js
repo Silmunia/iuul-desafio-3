@@ -16,23 +16,23 @@ const EditEmployeeNameOperation_1 = __importDefault(require("./EditEmployeeNameO
 const InputHandler_1 = __importDefault(require("../../Commons/InputHandler"));
 const ListEmployeeInfoOperation_1 = __importDefault(require("./ListEmployeeInfoOperation"));
 const MainMenuOperation_1 = __importDefault(require("../MainMenuOperation"));
-const MenuRenderer_1 = __importDefault(require("../../Commons/MenuRenderer"));
 const Operation_1 = __importDefault(require("../Abstract Operation/Operation"));
 const EditEmployeePhoneOperation_1 = __importDefault(require("./EditEmployeePhoneOperation"));
 const EditEmployeeSalaryOperation_1 = __importDefault(require("./EditEmployeeSalaryOperation"));
 const EditEmployeeCpfOperation_1 = __importDefault(require("./EditEmployeeCpfOperation"));
 const EmployeeRolesMenu_1 = __importDefault(require("./Role Operations/EmployeeRolesMenu"));
+const EmployeeEditMenuRenderer_1 = __importDefault(require("../../Menu Renderer/EmployeeEditMenuRenderer"));
 class EmployeeEditMenuOperation extends Operation_1.default {
     constructor(dataManager, editedEmployee) {
         super(dataManager);
         this._inputHandler = new InputHandler_1.default();
-        this._menuRenderer = new MenuRenderer_1.default();
+        this._menuRenderer = new EmployeeEditMenuRenderer_1.default();
         this._expectedInputs = [1, 2, 3, 4, 5, 6, 7, 999];
         this._editedEmployee = editedEmployee;
     }
     runOperation() {
         return __awaiter(this, void 0, void 0, function* () {
-            this._menuRenderer.renderEditEmployeeMenu(this._expectedInputs);
+            this._menuRenderer.renderMenu(this._expectedInputs);
             return yield this.startCommandInput("Insira um comando: ");
         });
     }

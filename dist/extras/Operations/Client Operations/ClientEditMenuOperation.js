@@ -14,7 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const InputHandler_1 = __importDefault(require("../../Commons/InputHandler"));
 const MainMenuOperation_1 = __importDefault(require("../MainMenuOperation"));
-const MenuRenderer_1 = __importDefault(require("../../Commons/MenuRenderer"));
 const Operation_1 = __importDefault(require("../Abstract Operation/Operation"));
 const EditClientNameOperation_1 = __importDefault(require("./EditClientNameOperation"));
 const ListClientInfoOperation_1 = __importDefault(require("./ListClientInfoOperation"));
@@ -23,17 +22,18 @@ const EditClientCpfOperation_1 = __importDefault(require("./EditClientCpfOperati
 const EditClientVipOperation_1 = __importDefault(require("./EditClientVipOperation"));
 const ClientAddressesMenuOperation_1 = __importDefault(require("./Address Operations/ClientAddressesMenuOperation"));
 const ClientAccountsMenuOperation_1 = __importDefault(require("./Account Operations/ClientAccountsMenuOperation"));
+const ClientEditMenuRenderer_1 = __importDefault(require("../../Menu Renderer/ClientEditMenuRenderer"));
 class ClientEditMenuOperation extends Operation_1.default {
     constructor(dataManager, editedClient) {
         super(dataManager);
         this._inputHandler = new InputHandler_1.default();
-        this._menuRenderer = new MenuRenderer_1.default();
+        this._menuRenderer = new ClientEditMenuRenderer_1.default();
         this._expectedInputs = [1, 2, 3, 4, 5, 6, 7, 8, 999];
         this._editedClient = editedClient;
     }
     runOperation() {
         return __awaiter(this, void 0, void 0, function* () {
-            this._menuRenderer.renderEditClientMenu(this._expectedInputs);
+            this._menuRenderer.renderMenu(this._expectedInputs);
             return yield this.startCommandInput("Insira um comando: ");
         });
     }

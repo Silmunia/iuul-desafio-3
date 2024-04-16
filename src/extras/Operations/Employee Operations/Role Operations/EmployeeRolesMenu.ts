@@ -4,15 +4,16 @@ import EmployeeEditMenuOperation from "../EmployeeEditMenuOperation";
 import Funcionario from "../../../../objects/classes/Funcionario";
 import InputHandler from "../../../Commons/InputHandler";
 import MainMenuOperation from "../../MainMenuOperation";
-import MenuRenderer from "../../../Commons/MenuRenderer";
+import MenuRenderer from "../../../Menu Renderer/Interface/MenuRenderer";
 import Operation from "../../Abstract Operation/Operation";
 import AddEmployeeRoleOperation from "./AddEmployeeRoleOperation";
 import RemoveEmployeeRoleOperation from "./RemoveEmployeeRoleOperation";
+import EmployeeRoleMenuRenderer from "../../../Menu Renderer/EmployeeRoleMenuRenderer";
 
 class EmployeeRolesMenu extends Operation {
 
     private _inputHandler: InputHandler = new InputHandler();
-    private _menuRenderer: MenuRenderer = new MenuRenderer();
+    private _menuRenderer: MenuRenderer = new EmployeeRoleMenuRenderer();
     private _editedEmployee: Funcionario;
     private _expectedInputs: Array<number> = [1, 2, 3, 4, 999];
 
@@ -22,7 +23,7 @@ class EmployeeRolesMenu extends Operation {
     }
 
     public async runOperation(): Promise<Operation> {
-        this._menuRenderer.renderEditEmployeeRolesMenu(this._expectedInputs);
+        this._menuRenderer.renderMenu(this._expectedInputs);
 
         return await this.startCommandInput("Insira um comando: ");
     }

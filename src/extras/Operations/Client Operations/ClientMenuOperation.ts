@@ -1,19 +1,20 @@
 
 import InputHandler from "../../Commons/InputHandler";
 import MainMenuOperation from "../MainMenuOperation";
-import MenuRenderer from "../../Commons/MenuRenderer";
+import MenuRenderer from "../../Menu Renderer/Interface/MenuRenderer";
 import Operation from "../Abstract Operation/Operation";
 import CreateClientOperation from "./CreateClientOperation";
 import SelectClientOperation from "./SelectClientOperation";
+import ClientMenuRenderer from "../../Menu Renderer/ClientMenuRenderer";
 
 class ClientMenuOperation extends Operation {
 
     private _inputHandler: InputHandler = new InputHandler();
-    private _menuRenderer: MenuRenderer = new MenuRenderer();
+    private _menuRenderer: MenuRenderer = new ClientMenuRenderer();
     private _expectedInputs: Array<number> = [1, 2, 3, 999];
 
     public async runOperation(): Promise<Operation> {
-        this._menuRenderer.renderMainClientMenu(this._expectedInputs);
+        this._menuRenderer.renderMenu(this._expectedInputs);
 
         return await this.startCommandInput("Insira um comando: ");
     }

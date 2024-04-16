@@ -14,20 +14,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const InputHandler_1 = __importDefault(require("../../Commons/InputHandler"));
 const MainMenuOperation_1 = __importDefault(require("../MainMenuOperation"));
-const MenuRenderer_1 = __importDefault(require("../../Commons/MenuRenderer"));
 const Operation_1 = __importDefault(require("../Abstract Operation/Operation"));
 const CreateClientOperation_1 = __importDefault(require("./CreateClientOperation"));
 const SelectClientOperation_1 = __importDefault(require("./SelectClientOperation"));
+const ClientMenuRenderer_1 = __importDefault(require("../../Menu Renderer/ClientMenuRenderer"));
 class ClientMenuOperation extends Operation_1.default {
     constructor() {
         super(...arguments);
         this._inputHandler = new InputHandler_1.default();
-        this._menuRenderer = new MenuRenderer_1.default();
+        this._menuRenderer = new ClientMenuRenderer_1.default();
         this._expectedInputs = [1, 2, 3, 999];
     }
     runOperation() {
         return __awaiter(this, void 0, void 0, function* () {
-            this._menuRenderer.renderMainClientMenu(this._expectedInputs);
+            this._menuRenderer.renderMenu(this._expectedInputs);
             return yield this.startCommandInput("Insira um comando: ");
         });
     }
