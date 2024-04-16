@@ -1,90 +1,76 @@
-
-import Cargo from "../../objects/classes/Cargo";
-import Cliente from "../../objects/classes/Cliente";
-import Funcionario from "../../objects/classes/Funcionario";
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 class DataRepository {
-    private employees: Array<Funcionario> = [];
-    private clients: Array<Cliente> = [];
-    private roles: Array<Cargo> = [];
-
-    public addEmployee(employee: Funcionario) {
+    constructor() {
+        this.employees = [];
+        this.clients = [];
+        this.roles = [];
+    }
+    addEmployee(employee) {
         this.employees.push(employee);
     }
-
-    public addClient(client: Cliente) {
+    addClient(client) {
         this.clients.push(client);
     }
-
-    public addRole(newRole: Cargo) {
+    addRole(newRole) {
         this.roles.push(newRole);
     }
-
-    public listEmployees(): string {
+    listEmployees() {
         try {
             return this.listData(this.employees, "Sem Funcionários para listar");
-        } catch (error) {
+        }
+        catch (error) {
             throw error;
         }
     }
-
-    public listClients(): string {
+    listClients() {
         try {
             return this.listData(this.clients, "Sem Clientes para listar");
-        } catch (error) {
+        }
+        catch (error) {
             throw error;
         }
     }
-
-    public getEmployee(index: number) {
+    getEmployee(index) {
         if (index >= 0 && index < this.employees.length) {
             return this.employees[index];
-        } else {
+        }
+        else {
             throw new Error("Não há Funcionário com o índice selecionado");
         }
     }
-
-    public getClient(index: number) {
+    getClient(index) {
         if (index >= 0 && index < this.clients.length) {
             return this.clients[index];
-        } else {
+        }
+        else {
             throw new Error("Não há Cliente com o índice selecionado");
         }
     }
-
-    public getRole(name: string) {
+    getRole(name) {
         for (let i = 0; i < this.roles.length; i++) {
             if (this.roles[i].nome === name) {
                 return this.roles[i];
             }
         }
-
         throw new Error("Não há Cargo com o nome selecionado");
     }
-
-    public getAllClients(): Array<Cliente> {
+    getAllClients() {
         return this.clients;
     }
-
-    private listData(dataArray: Array<Funcionario | Cliente>, errorMessage: string): string {
+    listData(dataArray, errorMessage) {
         if (dataArray.length === 0) {
             throw new Error(errorMessage);
         }
-
-        let resultList: string = "";
-
+        let resultList = "";
         for (let i = 0; i < dataArray.length; i++) {
             let current = dataArray[i];
-
-            resultList += `${i+1}. ${current.nome}, CPF ${current.cpf}`;
-
-            if (i < dataArray.length-1) {
+            resultList += `${i + 1}. ${current.nome}, CPF ${current.cpf}`;
+            if (i < dataArray.length - 1) {
                 resultList += "\n";
             }
         }
-
         return resultList;
     }
 }
-
-export default DataRepository;
+exports.default = DataRepository;

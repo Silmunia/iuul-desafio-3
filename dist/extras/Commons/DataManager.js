@@ -12,15 +12,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const DataRepository_1 = __importDefault(require("./DataRepository"));
 const FactoryRepository_1 = __importDefault(require("./FactoryRepository"));
+const ClientDataRepository_1 = __importDefault(require("./Data Model/ClientDataRepository"));
+const EmployeeDataRepository_1 = __importDefault(require("./Data Model/EmployeeDataRepository"));
 class DataManager {
     constructor() {
         this.factoryRepository = new FactoryRepository_1.default();
-        this.dataRepository = new DataRepository_1.default();
+        this.clientRepository = new ClientDataRepository_1.default();
+        this.employeeRepository = new EmployeeDataRepository_1.default();
     }
     getTargetAccountForTransfer(accountNumber) {
-        let allClients = this.dataRepository.getAllClients();
+        let allClients = this.clientRepository.getAllClients();
         for (let i = 0; i < allClients.length; i++) {
             let currentAccounts = allClients[i].contas;
             for (let j = 0; j < currentAccounts.length; j++) {
@@ -47,16 +49,16 @@ class DataManager {
             additionalRoles.push(extraRole);
         }
         let newEmployee = this.factoryRepository.createEmployee(initialRole, cpf, employeeName, phone, salary, additionalRoles);
-        this.dataRepository.addEmployee(newEmployee);
+        this.employeeRepository.addEmployee(newEmployee);
     }
     getRole(roleName) {
         try {
-            let foundRole = this.dataRepository.getRole(roleName);
+            let foundRole = this.employeeRepository.getRole(roleName);
             return foundRole;
         }
         catch (_a) {
             let newRole = this.factoryRepository.createRole(roleName);
-            this.dataRepository.addRole(newRole);
+            this.employeeRepository.addRole(newRole);
             return newRole;
         }
     }
@@ -71,7 +73,7 @@ class DataManager {
     }
     createClient(cpf, clientName, phone, isVIP, initialAddress, initialAccount, additionalAccounts, additionalAddresses) {
         let newClient = this.factoryRepository.createClient(cpf, clientName, phone, isVIP, initialAddress, initialAccount, additionalAccounts, additionalAddresses);
-        this.dataRepository.addClient(newClient);
+        this.clientRepository.addClient(newClient);
     }
     createAddress(zipCode, street, number, extraInfo, city, state) {
         return this.factoryRepository.createAddress(zipCode, street, number, extraInfo, city, state);
@@ -84,7 +86,7 @@ class DataManager {
     }
     listEmployees() {
         try {
-            return this.dataRepository.listEmployees();
+            return this.employeeRepository.listEmployees();
         }
         catch (error) {
             throw error;
@@ -92,7 +94,7 @@ class DataManager {
     }
     getEmployeeFromRepository(index) {
         try {
-            return this.dataRepository.getEmployee(index);
+            return this.employeeRepository.getEmployee(index);
         }
         catch (error) {
             throw error;
@@ -100,7 +102,7 @@ class DataManager {
     }
     getClientFromRepository(index) {
         try {
-            return this.dataRepository.getClient(index);
+            return this.clientRepository.getClient(index);
         }
         catch (error) {
             throw error;
@@ -196,7 +198,7 @@ class DataManager {
     }
     listClients() {
         try {
-            return this.dataRepository.listClients();
+            return this.clientRepository.listClients();
         }
         catch (error) {
             throw error;
