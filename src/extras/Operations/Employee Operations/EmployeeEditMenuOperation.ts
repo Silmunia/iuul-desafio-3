@@ -5,17 +5,18 @@ import Funcionario from "../../../objects/classes/Funcionario";
 import InputHandler from "../../Commons/InputHandler";
 import ListEmployeeInfoOperation from "./ListEmployeeInfoOperation";
 import MainMenuOperation from "../MainMenuOperation";
-import MenuRenderer from "../../Commons/MenuRenderer";
+import MenuRenderer from "../../Menu Renderer/Interface/MenuRenderer";
 import Operation from "../Abstract Operation/Operation";
 import EditEmployeePhoneOperation from "./EditEmployeePhoneOperation";
 import EditEmployeeSalaryOperation from "./EditEmployeeSalaryOperation";
 import EditEmployeeCpfOperation from "./EditEmployeeCpfOperation";
-import EmployeeRolesMenu from "./EmployeeRolesMenu";
+import EmployeeRolesMenu from "./Role Operations/EmployeeRolesMenu";
+import EmployeeEditMenuRenderer from "../../Menu Renderer/EmployeeEditMenuRenderer";
 
 class EmployeeEditMenuOperation extends Operation {
 
     private _inputHandler: InputHandler = new InputHandler();
-    private _menuRenderer: MenuRenderer = new MenuRenderer();
+    private _menuRenderer: MenuRenderer = new EmployeeEditMenuRenderer();
     private _expectedInputs: Array<number> = [1, 2, 3, 4, 5, 6, 7, 999];
 
     private _editedEmployee: Funcionario;
@@ -26,7 +27,7 @@ class EmployeeEditMenuOperation extends Operation {
     }
 
     public async runOperation(): Promise<Operation> {
-        this._menuRenderer.renderEditEmployeeMenu(this._expectedInputs);
+        this._menuRenderer.renderMenu(this._expectedInputs);
 
         return await this.startCommandInput("Insira um comando: ");
     }
@@ -54,6 +55,7 @@ class EmployeeEditMenuOperation extends Operation {
                 termination.maintainExecution = false;
                 return termination;
             default:
+                console.log(">>> Comando inválido");
                 return this;
         }
     }

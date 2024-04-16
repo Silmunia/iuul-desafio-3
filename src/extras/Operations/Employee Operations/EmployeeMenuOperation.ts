@@ -2,18 +2,19 @@
 import CreateEmployeeOperation from "./CreateEmployeeOperation";
 import InputHandler from "../../Commons/InputHandler";
 import MainMenuOperation from "../MainMenuOperation";
-import MenuRenderer from "../../Commons/MenuRenderer";
+import MenuRenderer from "../../Menu Renderer/Interface/MenuRenderer";
 import Operation from "../Abstract Operation/Operation";
 import SelectEmployeeOperation from "./SelectEmployeeOperation";
+import EmployeeMenuRenderer from "../../Menu Renderer/EmployeeMenuRenderer";
 
 class EmployeeMenuOperation extends Operation {
 
     private _inputHandler: InputHandler = new InputHandler();
-    private _menuRenderer: MenuRenderer = new MenuRenderer();
+    private _menuRenderer: MenuRenderer = new EmployeeMenuRenderer();
     private _expectedInputs: Array<number> = [1, 2, 3, 999];
 
     public async runOperation(): Promise<Operation> {
-        this._menuRenderer.renderMainEmployeeMenu(this._expectedInputs);
+        this._menuRenderer.renderMenu(this._expectedInputs);
 
         return await this.startCommandInput("Insira um comando: ");
     }
@@ -33,6 +34,7 @@ class EmployeeMenuOperation extends Operation {
                 termination.maintainExecution = false;
                 return termination;
             default:
+                console.log(">>> Comando inválido");
                 return this;
         }
     }

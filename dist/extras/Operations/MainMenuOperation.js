@@ -12,21 +12,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const ClientMenuOperation_1 = __importDefault(require("./ClientMenuOperation"));
+const ClientMenuOperation_1 = __importDefault(require("./Client Operations/ClientMenuOperation"));
 const EmployeeMenuOperation_1 = __importDefault(require("./Employee Operations/EmployeeMenuOperation"));
 const InputHandler_1 = __importDefault(require("../Commons/InputHandler"));
 const Operation_1 = __importDefault(require("./Abstract Operation/Operation"));
-const MenuRenderer_1 = __importDefault(require("../Commons/MenuRenderer"));
+const MainMenuRenderer_1 = __importDefault(require("../Menu Renderer/MainMenuRenderer"));
 class MainMenuOperation extends Operation_1.default {
     constructor(dataManager) {
         super(dataManager);
         this._inputHandler = new InputHandler_1.default();
-        this._menuRenderer = new MenuRenderer_1.default();
+        this._menuRenderer = new MainMenuRenderer_1.default();
         this._expectedInputs = [1, 2, 999];
     }
     runOperation() {
         return __awaiter(this, void 0, void 0, function* () {
-            this._menuRenderer.renderMainMenu(this._expectedInputs);
+            this._menuRenderer.renderMenu(this._expectedInputs);
             return yield this.startCommandInput("Insira um comando: ");
         });
     }
@@ -42,6 +42,7 @@ class MainMenuOperation extends Operation_1.default {
                     this.maintainExecution = false;
                     return this;
                 default:
+                    console.log(">>> Comando inválido");
                     return this;
             }
         });

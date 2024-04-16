@@ -53,6 +53,8 @@ abstract class Conta {
     }
 
     abstract calcularSaldo(): number;
+
+    abstract fazerSaque(valor: number): void;
 }
 
 export default Conta;

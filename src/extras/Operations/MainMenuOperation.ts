@@ -1,15 +1,16 @@
 
-import ClientMenuOperation from "./ClientMenuOperation";
+import ClientMenuOperation from "./Client Operations/ClientMenuOperation";
 import DataManager from "../Commons/DataManager";
 import EmployeeMenuOperation from "./Employee Operations/EmployeeMenuOperation";
 import InputHandler from "../Commons/InputHandler";
 import Operation from "./Abstract Operation/Operation";
-import MenuRenderer from "../Commons/MenuRenderer";
+import MenuRenderer from "../Menu Renderer/Interface/MenuRenderer";
+import MainMenuRenderer from "../Menu Renderer/MainMenuRenderer";
 
 class MainMenuOperation extends Operation {
 
     private _inputHandler: InputHandler = new InputHandler();
-    private _menuRenderer: MenuRenderer = new MenuRenderer();
+    private _menuRenderer: MenuRenderer = new MainMenuRenderer();
     private _expectedInputs: Array<number> = [1, 2, 999];
 
     constructor(dataManager: DataManager) {
@@ -17,7 +18,7 @@ class MainMenuOperation extends Operation {
     }
 
     public async runOperation(): Promise<Operation> {
-        this._menuRenderer.renderMainMenu(this._expectedInputs);
+        this._menuRenderer.renderMenu(this._expectedInputs);
 
         return await this.startCommandInput("Insira um comando: ");
     }
@@ -34,6 +35,7 @@ class MainMenuOperation extends Operation {
                 this.maintainExecution = false;
                 return this;
             default:
+                console.log(">>> Comando inválido");
                 return this;
         }
     }
